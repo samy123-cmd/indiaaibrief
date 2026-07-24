@@ -50,7 +50,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/refund",
     "/editorial",
     "/dmca",
-    "/search",
   ];
 
   const marketing: MetadataRoute.Sitemap = staticRoutes.map((path) => ({

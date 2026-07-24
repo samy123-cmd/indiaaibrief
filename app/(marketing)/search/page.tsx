@@ -9,6 +9,7 @@ export const metadata = buildMetadata({
   description:
     "Search IndiaAIBrief articles, startups, playbooks, and products for Indian AI intelligence.",
   path: "/search",
+  noIndex: true,
 });
 
 export default async function SearchPage({

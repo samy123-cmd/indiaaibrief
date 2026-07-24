@@ -147,11 +147,6 @@ export function buildMetadata({
       "apple-mobile-web-app-status-bar-style": "black-translucent",
       "apple-mobile-web-app-title": SITE_NAME,
       "format-detection": "telephone=no",
-      copyright: `${SITE_NAME} © ${new Date().getFullYear()}`,
-      language: SITE.language,
-      "revisit-after": "1 day",
-      distribution: "global",
-      rating: "general",
       ...(type === "article" && authors?.[0]
         ? {
             "twitter:label1": "Written by",
