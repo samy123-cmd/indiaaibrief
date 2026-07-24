@@ -57,7 +57,7 @@ The Transformer is an Encoder-Decoder architecture (though GPT uses only the Dec
 
 At its core, the model calculates how much every word in a sentence should "attend" to every other word. The formula is:
 
-$Attention(Q, K, V) = softmax(\frac{QK^T}{\sqrt{d_k}})V$
+`Attention(Q, K, V) = softmax((QKᵀ) / √dₖ) V`
 
 - **Queries (Q)**: What I am looking for?
 - **Keys (K)**: What descriptor do I have?
@@ -83,7 +83,7 @@ The shift to Transformers led to log-scale improvements in performance (Perplexi
 
 ### Limitations & Open Problems
 
-1. **Quadratic Complexity $O(N^2)$**: The attention mechanism compares every token to every other token. Doubling the context length quadruples the compute cost. This makes infinite context windows extremely expensive.
+1. **Quadratic Complexity O(N²)**: The attention mechanism compares every token to every other token. Doubling the context length quadruples the compute cost. This makes infinite context windows extremely expensive.
 2. **The Hallucination Feature**: Because the model is probabilistic (predicting the next token based on statistical likelihood), it can confidently state falsehoods if they "sound" statistically probable.
 
 Transformers didn't just improve translation; they created generic intelligence. The same architecture used for predicting text is now used for folding proteins (AlphaFold), generating images, and controlling robots.

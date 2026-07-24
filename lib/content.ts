@@ -180,6 +180,9 @@ function dbRowToPost(row: typeof articles.$inferSelect): Post {
 
 async function getDbPosts(category?: ContentCategory): Promise<Post[]> {
   if (!process.env.DATABASE_URL) return [];
+  // Build-time prerender: use MDX only so we don't open 15× DB pools (EMAXCONNSESSION).
+  const { isProductionBuildPhase } = await import("@/lib/db");
+  if (isProductionBuildPhase()) return [];
 
   try {
     const { getDb } = await import("@/lib/db");
@@ -233,6 +236,9 @@ export async function getPostBySlug(
   const mdx = parsePostFile(category, `${slug}.mdx`);
 
   if (!process.env.DATABASE_URL) return mdx;
+
+  const { isProductionBuildPhase } = await import("@/lib/db");
+  if (isProductionBuildPhase()) return mdx;
 
   try {
     const { getDb } = await import("@/lib/db");
