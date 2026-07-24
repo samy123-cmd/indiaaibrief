@@ -299,7 +299,7 @@ async function shareToTelegram(opts: {
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) return;
 
-  const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://indiaaibrief.com";
+  const site = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.indiaaibrief.com";
   const text = `🇮🇳 ${opts.title}\n${site}${opts.url}`;
 
   try {

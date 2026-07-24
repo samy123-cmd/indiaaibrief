@@ -80,12 +80,10 @@ export function buildMetadata({
     category: section,
     keywords: tags,
     metadataBase: new URL(SITE.url),
+    // English-only site: canonical only — no hreflang (avoids Semrush
+    // self-ref / redirect conflicts on a single locale).
     alternates: {
       canonical: url,
-      languages: {
-        "en-IN": url,
-        "x-default": url,
-      },
     },
     robots: noIndex
       ? { index: false, follow: false }

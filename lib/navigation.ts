@@ -10,24 +10,26 @@ export const PRIMARY_NAV: NavItem[] = [
   { label: "Policy", href: "/policy" },
 ];
 
+export const FOOTER_COMPANY: NavItem[] = [
+  { label: "About", href: "/about" },
+  { label: "Authors", href: "/authors" },
+  { label: "Newsletter", href: "/newsletter" },
+  { label: "Contact", href: "/contact" },
+  { label: "Careers", href: "/careers" },
+];
+
 export const FOOTER_CATEGORIES: NavItem[] = [
   { label: "News", href: "/news" },
   { label: "Explains", href: "/explains" },
   { label: "Compares", href: "/compares" },
   { label: "Playbooks", href: "/playbooks" },
+  { label: "Data", href: "/data" },
 ];
 
 export const FOOTER_PRODUCTS: NavItem[] = [
   { label: "AI Compliance Kit", href: "/kit/ai-compliance" },
   { label: "Readiness Audit", href: "/audit" },
   { label: "Subscribe", href: "/subscribe" },
-];
-
-export const FOOTER_COMPANY: NavItem[] = [
-  { label: "About", href: "/about" },
-  { label: "Authors", href: "/authors" },
-  { label: "Contact", href: "/contact" },
-  { label: "Careers", href: "/careers" },
 ];
 
 export const FOOTER_LEGAL: NavItem[] = [

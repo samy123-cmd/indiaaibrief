@@ -27,7 +27,7 @@ interface ScrapeConfig {
 }
 
 const FETCH_HEADERS = {
-  "User-Agent": "IndiaAIBriefBot/1.0 (+https://indiaaibrief.com)",
+  "User-Agent": "IndiaAIBriefBot/1.0 (+https://www.indiaaibrief.com)",
   Accept: "text/html,application/xhtml+xml",
 };
 

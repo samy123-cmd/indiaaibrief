@@ -55,6 +55,8 @@ export async function generateMetadata({
     title: categoryPageTitle(copy.title, page, tag),
     description: copy.description,
     path: canonicalPath,
+    // Tag filters are utility UI — do not index thin filtered URL variants.
+    noIndex: Boolean(tag),
   });
 }
 
@@ -133,9 +135,11 @@ export default async function CategoryPage({
         ) : null}
       </h1>
       <p className="mt-3 max-w-2xl text-text-secondary">{copy.description}</p>
-      <p className="mt-4 max-w-3xl text-sm leading-6 text-text-tertiary">
-        {copy.seoText}
-      </p>
+      <div className="prose-article mt-6 max-w-3xl !px-0 !py-0">
+        <p className="!mt-0 text-base !leading-7 text-text-secondary">
+          {copy.seoText}
+        </p>
+      </div>
 
       {featured.length > 0 ? (
         <section className="mt-10">

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { absoluteUrl } from "@/lib/utils";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -6,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/dashboard/", "/api/", "/_next/", "/404", "/500"],
+        disallow: ["/dashboard/", "/api/", "/404", "/500"],
       },
       {
         userAgent: "GPTBot",
@@ -30,9 +31,9 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: [
-      "https://indiaaibrief.com/sitemap.xml",
-      "https://indiaaibrief.com/news-sitemap.xml",
-      "https://indiaaibrief.com/image-sitemap.xml",
+      absoluteUrl("/sitemap.xml"),
+      absoluteUrl("/news-sitemap.xml"),
+      absoluteUrl("/image-sitemap.xml"),
     ],
   };
 }

@@ -14,7 +14,18 @@ export function formatInr(amount: number): string {
 }
 
 export function absoluteUrl(path = "/"): string {
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://indiaaibrief.com";
+  let base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.indiaaibrief.com";
+  // Production serves www; apex 308s to www. Never emit apex absolute URLs.
+  try {
+    const parsed = new URL(base);
+    if (parsed.hostname === "indiaaibrief.com") {
+      parsed.hostname = "www.indiaaibrief.com";
+      parsed.protocol = "https:";
+      base = parsed.origin;
+    }
+  } catch {
+    // keep fallback base
+  }
   if (path.startsWith("http")) return path;
   return `${base.replace(/\/$/, "")}${path.startsWith("/") ? path : `/${path}`}`;
 }

@@ -72,9 +72,30 @@ export default function DmcaPage() {
         <li>Counter-notice reinstatement: per applicable law</li>
       </ul>
 
+      <h2>5. What we will not remove without process</h2>
+      <p>
+        Fair comment, accurate reporting of publicly available facts, and
+        lawfully licensed material are not removed merely because a subject
+        dislikes coverage. Personality-rights or defamation claims require
+        enough detail for us to assess jurisdiction and risk; incomplete
+        threats without particulars may be closed without action. We preserve
+        logs of notices for compliance and dispute resolution.
+      </p>
+
+      <h2>6. Repeat infringement</h2>
+      <p>
+        Contributors or partners who repeatedly submit infringing material may
+        lose publishing access. Readers who abuse the notice process (for
+        example, knowingly false claims) may have future notices deprioritized
+        after we document the abuse.
+      </p>
+
       <p>
         Prefer a form? Use our <Link href="/contact">contact page</Link> and
-        select a legal / press inquiry.
+        select a legal / press inquiry. Related:{" "}
+        <Link href="/editorial">Editorial Policy</Link>,{" "}
+        <Link href="/privacy">Privacy</Link>,{" "}
+        <Link href="/terms">Terms</Link>.
       </p>
     </article>
   );

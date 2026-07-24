@@ -763,7 +763,7 @@ export const INDIA_AI_POLICIES: PolicyUpdate[] = [
     publishedAt: "2026-06-01T10:00:00+05:30",
     summary:
       "High Court orders and injunctions on deepfakes and personality rights — de facto product requirements for generative media startups ahead of fuller statutory labelling rules.",
-    sourceUrl: "https://indiaaibrief.com/news/delhi-madras-high-court-deepfake-rulings",
+    sourceUrl: "https://www.indiaaibrief.com/news/delhi-madras-high-court-deepfake-rulings",
     tags: ["court", "deepfake", "personality-rights"],
   },
 ];

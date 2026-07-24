@@ -10,10 +10,12 @@ interface ShareButtonsProps {
   className?: string;
 }
 
+const SITE_ORIGIN = "https://www.indiaaibrief.com";
+
 function toAbsolute(url: string): string {
   if (url.startsWith("http")) return url;
   const origin =
-    typeof window !== "undefined" ? window.location.origin : "https://indiaaibrief.com";
+    typeof window !== "undefined" ? window.location.origin : SITE_ORIGIN;
   return `${origin}${url.startsWith("/") ? url : `/${url}`}`;
 }
 
@@ -25,16 +27,15 @@ export function ShareButtons({ title, url, className }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
 
   const absolute = typeof window !== "undefined" ? toAbsolute(url) : url;
+  const ssrAbsolute = `${SITE_ORIGIN}${url.startsWith("/") ? url : `/${url}`}`;
   const encodedUrl = encodeURIComponent(
-    typeof window !== "undefined" ? absolute : `https://indiaaibrief.com${url.startsWith("/") ? url : `/${url}`}`,
+    typeof window !== "undefined" ? absolute : ssrAbsolute,
   );
   const encodedTitle = encodeURIComponent(title);
   const encodedText = encodeURIComponent(
     shareText(
       title,
-      typeof window !== "undefined"
-        ? absolute
-        : `https://indiaaibrief.com${url.startsWith("/") ? url : `/${url}`}`,
+      typeof window !== "undefined" ? absolute : ssrAbsolute,
     ),
   );
 

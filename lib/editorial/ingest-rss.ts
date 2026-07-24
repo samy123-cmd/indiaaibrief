@@ -12,7 +12,7 @@ import type { FetchFrequency } from "@/lib/editorial/types";
 const parser = new Parser({
   timeout: 15000,
   headers: {
-    "User-Agent": "IndiaAIBriefBot/1.0 (+https://indiaaibrief.com)",
+    "User-Agent": "IndiaAIBriefBot/1.0 (+https://www.indiaaibrief.com)",
     Accept: "application/rss+xml, application/xml, text/xml, */*",
   },
 });

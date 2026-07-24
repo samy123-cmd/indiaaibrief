@@ -380,6 +380,18 @@ export default function AboutPage() {
             >
               Authors →
             </Link>
+            <Link
+              href="/newsletter"
+              className="font-mono text-xs text-text-tertiary hover:text-foreground"
+            >
+              Newsletter archive →
+            </Link>
+            <Link
+              href="/careers"
+              className="font-mono text-xs text-text-tertiary hover:text-foreground"
+            >
+              Careers →
+            </Link>
           </nav>
         </section>
 
