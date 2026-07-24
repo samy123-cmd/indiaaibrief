@@ -1,0 +1,30 @@
+import { NextResponse } from "next/server";
+import { z } from "zod";
+import { subscribeToNewsletter } from "@/lib/buttondown";
+
+const bodySchema = z.object({
+  email: z.string().email(),
+  tags: z.array(z.string()).optional(),
+});
+
+export async function POST(request: Request) {
+  try {
+    const json: unknown = await request.json();
+    const parsed = bodySchema.safeParse(json);
+
+    if (!parsed.success) {
+      return NextResponse.json({ error: "Valid email required" }, { status: 400 });
+    }
+
+    const subscriber = await subscribeToNewsletter({
+      email: parsed.data.email,
+      tags: parsed.data.tags,
+    });
+
+    return NextResponse.json({ ok: true, id: subscriber.id });
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Newsletter subscription failed";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}

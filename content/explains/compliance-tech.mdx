@@ -1,0 +1,92 @@
+---
+title: "RegTech for AI: The Compliance Stack Indian BFSI Needs"
+description: "DPDP logging, model cards, and drift monitoring are becoming procurement musts. Here is the compliance tech stack Indian BFSI buyers expect."
+publishedAt: "2026-07-22T10:00:00+05:30"
+modifiedAt: "2026-07-24T12:00:00+05:30"
+author: "indiaaibrief-desk"
+category: "explains"
+tags: ["regulation", "policy", "regtech", "bfsi", "authority-series"]
+image: "/images/articles/compliance-tech.webp"
+imageAlt: "Editorial graphic for RegTech for AI: The Compliance Stack Indian BFSI Needs"
+featured: false
+trending: false
+readingTime: 11
+excerpt: "Indian BFSI buyers now ask AI vendors for model cards, drift monitoring, and DPDP-ready audit logs before signing — spreadsheets no longer pass diligence."
+structuredData:
+  type: "FAQPage"
+  faq:
+    - question: "What compliance tooling do Indian BFSI buyers now ask AI vendors for?"
+      answer: "Model documentation (model cards), drift and bias monitoring, DPDP-aligned audit logs showing what personal data was processed and why, and evidence of human oversight for credit or underwriting decisions."
+    - question: "Is ISO/IEC 42001 certification worth pursuing for an Indian AI startup?"
+      answer: "If you sell into BFSI, healthcare, or government, yes — it is becoming a fast-track signal for compliance diligence, similar to how ISO 27001 works for information security today."
+    - question: "Can a small Indian AI team build a compliance stack without enterprise tooling budgets?"
+      answer: "Yes. Start with open-source model cards, basic logging of every AI-assisted decision, and a written data map — this satisfies most early diligence questionnaires before you need commercial platforms."
+    - question: "Does DPDP require specific logging for AI systems?"
+      answer: "DPDP does not mandate a specific log format, but its accountability principle requires you to demonstrate lawful processing on request — which in practice means logging what personal data an AI system touched and why."
+---
+
+<Answer>
+Indian BFSI and enterprise buyers are starting to ask AI vendors for model documentation, drift monitoring, and DPDP-aligned audit logs before signing — the same way ISO 27001 became a procurement gate for information security. Founders who treat this as a compliance-tech build, not a policy afterthought, close enterprise deals faster.
+</Answer>
+
+For Indian AI vendors selling into banks, NBFCs, and insurers, the RFP now includes questions no engineering team was tracking a year ago: can you produce a model card, show drift detection logs, or prove which personal data fields an AI decision touched.
+
+## What Changed
+
+- Manually filled compliance spreadsheets are no longer credible for regulated Indian buyers — RBI-supervised entities increasingly expect automated, auditable evidence from AI vendors, not a one-time questionnaire response.
+- **DPDP's accountability principle** effectively requires Indian companies to log what personal data an AI system processed and why, even though the Act does not prescribe a specific technical format.
+- **ISO/IEC 42001** (AI management systems) is emerging globally as the "ISO 27001 for AI" — a certification Indian enterprise buyers are starting to ask about in vendor diligence.
+- See [How India's DPDP Act Affects AI Training Data](/explains/dpdp-act-ai-training-data) for the data-side obligations this tooling needs to support, and [AI Regulation in India](/explains/ai-regulation-india-business-guide) for the broader compliance stack.
+
+## The Details
+
+### Layer 1: Data Provenance and Documentation
+
+Before a model is trained or fine-tuned, Indian teams increasingly need to show where the data came from and what it contains.
+
+- **Model Cards**: The HuggingFace/Google-pioneered standard for documenting model details, intended use, limitations, and training data sources. Indian enterprise buyers now ask for these as a baseline diligence artifact, not an optional nicety.
+- **AI Bill of Materials (BoM)**: A manifest listing every dataset, library, and model weight used in a system. For Indian teams building on open-weight models plus proprietary fine-tunes, this is what a security or compliance reviewer will ask for first.
+
+### Layer 2: Observability and Runtime Monitoring
+
+AI systems rarely fail loudly; they drift silently, and Indian regulated buyers are starting to require proof that you would notice.
+
+- **Drift detection** — monitoring whether production inputs diverge from training data, relevant wherever an Indian lender's applicant pool shifts over time.
+- **Bias monitoring** — automated checks for disparate outcomes across demographic groups, directly relevant to RBI's fair-lending expectations and any hiring-AI use case.
+- **Guardrails** — filtering layers between model and user output, increasingly expected wherever an AI system faces Indian consumers directly (chat support, claims triage).
+
+### Layer 3: DPDP-Ready Audit Logging
+
+This is the layer most Indian AI startups underinvest in. A DPDP-ready log for an AI system should capture, at minimum: what personal data fields were processed, the lawful basis or purpose, which model or version handled the request, and whether a human reviewed the output for high-impact decisions. Without this, responding to a regulator inquiry or an enterprise customer's audit becomes a manual reconstruction exercise under time pressure.
+
+### The Certification Layer: ISO/IEC 42001
+
+Just as ISO 27001 became table stakes for enterprise software sales in India, ISO/IEC 42001 is positioning itself as the auditable standard for AI management systems globally. It is not mandatory, but for Indian vendors selling into BFSI, healthcare, or government, early certification is becoming a differentiator in RFPs that otherwise treat all AI vendors as equally unproven.
+
+## What This Means for Indian Founders and CTOs
+
+1. **Require a model card for every model version before deploy.** Make it a CI/CD gate, not a documentation task someone does "later" — later rarely arrives before the first enterprise audit.
+2. **Build DPDP logging into your pipeline now**, not retroactively. Capture personal-data fields touched, purpose, and model version for every AI-assisted decision that affects an individual.
+3. **Start an ISO 42001 gap analysis early** if BFSI, healthcare, or government are on your roadmap — certification timelines run months, and RFPs increasingly ask for it upfront.
+4. **Audit your AI Bill of Materials.** Know every open-source library and model weight in your stack; supply-chain questions are now standard in Indian enterprise security reviews.
+5. **Treat guardrails as a compliance control, not just a UX safety net** — log what they blocked and why, since that log is your evidence of due diligence.
+
+## Frequently Asked Questions
+
+### What compliance tooling do Indian BFSI buyers now ask AI vendors for?
+
+Model documentation (model cards), drift and bias monitoring, DPDP-aligned audit logs showing what personal data was processed and why, and evidence of human oversight for credit or underwriting decisions.
+
+### Is ISO/IEC 42001 certification worth pursuing for an Indian AI startup?
+
+If you sell into BFSI, healthcare, or government, yes — it is becoming a fast-track signal for compliance diligence, similar to how ISO 27001 works for information security today.
+
+### Can a small Indian AI team build a compliance stack without enterprise tooling budgets?
+
+Yes. Start with open-source model cards, basic logging of every AI-assisted decision, and a written data map — this satisfies most early diligence questionnaires before you need commercial platforms.
+
+### Does DPDP require specific logging for AI systems?
+
+DPDP does not mandate a specific log format, but its accountability principle requires you to demonstrate lawful processing on request — which in practice means logging what personal data an AI system touched and why.
+
+Related reading: [How India's DPDP Act Affects AI Training Data](/explains/dpdp-act-ai-training-data), [AI Regulation in India: A Business Guide](/explains/ai-regulation-india-business-guide), [MeitY AI Governance Framework](/news/meity-ai-governance-framework-2026), [AI Liability in India](/explains/liability), and the [AI Compliance Starter Kit](/kit/ai-compliance).

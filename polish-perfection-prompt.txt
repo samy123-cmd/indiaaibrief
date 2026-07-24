@@ -1,0 +1,947 @@
+"Execute the IndiaAIBrief.com Pre-Launch Perfection Protocol. This is the final polish pass before the site goes live. Every page, every tag, every schema, every performance metric must be production-perfect and Google-ready. No shortcuts. No "good enough." Perfect or nothing.
+
+## PHASE 1: TECHNICAL SEO FOUNDATION (Do First)
+
+### 1.1 robots.txt
+Create `/app/robots.ts` or static `public/robots.txt` with EXACTLY this content:
+```
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /404
+Disallow: /500
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
+Sitemap: https://indiaaibrief.com/sitemap.xml
+Sitemap: https://indiaaibrief.com/news-sitemap.xml
+```
+- Verify no other routes are blocked accidentally
+- Ensure sitemap URLs are absolute and HTTPS
+
+### 1.2 Sitemap Architecture
+Create THREE sitemap files:
+
+**A. Main Sitemap (`/app/sitemap.ts`)**
+- Dynamic generation using Next.js sitemap.ts convention
+- Include: homepage, all category pages, all article pages, all product pages, all static pages
+- For articles: use `lastmod` from `modifiedAt` or `publishedAt` frontmatter
+- `changefreq`: homepage=daily, news articles=daily, explainers=weekly, playbooks=monthly, static pages=monthly
+- `priority`: homepage=1.0, category pages=0.8, articles=0.6, product pages=0.7, static pages=0.5
+- Max 50,000 URLs per sitemap. If exceeded, create sitemap index.
+- Validate XML structure: proper `<urlset>`, `<url>`, `<loc>`, `<lastmod>`, `<changefreq>`, `<priority>` tags
+
+**B. News Sitemap (`/app/news-sitemap.ts`)**
+- Google News specific format
+- Include ONLY articles from last 48 hours
+- Required tags: `<news:name>IndiaAIBrief</news:name>`, `<news:language>en</news:language>`, `<news:publication_date>` (ISO 8601), `<news:title>`
+- Update every time a news article is published
+- Submit separately to Google Search Console
+
+**C. Image Sitemap (Optional but Recommended)**
+- Include all article hero images
+- Tags: `<image:loc>`, `<image:title>`, `<image:caption>`
+
+### 1.3 Canonical URLs
+- EVERY page must have a self-referencing canonical tag
+- For paginated pages: `/news?page=2` should canonical to itself (NOT the first page)
+- For filtered/sorted pages: canonical to the base category page if filters are not SEO-significant
+- For product pages with query params: canonical to clean URL without params
+- Use `next/head` or metadata API to inject `<link rel="canonical" href="absolute-url" />`
+- No trailing slash inconsistencies — pick one and 301 redirect the other
+
+### 1.4 Pagination SEO
+- Category listing pages: implement proper pagination
+- Use `rel="prev"` and `rel="next"` in head (if using traditional pagination)
+- OR use infinite scroll with proper URL-based pagination fallback for crawlers
+- Pagination URLs: `?page=2`, `?page=3` etc.
+- Each paginated page must have unique title: `News — Page 2 | IndiaAIBrief`
+
+### 1.5 Hreflang (If Applicable)
+- If any content exists in Hindi or other Indian languages, implement hreflang
+- `<link rel="alternate" hreflang="en-in" href="https://indiaaibrief.com/path" />`
+- `<link rel="alternate" hreflang="hi-in" href="https://indiaaibrief.com/hi/path" />`
+- `<link rel="alternate" hreflang="x-default" href="https://indiaaibrief.com/path" />`
+
+### 1.6 URL Structure Final Audit
+- All URLs lowercase
+- Hyphens for spaces, NO underscores
+- No special characters except hyphens
+- No query params in canonical URLs (use clean slugs)
+- Consistent trailing slash policy (recommend: NO trailing slash, 301 redirect trailing slash to non-trailing)
+- 301 redirects for any changed URLs
+- Custom 404 page returns proper 404 status code
+- Custom 500 page returns proper 500 status code
+
+---
+
+## PHASE 2: STRUCTURED DATA PERFECTION (Validate Every Page)
+
+### 2.1 Homepage
+**Organization Schema:**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "IndiaAIBrief",
+  "url": "https://indiaaibrief.com",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://indiaaibrief.com/logo.png",
+    "width": 512,
+    "height": 512
+  },
+  "sameAs": [
+    "https://twitter.com/indiaaibrief",
+    "https://linkedin.com/company/indiaaibrief",
+    "https://t.me/indiaaibrief"
+  ],
+  "description": "Indian AI intelligence for decision-makers. Breaking news, explainers, and original analysis on India's AI ecosystem.",
+  "foundingDate": "2026",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "Editorial",
+    "email": "editor@indiaaibrief.com",
+    "availableLanguage": ["English", "Hindi"]
+  }
+}
+```
+
+**WebSite Schema (for Sitelinks Searchbox):**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "IndiaAIBrief",
+  "url": "https://indiaaibrief.com",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://indiaaibrief.com/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+```
+
+### 2.2 Article Pages (ALL Articles)
+**NewsArticle Schema (Mandatory for every article):**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": "Title max 110 chars",
+  "description": "Meta description",
+  "image": [
+    "https://indiaaibrief.com/images/article-1200x630.webp",
+    "https://indiaaibrief.com/images/article-800x600.webp"
+  ],
+  "datePublished": "2026-07-24T08:00:00+05:30",
+  "dateModified": "2026-07-24T10:30:00+05:30",
+  "author": {
+    "@type": "Person",
+    "name": "Author Name",
+    "url": "https://indiaaibrief.com/authors/author-slug",
+    "jobTitle": "Senior AI Policy Analyst",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "IndiaAIBrief"
+    },
+    "image": "https://indiaaibrief.com/images/authors/author.webp"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "IndiaAIBrief",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://indiaaibrief.com/logo.png",
+      "width": 512,
+      "height": 512
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://indiaaibrief.com/news/2026/07/24/article-slug"
+  },
+  "articleSection": "News",
+  "wordCount": 1200,
+  "inLanguage": "en-IN"
+}
+```
+
+**BreadcrumbList Schema:**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://indiaaibrief.com"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "News",
+      "item": "https://indiaaibrief.com/news"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Article Title",
+      "item": "https://indiaaibrief.com/news/2026/07/24/article-slug"
+    }
+  ]
+}
+```
+
+**FAQPage Schema (If article has FAQ section):**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Question text?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Answer text."
+      }
+    }
+  ]
+}
+```
+
+**ArticleBody Requirements:**
+- Use `itemProp="articleBody"` on the main content div
+- Use `itemProp="headline"` on H1
+- Use `itemProp="datePublished"` and `itemProp="dateModified"` on time elements
+- Use `itemProp="author"` on author block
+
+### 2.3 Author Pages
+**Person Schema:**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Author Name",
+  "url": "https://indiaaibrief.com/authors/slug",
+  "image": "author-image-url",
+  "jobTitle": "Title",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "IndiaAIBrief"
+  },
+  "sameAs": ["twitter", "linkedin"],
+  "description": "Bio text"
+}
+```
+
+### 2.4 Product Pages (Digital Products)
+**Product Schema:**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "AI Compliance Starter Kit for Indian MSMEs",
+  "image": "product-image-url",
+  "description": "Product description",
+  "brand": {
+    "@type": "Brand",
+    "name": "IndiaAIBrief"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "product-url",
+    "priceCurrency": "INR",
+    "price": "999",
+    "availability": "https://schema.org/InStock"
+  }
+}
+```
+
+### 2.5 Validation Checklist
+- [ ] Test EVERY page in Google Rich Results Test
+- [ ] Test EVERY page in Schema.org Validator
+- [ ] Ensure no errors, no warnings, no missing required fields
+- [ ] Ensure image URLs are absolute (https://)
+- [ ] Ensure date formats are ISO 8601 with timezone (+05:30 for India)
+- [ ] Ensure all `@id` fields are absolute URLs
+
+---
+
+## PHASE 3: META TAGS PERFECTION (Every Single Page)
+
+### 3.1 Standard Meta Tags (All Pages)
+```html
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<meta name="description" content="Compelling 150-160 char description">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="author" content="Author Name">
+<meta name="publisher" content="IndiaAIBrief">
+<meta name="copyright" content="IndiaAIBrief © 2026">
+<meta name="language" content="English">
+<meta name="revisit-after" content="1 day">
+<meta name="distribution" content="global">
+<meta name="rating" content="general">
+<meta name="theme-color" content="#DC2626">
+<meta name="msapplication-TileColor" content="#DC2626">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="IndiaAIBrief">
+<meta name="application-name" content="IndiaAIBrief">
+<meta name="format-detection" content="telephone=no">
+```
+
+### 3.2 Open Graph (All Pages)
+```html
+<meta property="og:site_name" content="IndiaAIBrief">
+<meta property="og:locale" content="en_IN">
+<meta property="og:type" content="article"> <!-- or website for homepage -->
+<meta property="og:title" content="Title under 60 chars">
+<meta property="og:description" content="Description under 200 chars">
+<meta property="og:url" content="absolute-canonical-url">
+<meta property="og:image" content="1200x630-image-url">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Descriptive image alt text">
+<meta property="og:image:type" content="image/webp">
+<meta property="article:published_time" content="ISO-8601-date">
+<meta property="article:modified_time" content="ISO-8601-date">
+<meta property="article:author" content="author-url">
+<meta property="article:section" content="Category">
+<meta property="article:tag" content="tag1">
+<meta property="article:tag" content="tag2">
+```
+
+### 3.3 Twitter Cards (All Pages)
+```html
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@indiaaibrief">
+<meta name="twitter:creator" content="@authorhandle">
+<meta name="twitter:title" content="Title under 60 chars">
+<meta name="twitter:description" content="Description under 200 chars">
+<meta name="twitter:image" content="1200x630-image-url">
+<meta name="twitter:image:alt" content="Descriptive alt text">
+<meta name="twitter:label1" content="Written by">
+<meta name="twitter:data1" content="Author Name">
+<meta name="twitter:label2" content="Reading time">
+<meta name="twitter:data2" content="5 minutes">
+```
+
+### 3.4 Title Tag Rules
+- Format: `Primary Keyword — Secondary Keyword | IndiaAIBrief`
+- Max 60 characters (including brand)
+- Front-load important keywords
+- Every page must have a UNIQUE title
+- No duplicate titles across the site
+
+### 3.5 Meta Description Rules
+- 150-160 characters
+- Compelling, with implicit CTA
+- Include primary keyword naturally
+- Every page must have a UNIQUE description
+- No duplicate descriptions
+
+### 3.6 Special Page Meta
+**Homepage:**
+- Title: "Indian AI Intelligence for Decision-Makers | IndiaAIBrief"
+- Description: "Breaking news, original analysis, and actionable intelligence on India's AI ecosystem. For founders, CTOs, and policymakers."
+- OG type: website
+
+**Category Pages:**
+- Title: "Category Name — Latest Updates | IndiaAIBrief"
+- Description: "Latest [category] on Indian AI. [unique value proposition]."
+
+**About Page:**
+- Title: "About IndiaAIBrief — Editorial Team & Mission"
+- Description: "IndiaAIBrief is an AI intelligence platform for Indian decision-makers. Learn about our editorial standards and team."
+
+**Contact Page:**
+- Title: "Contact IndiaAIBrief — Editorial & Press Inquiries"
+
+**Product Pages:**
+- Title: "Product Name — Price & Details | IndiaAIBrief"
+- OG type: product
+
+**404 Page:**
+- Title: "Page Not Found | IndiaAIBrief"
+- Meta robots: noindex, nofollow
+
+---
+
+## PHASE 4: GOOGLE SEARCH CONSOLE SETUP
+
+### 4.1 Verification
+- Add property: `https://indiaaibrief.com` (Domain property preferred, or URL prefix)
+- Verification methods (in order of preference):
+  1. DNS TXT record (domain property) — add to Cloudflare DNS
+  2. HTML file upload (URL prefix) — place in public/
+  3. HTML meta tag (URL prefix) — add to layout
+  4. Google Analytics association
+
+### 4.2 Sitemap Submission
+- Submit main sitemap: `https://indiaaibrief.com/sitemap.xml`
+- Submit news sitemap: `https://indiaaibrief.com/news-sitemap.xml`
+- Verify sitemap status: Success, no errors
+
+### 4.3 URL Inspection
+- Inspect homepage: Request indexing, verify "URL is on Google"
+- Inspect 5+ article pages: Verify indexing, check rendered HTML vs raw HTML
+- Inspect category pages: Verify indexing
+- Check mobile usability: No errors
+- Check Core Web Vitals: All green (LCP, INP, CLS)
+
+### 4.4 Performance Report Setup
+- Verify search queries are being tracked
+- Check for manual actions: None should exist
+- Check for security issues: None should exist
+- Set up email notifications for critical issues
+
+### 4.5 Coverage Report
+- Ensure all important pages are in "Valid" status
+- Fix any "Excluded" pages that should be indexed
+- Fix any "Error" pages immediately
+- Monitor "Valid with warnings"
+
+### 4.6 Core Web Vitals Report
+- All pages must show "Good" status for LCP, INP, CLS
+- If any "Needs Improvement" or "Poor": fix before launch
+- Field data (CrUX) will take 28 days to populate, but lab data must be perfect now
+
+### 4.7 Page Experience Signals
+- Mobile usability: No errors
+- HTTPS: All pages served over HTTPS
+- No intrusive interstitials
+- Safe browsing: No issues
+
+---
+
+## PHASE 5: GOOGLE ADSENSE READINESS
+
+### 5.1 Policy Compliance (Mandatory Before Application)
+- [ ] **Original content:** At least 20-30 high-quality, original articles published
+- [ ] **No thin content:** Every page has substantial, useful content (min 300 words for text pages)
+- [ ] **No duplicate content:** No copy-paste from other sites
+- [ ] **No copyrighted material:** All images licensed or original
+- [ ] **No adult/gambling/violence content:** Clean, professional
+- [ ] **No misleading claims:** No "get rich quick," no fake news
+- [ ] **Navigation:** Clear, functional navigation on all pages
+- [ ] **About page:** Complete with team info, editorial policy
+- [ ] **Contact page:** Working contact form or email
+- [ ] **Privacy policy:** GDPR + DPDP compliant, mentions cookies/tracking
+- [ ] **Terms of service:** Clear user agreement
+- [ ] **Cookie policy:** Explains what cookies are used
+- [ ] **No broken links:** All internal links work
+- [ ] **No placeholder content:** No "lorem ipsum," no empty pages
+- [ ] **Site is live and accessible:** No maintenance mode, no password protection
+
+### 5.2 Content Quality Standards
+- Minimum 20 published articles before applying
+- Articles must be: original, well-written, grammatically correct, factually accurate
+- Average article length: 500-1500 words
+- Regular publishing schedule (at least 2-3x per week)
+- No AI-generated content without human editing and value-add
+
+### 5.3 Ad Slot Preparation (For When Approved)
+- Designate ad slots in layout (do NOT implement ads yet — apply first, get approved, then add)
+- Ad slots must be static (reserved space) to prevent CLS
+- Recommended slots:
+  - Below article title (in-content, 728x90 desktop / 320x100 mobile)
+  - Mid-article (in-content, 300x250 or responsive)
+  - Below article content (before comments/related)
+  - Sidebar (desktop only, 300x250 or 300x600)
+- Ensure ad slots don't overlap content
+- Ensure ad slots are clearly distinguishable from editorial content (label: "Advertisement")
+
+### 5.4 ads.txt
+Create `public/ads.txt` (only after AdSense approval):
+```
+# AdSense
+google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+```
+
+### 5.5 Application Process
+1. Ensure all Phase 5.1 checklist items are complete
+2. Go to Google AdSense → Sign up
+3. Enter site URL: `https://indiaaibrief.com`
+4. Add verification code to `<head>` (temporary, remove after verification)
+5. Wait for review (typically 1-2 weeks, sometimes up to 4 weeks)
+6. During review: keep publishing content, do NOT place ads yet
+7. After approval: implement ad code, add ads.txt
+
+---
+
+## PHASE 6: PERFORMANCE PERFECTION
+
+### 6.1 Core Web Vitals (Test on Real Devices)
+Test on: WebPageTest (Mumbai, 3G Fast, Moto G4) + PageSpeed Insights (Mobile)
+
+**LCP (Largest Contentful Paint):**
+- Target: < 2.0s
+- Hero image must be: WebP/AVIF, properly sized, eager loaded, explicit dimensions
+- Font loading: `font-display: optional`, preloaded weights only
+- No render-blocking resources above the fold
+- Inline critical CSS
+
+**INP (Interaction to Next Paint):**
+- Target: < 150ms
+- Break up long tasks (>50ms)
+- Minimize DOM size (< 1500 elements)
+- Use `content-visibility: auto` for below-fold sections
+- Event handlers must be fast (debounce/throttle where needed)
+
+**CLS (Cumulative Layout Shift):**
+- Target: < 0.05
+- ALL images must have explicit width and height
+- ALL ads/embeds must have reserved static space
+- No web fonts causing FOUT/FOIT
+- No late-loading content pushing things around
+- Use `aspect-ratio` CSS for responsive containers
+
+**TTFB (Time to First Byte):**
+- Target: < 400ms
+- Edge caching at Mumbai (Vercel Edge)
+- Database queries optimized (indexes, no N+1)
+- No slow API calls on critical path
+
+### 6.2 Lighthouse Audit (Every Page Type)
+Run Lighthouse on: homepage, article page, category page, product page
+
+**Target Scores:**
+- Performance: 95+
+- Accessibility: 100
+- Best Practices: 100
+- SEO: 100
+
+**Performance Fixes:**
+- [ ] Eliminate render-blocking resources
+- [ ] Properly size images
+- [ ] Defer offscreen images (lazy loading)
+- [ ] Minify CSS and JS
+- [ ] Remove unused CSS/JS
+- [ ] Efficiently encode images (WebP/AVIF)
+- [ ] Reduce server response times
+- [ ] Avoid chaining critical requests
+- [ ] Keep request counts low (< 50 per page)
+- [ ] Minimize main-thread work
+- [ ] Reduce JavaScript execution time
+- [ ] Avoid enormous network payloads (< 1.6MB total)
+
+### 6.3 Image Optimization Final Check
+- [ ] All images converted to WebP (with AVIF fallback)
+- [ ] All images have explicit width and height attributes
+- [ ] Hero images eager loaded, all others lazy loaded
+- [ ] Responsive images with srcset for different viewport sizes
+- [ ] Images served from CDN with Brotli compression
+- [ ] No images > 200KB without good reason
+- [ ] SVG icons used where possible (logos, icons)
+- [ ] Image alt text: descriptive, keyword-rich, under 125 chars
+
+### 6.4 Font Optimization Final Check
+- [ ] Only variable fonts (Inter Variable)
+- [ ] Only weights used on page are loaded (400, 600, 700)
+- [ ] `font-display: optional` on all @font-face
+- [ ] Preload critical font files in `<head>`
+- [ ] System font stack as fallback
+- [ ] No layout shifts from font loading
+
+### 6.5 JavaScript Final Check
+- [ ] Zero client-side JS on static pages (Server Components)
+- [ ] Client Components marked with "use client"
+- [ ] No unused dependencies in bundle
+- [ ] Bundle size < 100KB gzipped for initial load
+- [ ] All third-party scripts deferred or loaded via Partytown
+- [ ] No jQuery, Lodash, Moment.js
+- [ ] Analytics script deferred, < 1KB (Plausible)
+
+---
+
+## PHASE 7: ACCESSIBILITY (WCAG 2.1 AA)
+
+### 7.1 Visual
+- [ ] Color contrast ratio: minimum 4.5:1 for normal text, 3:1 for large text
+- [ ] Accent color (#DC2626) on background (#FAFAFA): verify contrast
+- [ ] Text can be resized up to 200% without breaking layout
+- [ ] No content hidden at 200% zoom
+- [ ] Focus indicators visible on all interactive elements (2px outline, accent color)
+
+### 7.2 Navigation
+- [ ] All functionality available via keyboard
+- [ ] Logical tab order
+- [ ] Skip to main content link (visible on focus)
+- [ ] No keyboard traps
+- [ ] Dropdown menus keyboard accessible (arrow keys, escape, enter)
+
+### 7.3 Screen Readers
+- [ ] Semantic HTML: proper heading hierarchy (H1 → H2 → H3, no skips)
+- [ ] Landmark regions: `<header>`, `<nav>`, `<main>`, `<article>`, `<aside>`, `<footer>`
+- [ ] ARIA labels where needed: `aria-label`, `aria-labelledby`, `aria-describedby`
+- [ ] Alt text on ALL images (decorative images: `alt=""` or `role="presentation"`)
+- [ ] Form labels associated with inputs (`<label for="id">` or `aria-label`)
+- [ ] Error messages associated with form fields (`aria-describedby`)
+- [ ] Live regions for dynamic content updates (`aria-live`)
+- [ ] Button text descriptive (not "Click here" — "Subscribe to newsletter")
+
+### 7.4 Motion
+- [ ] `prefers-reduced-motion` media query respected
+- [ ] No auto-playing animations that cannot be paused
+- [ ] No content that flashes more than 3 times per second
+
+### 7.5 Testing
+- [ ] Test with keyboard only (Tab, Enter, Space, Arrow keys)
+- [ ] Test with screen reader (NVDA, VoiceOver, or ChromeVox)
+- [ ] Run axe DevTools audit: 0 violations
+- [ ] Run WAVE audit: 0 errors
+
+---
+
+## PHASE 8: SECURITY HARDENING
+
+### 8.1 HTTPS
+- [ ] All pages served over HTTPS (no mixed content)
+- [ ] HSTS header: `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`
+- [ ] Redirect HTTP to HTTPS at CDN level
+
+### 8.2 Content Security Policy
+Implement strict CSP (start with report-only, then enforce):
+```
+Content-Security-Policy: 
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://plausible.io;
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data: https:;
+  font-src 'self';
+  connect-src 'self' https://api.razorpay.com https://api.buttondown.email;
+  frame-src 'self' https://checkout.razorpay.com;
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self';
+  upgrade-insecure-requests;
+```
+
+### 8.3 Security Headers
+```
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=()
+```
+
+### 8.4 Data Protection
+- [ ] No sensitive data in URLs (query params)
+- [ ] Form inputs sanitized and validated (Zod on client AND server)
+- [ ] CSRF protection on all forms
+- [ ] Rate limiting on API routes (5 requests/minute for auth, 10 for general)
+- [ ] SQL injection prevention (parameterized queries only)
+- [ ] XSS prevention (output encoding, no raw HTML from user input)
+- [ ] Secure cookies: HttpOnly, Secure, SameSite=Strict
+
+---
+
+## PHASE 9: SOCIAL & SHARING PERFECTION
+
+### 9.1 Open Graph Images
+- [ ] Every article has a unique 1200x630 OG image
+- [ ] Homepage has a branded 1200x630 OG image
+- [ ] Product pages have product-focused 1200x630 OG images
+- [ ] Images are < 300KB, WebP format
+- [ ] Images have descriptive alt text in OG meta
+
+### 9.2 Twitter Cards
+- [ ] All pages have summary_large_image card
+- [ ] Twitter handle in meta
+- [ ] Image dimensions specified
+
+### 9.3 Social Sharing Buttons
+- [ ] Native Web Share API (primary)
+- [ ] Fallback: Twitter, LinkedIn, WhatsApp, Telegram, Copy Link
+- [ ] Custom SVG icons (no external scripts)
+- [ ] Share text includes title + URL + relevant hashtag (#IndiaAI)
+- [ ] WhatsApp share: `https://wa.me/?text=URL%20Title`
+- [ ] Telegram share: `https://t.me/share/url?url=URL&text=Title`
+
+### 9.4 Social Profiles
+- [ ] Twitter/X: @indiaaibrief (create if not exists)
+- [ ] LinkedIn: Company page created
+- [ ] Telegram: Channel created, bot configured
+- [ ] All profiles linked in footer and Organization schema
+
+---
+
+## PHASE 10: MONETIZATION INFRASTRUCTURE
+
+### 10.1 Razorpay Integration
+- [ ] Razorpay account created and KYC completed
+- [ ] Test mode: all payment flows working
+- [ ] Live mode: API keys configured in environment variables
+- [ ] Webhook endpoint: `/api/payments/webhook` configured
+- [ ] Webhook signature verification implemented
+- [ ] Payment success page designed
+- [ ] Payment failure handling (retry, error messages)
+- [ ] Invoice generation (Razorpay auto-invoice)
+- [ ] Refund process documented and implemented
+
+### 10.2 Subscription Management
+- [ ] Metered paywall: 3 articles/month for free users
+- [ ] Article view counter: localStorage + server sync
+- [ ] Paywall UI: blur content below fold + CTA overlay
+- [ ] Subscription page: 3 tiers (Free, Brief ₹299/mo, Intelligence ₹999/mo)
+- [ ] Tier comparison table: features, pricing, CTA buttons
+- [ ] Annual discount: 2 months free (₹2,999 vs ₹3,588)
+- [ ] Cancellation flow: self-service, immediate effect, prorated refund policy
+- [ ] Subscription status dashboard for users
+
+### 10.3 Digital Product Delivery
+- [ ] Product landing page: hero, features, pricing, testimonials, FAQ
+- [ ] Checkout flow: Razorpay → success → download page
+- [ ] Download page: time-limited link (24 hours), download counter
+- [ ] Email delivery: automated email with download link
+- [ ] Product access in user dashboard
+
+### 10.4 Affiliate Links
+- [ ] Affiliate program accounts created (relevant AI tools with India presence)
+- [ ] Link tracking: UTM parameters + internal attribution
+- [ ] Disclosure: "We may earn a commission..." on all affiliate content
+- [ ] No-follow on affiliate links: `rel="nofollow sponsored"`
+
+---
+
+## PHASE 11: ANALYTICS & TRACKING
+
+### 11.1 Plausible Analytics
+- [ ] Self-hosted or cloud Plausible account
+- [ ] Script added: `<script defer data-domain="indiaaibrief.com" src="https://plausible.io/js/script.js"></script>`
+- [ ] Custom events tracked: newsletter_signup, product_purchase, subscription_start, article_share
+- [ ] Goal funnels: homepage → article → newsletter signup → subscription
+
+### 11.2 Google Search Console
+- [ ] Property verified
+- [ ] Sitemaps submitted
+- [ ] URL inspection done for key pages
+- [ ] Performance report monitored
+
+### 11.3 Buttondown Newsletter
+- [ ] Account created
+- [ ] API key configured
+- [ ] Subscribe form working end-to-end
+- [ ] Welcome email configured
+- [ ] Unsubscribe link working
+
+### 11.4 Telegram Bot
+- [ ] Bot created via @BotFather
+- [ ] Webhook configured
+- [ ] Auto-post on new article publish
+- [ ] Community group/channel created
+
+---
+
+## PHASE 12: LEGAL COMPLIANCE
+
+### 12.1 Privacy Policy (`/privacy`)
+- [ ] GDPR compliant (EU visitors)
+- [ ] India DPDP Act 2023 compliant
+- [ ] Sections: data collected, usage, cookies, third parties, user rights, retention, security, contact
+- [ ] Cookie policy integrated (Plausible is cookie-less)
+- [ ] Last updated date
+- [ ] Contact email for DPO
+
+### 12.2 Terms of Service (`/terms`)
+- [ ] User rights and responsibilities
+- [ ] Subscription terms and billing
+- [ ] Content ownership and licensing
+- [ ] Prohibited use
+- [ ] Termination conditions
+- [ ] Limitation of liability
+- [ ] Governing law: India
+- [ ] Dispute resolution
+- [ ] Last updated date
+
+### 12.3 Cookie Policy (`/cookies`)
+- [ ] List of all cookies used (should be minimal)
+- [ ] Plausible is cookie-less — state this clearly
+- [ ] Explain localStorage usage (theme, paywall count)
+- [ ] How to manage cookies
+
+### 12.4 Refund Policy (`/refund`)
+- [ ] Digital products: 7-day refund if not downloaded
+- [ ] Subscriptions: no refund after content access, prorated if unused
+- [ ] Process: email request, 48-hour response
+- [ ] Exceptions listed
+
+### 12.5 Editorial Policy (`/editorial`)
+- [ ] Independence statement
+- [ ] No pay-for-play policy
+- [ ] Fact-checking process
+- [ ] Correction process (48-hour turnaround)
+- [ ] Source verification standards
+- [ ] AI disclosure (AI drafts, human enrichment)
+- [ ] Conflict of interest disclosure
+- [ ] Contact for corrections
+
+### 12.6 DMCA / Content Removal
+- [ ] Process for reporting copyright infringement
+- [ ] Contact form or email
+- [ ] Response timeline (48 hours)
+- [ ] Counter-notification process
+
+---
+
+## PHASE 13: CONTENT QUALITY AUDIT
+
+### 13.1 Duplicate Content Check
+- [ ] No duplicate titles across site
+- [ ] No duplicate meta descriptions
+- [ ] No duplicate H1 tags
+- [ ] No duplicate content blocks (use components, not copy-paste)
+- [ ] Canonical tags correct on all pages
+- [ ] No parameter-based duplicate URLs (use canonicals or robots.txt)
+
+### 13.2 Thin Content Check
+- [ ] All category pages have descriptive text (min 150 words)
+- [ ] All tag pages have content or are noindex
+- [ ] No empty pages (placeholder content removed)
+- [ ] No pages with only images/no text
+- [ ] 404 page is helpful (suggested links, search)
+
+### 13.3 Broken Links Check
+- [ ] All internal links work (no 404s)
+- [ ] All external links work (or have fallback)
+- [ ] All image src URLs resolve
+- [ ] All script/css URLs resolve
+- [ ] All anchor links work (TOC links, footnotes)
+
+### 13.4 Content Freshness
+- [ ] Homepage shows latest content
+- [ ] Category pages sorted by date
+- [ ] Modified dates accurate (update when content changes)
+- [ ] No outdated content (update or remove)
+
+---
+
+## PHASE 14: MOBILE PERFECTION
+
+### 14.1 Responsive Design
+- [ ] Test on: iPhone SE (375px), iPhone 14 (390px), Android (360px), iPad (768px), Desktop (1440px)
+- [ ] No horizontal scroll on any device
+- [ ] Text readable without zoom (16px minimum)
+- [ ] Tap targets minimum 44x44px with 8px spacing
+- [ ] No content cut off at edges
+- [ ] Images scale properly without distortion
+
+### 14.2 Mobile-Specific
+- [ ] Sticky nav doesn't cover content
+- [ ] Sticky newsletter CTA doesn't block content
+- [ ] Mobile menu works smoothly (Sheet component)
+- [ ] Search works on mobile
+- [ ] Forms are thumb-friendly (large inputs, clear labels)
+- [ ] Tables horizontally scroll (not squished)
+- [ ] No hover-dependent interactions (mobile has no hover)
+
+### 14.3 Touch Interactions
+- [ ] Swipe gestures where expected (image galleries, carousels)
+- [ ] Pull-to-refresh not broken
+- [ ] Pinch-to-zoom on images
+- [ ] No accidental touches (adequate spacing)
+
+---
+
+## PHASE 15: PRE-LAUNCH CHECKLIST
+
+### 15.1 Domain & DNS
+- [ ] Domain: indiaaibrief.com registered and pointing to Vercel
+- [ ] DNS: Cloudflare configured
+- [ ] SSL: Certificate active (auto by Vercel/Cloudflare)
+- [ ] www redirect: www.indiaaibrief.com → indiaaibrief.com (301)
+- [ ] Apex redirect: indiaaibrief.com → https://indiaaibrief.com
+
+### 15.2 Environment Variables
+- [ ] All env vars set in Vercel dashboard
+- [ ] No secrets in code (use process.env only)
+- [ ] Production vs development env vars separated
+- [ ] `.env.example` file created (without real values)
+
+### 15.3 Build Verification
+- [ ] `next build` passes with 0 errors
+- [ ] `next build` passes with 0 warnings (or document accepted warnings)
+- [ ] TypeScript strict mode: 0 type errors
+- [ ] ESLint: 0 errors
+- [ ] All routes render without errors
+- [ ] All API routes respond correctly
+
+### 15.4 Final Testing
+- [ ] Homepage loads in < 2s on mobile 3G
+- [ ] Article page loads in < 2s on mobile 3G
+- [ ] All forms submit correctly (newsletter, contact, checkout)
+- [ ] All payments process correctly (test mode)
+- [ ] Auth flow works (sign up, sign in, sign out, password reset)
+- [ ] Dark mode toggle works and persists
+- [ ] Search returns results
+- [ ] Social share buttons work
+- [ ] Newsletter signup works end-to-end
+
+### 15.5 Backup & Recovery
+- [ ] Database backup strategy (automated daily)
+- [ ] Content backup (Git repository for MDX)
+- [ ] Recovery process documented
+- [ ] Rollback procedure for bad deploys
+
+### 15.6 Monitoring
+- [ ] Vercel Analytics enabled
+- [ ] Error tracking (Sentry or Vercel Error Monitoring)
+- [ ] Uptime monitoring (UptimeRobot or Pingdom)
+- [ ] Alert configured for downtime
+
+---
+
+## PHASE 16: POST-LAUNCH IMMEDIATE ACTIONS (Day 1)
+
+1. Submit sitemap to Google Search Console
+2. Request indexing for homepage + top 5 articles
+3. Verify site in Bing Webmaster Tools (submit sitemap)
+4. Post launch announcement on Twitter/X, LinkedIn, Telegram
+5. Send launch email to newsletter subscribers
+6. Monitor Vercel Analytics for traffic
+7. Monitor Search Console for crawl errors
+8. Monitor error tracking for 500s
+9. Respond to all user feedback within 24 hours
+10. Publish first post-launch article (maintain momentum)
+
+---
+
+## OUTPUT REQUIREMENTS
+
+Output a complete implementation covering:
+1. All meta tag components (reusable MetaTags component)
+2. All structured data JSON-LD generators (lib/schema.ts)
+3. robots.ts and sitemap.ts files
+4. Security headers configuration (next.config.js or middleware)
+5. CSP configuration
+6. Google Search Console verification setup instructions
+7. AdSense readiness checklist as a component/page
+8. Pre-launch checklist page/component
+9. Any missing legal pages
+10. Final performance audit script
+
+No placeholders. No TODOs. Production-ready code and configuration only. Every file path specified."

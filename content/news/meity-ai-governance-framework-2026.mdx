@@ -1,0 +1,88 @@
+---
+title: "MeitY AI Governance Framework: What Founders Must Change"
+description: "MeitY’s 2026 AI governance draft sets risk tiers, logging, and human oversight rules Indian AI products must meet before enterprise sales."
+publishedAt: "2026-07-22T09:00:00+05:30"
+modifiedAt: "2026-07-24T12:00:00+05:30"
+author: "indiaaibrief-desk"
+category: "news"
+tags: ["meity", "ai-governance", "compliance", "policy", "msme"]
+image: "/images/articles/meity-governance.webp"
+imageAlt: "Abstract red graphic representing MeitY AI governance briefing for Indian founders"
+featured: true
+trending: true
+readingTime: 8
+excerpt: "Three compliance moves Indian AI founders must make under MeitY’s draft governance framework — risk tiering, audit logs, and human oversight."
+structuredData:
+  type: "NewsArticle"
+  faq:
+    - question: "Does the MeitY AI governance framework apply to MSMEs?"
+      answer: "Yes. Risk classification and logging expectations apply to any deployer of high-risk AI in India, including MSMEs selling to enterprises or government."
+    - question: "When do Indian AI startups need to comply?"
+      answer: "Treat the draft as soft law now for enterprise RFPs. Formal compliance windows will track MeitY’s final notification — plan for Q4 2026 readiness."
+    - question: "What is the fastest compliance win under ₹50,000?"
+      answer: "Implement immutable inference logs, a one-page risk classification memo, and a human-in-the-loop escalation path for customer-facing decisions."
+    - question: "How is MeitY governance different from DPDP?"
+      answer: "DPDP governs personal data processing. MeitY-style governance covers how AI systems decide and who can override them. Enterprise India deals usually need both."
+---
+
+<Answer>
+MeitY’s 2026 AI governance draft classifies AI systems by risk and expects Indian deployers to document purpose, keep audit logs, and retain human oversight for high-risk use cases. Founders selling to enterprises or government should treat risk tiering, logging, and escalation paths as procurement requirements — not optional ethics slides.
+</Answer>
+
+India’s AI policy conversation moved from principles to procurement checklists overnight. If you ship customer-facing models for BFSI, healthcare, hiring, or citizen services, buyers will ask for evidence that matches this draft long before a formal Act lands.
+
+## What Changed
+
+- MeitY published a draft **AI governance framework** with risk tiers (unacceptable / high / limited / minimal).
+- High-risk systems need **purpose documentation**, **logging**, and **human oversight** for consequential decisions.
+- Enterprise and state tenders are already copying language from the draft into RFP annexures.
+- MSMEs are in scope when they deploy high-risk AI — headcount is not a carve-out.
+- Related reading: [How India's DPDP Act affects AI training data](/explains/dpdp-act-ai-training-data), [AI Regulation in India](/explains/ai-regulation-india-business-guide), and the [AI Compliance Starter Kit](/kit/ai-compliance).
+
+## The Details
+
+The draft’s practical effect is procurement pressure. Large Indian banks, insurers, and central ministries will not wait for Parliament. They will ask vendors for a one-page risk memo, retention of prompts/outputs for disputed decisions, and a named human who can override the model.
+
+For product teams, that means three engineering changes. First, **classify every production workflow** against the draft’s high-risk examples (credit, hiring, biometric ID, medical triage, welfare eligibility). Second, **write immutable logs** for model version, input hash, output, and reviewer ID — store them in India if your customer is a regulated entity. Third, **design a human escalation UI** before you ship the chatbot; retrofitting review queues mid-deal kills sales cycles.
+
+### What “good enough” looks like in an RFP pack
+
+Ship a four-page annex, not a white paper:
+
+1. Risk classification table (workflow → tier → rationale)
+2. Logging schema (fields, retention, India region)
+3. Human oversight map (who can override, SLA)
+4. Subprocessor list (model API, vector DB, observability)
+
+That pack answers 80% of first-round security questionnaires. Pair it with your [DPDP data map](/explains/dpdp-act-ai-training-data) so legal and security do not open two parallel threads.
+
+Do not confuse this with the Digital Personal Data Protection Act. Governance covers how the system decides; DPDP covers how personal data is processed. You need both for enterprise India.
+
+Founders scanning [Indian AI funding in Q2 2026](/news/indian-ai-funding-q2-2026) should note that diligence checklists now include “governance readiness” alongside runway and ARR. For market context, see [AI in India Statistics 2026](/data/ai-in-india-market-statistics-2026).
+
+## What This Means for Indian Founders and CTOs
+
+1. **Update your sales deck** with a risk classification table and log retention policy — buyers will ask.
+2. **Budget two sprints** for audit logging and human override before the next enterprise pilot.
+3. **Map DPDP + MeitY** in one compliance matrix; separate workstreams create duplicate paperwork.
+4. **Use the [AI Compliance Starter Kit](/kit/ai-compliance)** if you need a ₹999 checklist and Notion template this week.
+5. **Watch MeitY’s final notification** — treat Q4 2026 as the readiness deadline for regulated verticals.
+6. **Train CSMs** to explain overrides in plain language — procurement often routes questions through the account team, not the ML lead.
+
+## Frequently Asked Questions
+
+### Does the MeitY AI governance framework apply to MSMEs?
+
+Yes. Risk classification and logging expectations apply to any deployer of high-risk AI in India, including MSMEs selling to enterprises or government.
+
+### When do Indian AI startups need to comply?
+
+Treat the draft as soft law now for enterprise RFPs. Formal compliance windows will track MeitY’s final notification — plan for Q4 2026 readiness.
+
+### What is the fastest compliance win under ₹50,000?
+
+Implement immutable inference logs, a one-page risk classification memo, and a human-in-the-loop escalation path for customer-facing decisions.
+
+### How is MeitY governance different from DPDP?
+
+DPDP governs personal data processing. MeitY-style governance covers how AI systems decide and who can override them. Enterprise India deals usually need both.

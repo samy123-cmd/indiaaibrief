@@ -1,0 +1,94 @@
+---
+title: "AI Training Data and Copyright: India's Legal Gap"
+description: "The Indian Copyright Act has no AI-specific text-and-data-mining exception. Here's what that legal gap means for startups training or fine-tuning models."
+publishedAt: "2026-07-22T10:00:00+05:30"
+modifiedAt: "2026-07-24T12:00:00+05:30"
+author: "indiaaibrief-desk"
+category: "explains"
+tags: ["regulation", "policy", "copyright", "dpdp", "authority-series"]
+image: "/images/articles/copyright.webp"
+imageAlt: "Editorial graphic for AI Training Data and Copyright: India's Legal Gap"
+featured: false
+trending: false
+readingTime: 11
+excerpt: "India's Copyright Act has no AI training exception like the US fair-use defense — and DPDP adds a second layer when the scraped data is personal."
+structuredData:
+  type: "FAQPage"
+  faq:
+    - question: "Does Indian copyright law allow AI training on copyrighted text?"
+      answer: "It is untested. The Copyright Act, 1957 has a narrow 'fair dealing' exception, not the broader US 'fair use' doctrine, and no court has yet ruled on whether AI training qualifies."
+    - question: "If training data has personal information, does DPDP apply on top of copyright law?"
+      answer: "Yes. Copyright protects the rights-holder's expression; DPDP protects an individual's personal data. A scraped resume or chat log can trigger both regimes simultaneously."
+    - question: "Who owns the output of a generative AI tool under Indian law?"
+      answer: "Unclear. The Copyright Act requires an 'author' and India has not clarified whether AI-generated work without meaningful human authorship qualifies for protection."
+    - question: "Should Indian startups use enterprise AI models over free-tier APIs for IP protection?"
+      answer: "Yes for production use. Enterprise tiers (Azure OpenAI, ChatGPT Enterprise) typically include IP indemnification that free or consumer tiers do not."
+---
+
+<Answer>
+India's Copyright Act, 1957 has no text-and-data-mining exception and no settled case law on whether training an AI model on copyrighted text is infringement or fair dealing. For Indian startups, this means training-data risk cannot be resolved by reading a statute — it has to be managed contractually, especially where the scraped data is also personal data under DPDP.
+</Answer>
+
+Indian courts have not decided a single AI-training copyright case, unlike the US where *New York Times v. OpenAI* is actively testing the fair-use defense — leaving Indian startups to guess at a standard that does not yet exist while still carrying real commercial risk.
+
+## What Changed
+
+- The US "fair use" defense for AI training is being tested in court (*NYT v. OpenAI*, *Andersen v. Stability AI*) with no final ruling yet — India has no equivalent litigation to draw guidance from.
+- India's Copyright Act, 1957 offers only a narrow **"fair dealing"** exception (Section 52), which is stricter and more use-specific than the US "fair use" doctrine — it was not written with model training in mind.
+- Where training data is also personal data (resumes, chat logs, KYC documents), the [DPDP Act](/explains/dpdp-act-ai-training-data) applies independently of copyright, creating two separate legal exposures from one dataset.
+- Global AI vendors' indemnification terms (or lack thereof) are becoming the de facto risk allocation mechanism for Indian buyers, since local law offers no clear floor.
+
+## The Details
+
+### The Core Conflict: Is Training "Fair Dealing"?
+
+The fundamental question — does scraping the internet to train a model constitute permissible use — is unresolved globally and untested in India specifically.
+
+**The global fair-use argument**: AI labs argue training is transformative, akin to a student learning language patterns rather than copying text. *NYT v. OpenAI* challenges this directly, alleging ChatGPT can recite Times articles verbatim.
+
+**Why India's "fair dealing" is narrower**: Section 52 of the Copyright Act permits specific enumerated uses — private study, criticism, review, research — rather than the US's open-ended "transformative use" test. A court asked to fit "training a commercial LLM" into one of these categories would be doing real interpretive work, not applying settled precedent.
+
+### The DPDP Overlap: Two Regimes, One Dataset
+
+For Indian startups, the practical risk is rarely pure copyright — it is the overlap with personal data law. Scraped resumes, support transcripts, or public social media posts can simultaneously be:
+
+- **Copyrighted expression** (the specific wording, images, or creative arrangement), and
+- **Personal data** under DPDP (if it identifies a living individual)
+
+A dataset can be copyright-clean (public domain, licensed) but still violate DPDP if it contains personal data collected without lawful purpose. Conversely, DPDP-compliant data collected with consent can still infringe a third party's copyright in the underlying content. Treat these as two separate checklists, not one.
+
+### Output Ownership: Who Owns What the Model Generates?
+
+If an Indian team uses a generative tool to produce a logo, article draft, or code snippet, authorship is genuinely unclear under current law.
+
+- **India's position is undefined.** The Copyright Act requires an "author," and no amendment or ruling has clarified whether AI-assisted work with minimal human input qualifies.
+- **The US position (persuasive, not binding)**: the US Copyright Office has repeatedly refused registration for works lacking meaningful human authorship.
+- **The safer contractual assumption**: treat AI-generated output as protectable only where a human has made substantive creative choices and can document that "chain of custody" if ownership is ever challenged.
+
+## What This Means for Indian Founders and CTOs
+
+1. **Separate your training-data checklist from your DPDP checklist.** Run both audits — copyright provenance and personal-data lawful basis — on any corpus before it touches a training pipeline.
+2. **Insist on IP indemnification from your model vendor.** Enterprise tiers of major APIs (Azure OpenAI, ChatGPT Enterprise) typically indemnify commercial customers against training-data IP claims; free and consumer tiers usually do not.
+3. **Document human editing of AI drafts** if you intend to claim copyright in the output — a visible "chain of custody" from AI draft to human-edited final is your best evidence of authorship if challenged.
+4. **Prefer licensed or "clean" datasets** for anything you plan to fine-tune internally, especially for customer-facing outputs where infringement risk is commercially material.
+5. **Flag GitHub Copilot–style code suggestions** for open-source license contamination (GPL) before merging into proprietary Indian codebases — this is a live risk regardless of copyright's AI-training uncertainty.
+
+## Frequently Asked Questions
+
+### Does Indian copyright law allow AI training on copyrighted text?
+
+It is untested. The Copyright Act, 1957 has a narrow "fair dealing" exception, not the broader US "fair use" doctrine, and no court has yet ruled on whether AI training qualifies.
+
+### If training data has personal information, does DPDP apply on top of copyright law?
+
+Yes. Copyright protects the rights-holder's expression; DPDP protects an individual's personal data. A scraped resume or chat log can trigger both regimes simultaneously.
+
+### Who owns the output of a generative AI tool under Indian law?
+
+Unclear. The Copyright Act requires an "author" and India has not clarified whether AI-generated work without meaningful human authorship qualifies for protection.
+
+### Should Indian startups use enterprise AI models over free-tier APIs for IP protection?
+
+Yes for production use. Enterprise tiers (Azure OpenAI, ChatGPT Enterprise) typically include IP indemnification that free or consumer tiers do not.
+
+Related reading: [How India's DPDP Act Affects AI Training Data](/explains/dpdp-act-ai-training-data), [AI Liability in India](/explains/liability), [AI Regulation in India: A Business Guide](/explains/ai-regulation-india-business-guide), [Open Source vs. Regulation](/explains/open-source), and the [AI Compliance Starter Kit](/kit/ai-compliance).

@@ -1,0 +1,119 @@
+---
+title: "US AI Governance: From Voluntary Commitments to Executive Orders"
+description: "The US has no single AI law — EO 14110 compute-reporting duties, FTC enforcement, and NIST's AI RMF govern instead. Here's what Indian exporters selling into the US should track now."
+publishedAt: "2026-07-22T10:00:00+05:30"
+modifiedAt: "2026-07-24T12:00:00+05:30"
+author: "indiaaibrief-desk"
+category: "explains"
+tags: ["regulation", "policy", "original", "united-states"]
+image: "/images/articles/us-governance.webp"
+imageAlt: "Editorial graphic for US AI Governance: From Voluntary Commitments to Executive Orders"
+featured: false
+trending: false
+readingTime: 11
+excerpt: "No single US AI law exists — EO 14110, FTC enforcement, and state statutes like Colorado's govern AI instead. Indian exporters to the US should map exposure now, not wait for MeitY."
+structuredData:
+  type: "FAQPage"
+  faq:
+    - question: "Does the US have a single federal AI law like the EU AI Act?"
+      answer: "No. The US relies on Executive Order 14110, agency enforcement (chiefly the FTC), the voluntary NIST AI RMF, and a growing set of state laws rather than one comprehensive statute."
+    - question: "Does EO 14110's compute-reporting rule affect Indian AI labs or exporters?"
+      answer: "Only if you train models above the roughly 10^26 FLOPS threshold using US cloud infrastructure — in that case, your cloud provider may be required to report your usage under the order's 'Know Your Customer' rules."
+    - question: "Is NIST's AI RMF mandatory for Indian companies selling into the US?"
+      answer: "Not legally, but it is increasingly requested in US enterprise vendor questionnaires and treated by courts as evidence of due diligence, so treat it as a de facto requirement for serious deals."
+    - question: "Should Indian founders track US state AI laws or wait for a federal statute?"
+      answer: "Track state laws now. Colorado's AI Act (effective 2026) sets a 'high-risk AI' baseline, and other states are expected to follow before Congress passes a comprehensive federal law."
+---
+
+<Answer>
+The United States has no single federal AI law. Executive Order 14110 imposes compute-reporting duties above roughly 10^26 FLOPS, the FTC polices AI marketing claims and data misuse under Section 5, and NIST's AI RMF has become the default liability shield. Indian companies selling into the US should map this patchwork now — not wait for MeitY to legislate first.
+</Answer>
+
+For Indian IT services firms, SaaS exporters, and GCCs with US enterprise clients, this matters more than Brussels rulemaking: contract riders referencing NIST compliance or state AI statutes are already showing up in US customer paperwork, regardless of what [MeitY eventually issues](/explains/ai-regulation-india-business-guide).
+
+## What Changed
+
+- No comprehensive federal AI statute has passed Congress; agencies and Executive Orders fill the gap instead.
+- EO 14110's compute-reporting and cloud "Know Your Customer" duties are live for large model training runs.
+- The FTC has expanded Section 5 enforcement into AI marketing claims and novel "algorithmic disgorgement" remedies.
+- NIST's AI RMF, though voluntary, is now showing up as contract language in enterprise procurement and vendor risk reviews.
+- Colorado's AI Act — the first comprehensive state law on "high-risk" AI — takes effect in 2026, with other states expected to follow the same pattern GDPR-style privacy laws did after California.
+
+## The Details
+
+Unlike the European Union's centralized "AI Act," the United States has adopted a distributed, market-driven approach to AI governance. There is no single "US AI Law." Instead, enterprises face a patchwork of federal agency enforcement, state-level privacy statutes, and sweeping Executive Orders.
+
+However, calling the US "unregulated" is a dangerous misconception. Through broad interpretations of existing consumer protection laws and new mandates for national security, the US compliance environment is becoming arguably more unpredictable than Europe's.
+
+### Executive Order 14110 (Safe, Secure, and Trustworthy AI)
+
+Signed in October 2023, **EO 14110** is the cornerstone of federal AI policy. While not a statute, it carries the force of law for government contractors and invokes the **Defense Production Act (DPA)** for private sector giants.
+
+- **The Computing Threshold**: Companies training "dual-use foundation models" (specifically those using **>10^26 FLOPS**) must report training plans and safety test results to the Department of Commerce.
+- **Know Your Customer (KYC)**: US cloud providers (AWS, Azure, Google Cloud) are required to report foreign entities renting capacity to train large models.
+
+### The FTC: The De Facto AI Regulator
+
+The **Federal Trade Commission (FTC)** has aggressively asserted jurisdiction over AI under **Section 5 of the FTC Act** (unfair and deceptive practices).
+
+- **"Algorithmic Disgorgement"**: A novel penalty where the FTC forces companies to *delete* not just ill-gotten data, but the algorithms trained on that data.
+- **Marketing Claims**: Companies claiming their AI is "magical" or "bias-free" without evidence face enforcement for deceptive advertising.
+
+### NIST AI Risk Management Framework (AI RMF)
+
+While voluntary, the **NIST AI RMF (AI 100-1)** is rapidly becoming the standard of care for US liability defense. Courts and regulators increasingly view adherence to NIST standards as evidence of due diligence.
+
+**The 4 Core Functions**:
+
+| Function | Enterprise Objective |
+| :--- | :--- |
+| **GOVERN** | Cultivate a culture of risk management; executive accountability. |
+| **MAP** | Contextualize risks; understand downstream impacts. |
+| **MEASURE** | Quantitative and qualitative assessment (benchmarking). |
+| **MANAGE** | Allocate resources to prioritize and mitigate mapped risks. |
+
+### State-Level Complexity: The "California Effect"
+
+In the absence of Congress passing a federal AI bill, states are filling the vacuum.
+
+- **California (SB 1047 vetoed, others passing)**: While Governor Newsom vetoed the sweeping SB 1047, California has passed laws regarding **neural data privacy** and **deepfake transparency** (AB 2655).
+- **Colorado (Consumer Artificial Intelligence Act)**: The first comprehensive US state law explicitly regulating "high-risk" AI systems, effective 2026. It imposes a duty of care on developers to avoid algorithmic discrimination.
+
+### US vs. EU: A Compliance Matrix
+
+Understanding the philosophical difference is key for multinational strategy.
+
+| Feature | EU (AI Act) | US (EO 14110 + Agencies) |
+| :--- | :--- | :--- |
+| **Structure** | Single comprehensive regulation | Fragmented agency rules + Executive Orders |
+| **Enforcement** | Centralized (AI Office) + National | Decentralized (FTC, DOJ, EEOC) |
+| **Primary Focus** | Fundamental Rights & Safety | National Security & Consumer Protection |
+| **Foundation Models** | Tiered Compliance (Systemic Risk) | Computation Thresholds (Defense Production Act) |
+
+## What This Means for Indian Founders and CTOs
+
+1. Don't wait for a single "India AI law" moment before securing US deals — sectoral US clauses (NIST RMF references, state AI disclosure duties) are already appearing in customer contracts and RFPs today.
+2. If you rent US cloud compute (AWS/Azure/GCP) to train or fine-tune models above the EO 14110 threshold, your provider may be obligated to report you under the "Know Your Customer" cloud rules — factor this into vendor selection.
+3. Build a NIST AI RMF-aligned control set once; it doubles as evidence for US enterprise security reviews and complements the [DPDP Act](/explains/dpdp-act-ai-training-data) work you're likely already doing for Indian data.
+4. Treat Colorado's AI Act as the practical baseline for "high-risk" AI features (hiring, credit, healthcare triage) sold anywhere in the US — state-by-state retrofits are expensive to bolt on later.
+5. Marketing claims matter: FTC enforcement targets unsubstantiated "bias-free" or "human-level" claims — a real risk for Indian AI vendors positioning products for US buyers.
+
+## Frequently Asked Questions
+
+### Does the US have a single federal AI law like the EU AI Act?
+
+No. The US relies on Executive Order 14110, agency enforcement (chiefly the FTC), the voluntary NIST AI RMF, and a growing set of state laws rather than one comprehensive statute.
+
+### Does EO 14110's compute-reporting rule affect Indian AI labs or exporters?
+
+Only if you train models above the roughly 10^26 FLOPS threshold using US cloud infrastructure — in that case, your cloud provider may be required to report your usage under the order's "Know Your Customer" rules.
+
+### Is NIST's AI RMF mandatory for Indian companies selling into the US?
+
+Not legally, but it is increasingly requested in US enterprise vendor questionnaires and treated by courts as evidence of due diligence, so treat it as a de facto requirement for serious deals.
+
+### Should Indian founders track US state AI laws or wait for a federal statute?
+
+Track state laws now. Colorado's AI Act (effective 2026) sets a "high-risk AI" baseline, and other states are expected to follow before Congress passes a comprehensive federal law.
+
+For the EU's contrasting approach, read [The EU AI Act](/explains/eu-ai-act). For India's own regulatory stack, see [AI Regulation in India: A Business Guide](/explains/ai-regulation-india-business-guide), [How India's DPDP Act Affects AI Training Data](/explains/dpdp-act-ai-training-data), and [AI in India Statistics 2026](/data/ai-in-india-market-statistics-2026). If you're operationalizing controls, pair this with the [AI Compliance Starter Kit](/kit/ai-compliance) and our [enterprise agents guide](/explains/enterprise-agents).

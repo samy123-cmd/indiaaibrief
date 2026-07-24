@@ -1,0 +1,220 @@
+The Indian AI news space is a graveyard of aggregation sites. Analytics India Magazine, Inc42, YourStory, and a hundred smaller players already exist. If you launch another "AI news aggregator" that paraphrases TechCrunch and OpenAI blog posts, you will die. Not might — will.
+The brutal facts:
+88.29% of Indian news traffic is mobile — if your site isn't sub-2-second on a ₹8,000 Android phone, you're dead before you start 
+90% of Indian digital readers prefer articles under 500 words — your 2,000-word "deep dives" will be abandoned 
+Display ads are a trap for small sites — Ezoic now gates at 250K monthly users; AdSense pays ₹1.2–3.5 RPM for Indian traffic. At 10,000 pageviews, that's ₹300/month. You can't survive on that 
+AI Overviews have halved search clicks — if you're not being cited by ChatGPT/Perplexity, you're invisible 
+Your non-negotiable pivot: You are NOT building a "news site." You are building an AI intelligence platform for Indian decision-makers. News is the traffic layer. Intelligence is the monetization layer.
+1. THE NON-NEGOTIABLE DIFFERENTIATORS (Do These Or Quit Now)
+A. Original Voice, Not Aggregation
+Every failed AI news site scrapes and paraphrases. You need a distinct editorial voice that no AI can replicate. This means:
+Human strategic intent on every piece — AI drafts, humans add the "experience layer" (firsthand observations, contrarian takes, original data) 
+"Why us" requirement — every article must answer: what is unique, exclusive, or genuinely helpful that no competitor covers? 
+Brand voice enforcement — AI defaults to the mean. Your voice must deviate from the mean deliberately 
+B. India-First, Not India-Also
+Don't cover "global AI news with an Indian angle." Cover Indian AI reality:
+State-wise AI policy implementation (not just "India's AI policy")
+Tier-2/3 city AI adoption stories (not just Bangalore/Delhi)
+Indian language AI model developments
+MSME AI transformation stories (the real India)
+Government tender analysis for AI projects
+C. Productized Intelligence, Not Just Articles
+Your content must do something for the reader:
+Downloadable kits: n8n workflow bundles for Indian businesses, prompt systems for Hindi/English hybrid content, compliance checklists for AI deployment
+Scorecards: "AI-readiness scorecard for Indian manufacturers"
+Database: Track every Indian AI startup funding round, every government AI tender, every policy change — make it searchable and filterable
+D. Community, Not Audience
+Build a WhatsApp/Telegram insider network for AI professionals in India. Your website is the archive. Your community is the moat.
+2. PERFORMANCE: THE TECHNICAL NON-NEGOTIABLES
+In 2026, performance is a design constraint, not an afterthought . Google uses AI to measure your speed; slow sites get filtered from AI Overviews .
+Core Web Vitals Targets (Non-Negotiable)
+Table
+Metric	Target	Why It Matters
+LCP	< 2.5s mobile	53% of mobile users abandon after 3s 
+INP	< 150ms	Interactivity standard; 200ms is the fail line 
+CLS	< 0.1	Layout shifts kill trust and rankings 
+TTFB	< 600ms	Server response is the foundation 
+Implementation Checklist (In Order of Impact)
+1. Image Optimization (Biggest Bang for Buck)
+Convert ALL images to WebP/AVIF format
+Implement responsive images with srcset
+Add explicit width/height to prevent layout shifts
+Lazy load everything below the fold
+Compress hero images to 70-80% quality for mobile 
+2. JavaScript Discipline
+Defer or async all non-critical scripts
+Remove unused JS — most sites carry 50-70% dead CSS/JS weight
+Break up long tasks (>50ms) to optimize INP
+Reduce DOM size to <1,500 elements 
+3. CSS Optimization
+Extract critical above-the-fold CSS and inline it
+Load remaining stylesheets asynchronously
+Strip unused CSS rules
+Use font-display: optional to prevent FOIT/FOUT 
+4. Server & CDN
+Enable full-page caching (watch out for dynamic content bypasses)
+Use a CDN with Indian edge servers (Cloudflare, AWS CloudFront Mumbai)
+Enable Brotli compression and proper cache headers
+If TTFB >600ms, change hosting immediately 
+5. Third-Party Script Audit
+List every external resource
+Remove anything non-essential (social widgets, chatbots, analytics bloat)
+If you must use ads, reserve static ad slots to prevent CLS 
+6. Monitoring
+Set up Google Search Console Core Web Vitals report
+Test on real mobile devices with network throttling (not just your MacBook)
+Monitor monthly — performance degrades naturally over time 
+3. CONTENT STRATEGY: THE ONLY THING THAT MATTERS
+The "AI + Human" Framework (Non-Negotiable)
+AI handles efficiency. Humans handle trust, distinctiveness, and experience .
+Monday — Strategy & Brief (Human, 90 mins):
+Review Search Console for queries with impressions but low CTR
+Write a strategic brief: intent, gap, unique angle, irreplaceable data sources
+Target long, precise prompts that match real questions (e.g., "Which Indian AI tool for healthcare FHIR compliance is SOC 2 ready under ₹50K/month?") 
+Tuesday — AI Draft + Fact-Check (AI + Human, 2 hrs):
+AI produces structural outline and first draft
+Lead every major section with a 40-60 word direct answer (this is what gets cited in AI Overviews) 
+Human fact-checks EVERY claim against primary sources
+Wednesday — Human Enrichment (Human, 2-3 hrs):
+Add firsthand experience narrative
+Pull original data points
+Write expert quotes or conduct interviews
+Insert the contrarian take
+Rewrite intro/conclusion in brand voice
+Goal: 3+ elements competitors cannot replicate 
+Thursday — GEO Structuring (AI + Human, 1 hr):
+Answer-first paragraphs
+Question-based H2s/H3s
+FAQ section with schema
+Internal links to topically adjacent content
+Author bio with specific credentials 
+Content Types That Win in India (2026)
+Table
+Content Type	Length	Frequency	Purpose
+Breaking AI policy updates	200-400 words	Daily	Speed + SEO
+"How it works" explainers	500-800 words	3x/week	AI citation bait
+X vs Y comparisons	800-1200 words	2x/week	Affiliate + AI citation
+Implementation playbooks	1200-1500 words	1x/week	Product conversion
+Weekly insider brief	Newsletter format	Weekly	Subscription funnel
+Original data/research	Variable	Monthly	Authority building
+The "Answer-First" Structure (For AI Citation)
+Every article must follow this pattern:
+40-60 word direct answer (the snippet AI Overviews will lift)
+Context paragraph (why this matters to India specifically)
+Scannable sections with clear H2s
+Quoteable lines (for social sharing and AI citation)
+"What changed" notes on updates 
+4. SEO OPTIMIZATION: THE 2026 PLAYBOOK
+Technical SEO for News
+Structured Data (Non-Negotiable):
+Implement NewsArticle schema with headline, datePublished, dateModified, author, publisher
+Add Organization schema for publisher credibility
+Add Person schema for author information
+Add BreadcrumbList schema for navigation
+Include FAQPage schema when relevant 
+Google News Optimization:
+Clear author bylines on every article
+Publication dates prominently displayed
+Contact information and editorial policies visible
+Fact-checking processes documented
+Fast indexing: submit sitemaps, use IndexNow API 
+URL & Architecture:
+Clean, consistent URL structure: /ai-policy/2026/07/23/slug
+Keep important pages within 3 clicks from homepage
+Maintain valid XML sitemaps
+Stable URLs — never change without 301 redirects 
+Content SEO for AI Search (GEO - Generative Engine Optimization)
+The new reality: You must optimize for ChatGPT, Perplexity, and Gemini citations, not just Google blue links .
+GEO Tactics:
+Target long, precise prompts that match real user questions
+Create task-based pages: explainers, comparisons, playbooks, ROI calculators
+Lead with the answer, then outline steps, pitfalls, and copy-ready assets
+Ensure crawlability for AI bots (GPTBot, Perplexity crawler) — don't block them in robots.txt 
+Build topical authority — cover every sub-topic in your niche completely
+Internal Linking Strategy:
+Link related content aggressively
+Use descriptive anchor text (not "click here")
+Create topic clusters around core themes (Indian AI Policy, AI for MSMEs, etc.)
+5. AESTHETICS: DESIGN THAT CONVERTS
+Design Principles for 2026
+1. Performance-First Minimalism
+Every element earns its place
+White space guides the eye to critical information
+No decorative elements that don't contribute to understanding or action 
+2. Mobile-First (Because 88% of India Is Mobile)
+Design for thumb-friendly navigation (tappable elements in lower half of screen)
+Sticky menus, collapsible sections
+Tap targets minimum 44x44 pixels with 8px spacing 
+Hero images: 800x1200px for mobile; blog images: 640x320px 
+3. Bold Typography
+Oversized headlines that communicate before the user reads
+Limited font palette (2 fonts max)
+High contrast for readability
+Text communicates faster than images on news sites 
+4. Dark Mode Standard
+Toggle between light/dark themes
+Reduces eye strain, saves battery on OLED
+Expected by 2026 users 
+5. Micro-Interactions (Lightweight Only)
+Subtle hover effects, loading animations
+Must not impact performance
+Provide motion reduction options for accessibility 
+6. Accessibility (WCAG 2.1 AA Minimum)
+Semantic HTML for screen readers
+Keyboard navigation for all interactive elements
+Color contrast meeting readability standards
+Alt text for all images 
+What NOT To Do
+❌ Video backgrounds (kills performance)
+❌ 3D elements (unless absolutely necessary)
+❌ Heavy parallax scrolling (confuses mobile users)
+❌ Pop-ups and interstitials (Google penalizes, users hate)
+❌ Auto-playing anything
+6. MONETIZATION: THE REALITY CHECK
+Do NOT rely on ads. Here's the honest math:
+Table
+Strategy	Traffic Needed	Time to Revenue	Realistic Monthly (Solo)
+Digital products (kits, templates)	Almost none	2-6 weeks	₹40K–4L
+Productized audits/services	Almost none	1-2 weeks	₹80K–6L
+Recurring affiliate programs	Medium	1-3 months	₹25K–2.5L
+Paid newsletter/membership	Medium	2-4 months	₹40K–3L
+Sponsorships	Low (but niche)	1-3 months	₹15K–1.5L
+Display ads (AdSense)	50K+ pageviews	3-6 months	₹5K–15K
+The 90-Day Revenue Stack:
+Days 1-30: Ship one digital product (AI compliance kit for Indian businesses, ₹999)
+Days 31-60: Add one productized service ("AI-readiness audit for Indian MSMEs — 47-point scorecard, ₹4,999")
+Days 61-90: Launch paid newsletter tier, enable AdSense as "coffee money" only 
+Subscription Model (When Ready):
+Start with metered freemium (5-10 free articles/month)
+Build email list FIRST — readers convert after 5-10 positive interactions 
+Offer hybrid pricing: base subscription + premium article credits 
+Track churn obsessively — involuntary churn from failed payments alone can leak 5% monthly revenue 
+7. THE 90-DAY LAUNCH SEQUENCE
+Month 1: Foundation
+Week 1: Set up tech stack (Next.js 16 with Server Components, Cloudflare CDN, MongoDB/PostgreSQL)
+Week 2: Implement Core Web Vitals targets, structured data, dark mode
+Week 3: Create 10 pillar articles with original angle (not aggregated)
+Week 4: Build email capture, WhatsApp community, ship first digital product
+Month 2: Authority
+Week 5-6: Publish 3x/week with the AI+Human framework
+Week 7: Launch productized service offer
+Week 8: First original data piece (survey, analysis, database)
+Month 3: Monetization
+Week 9-10: Optimize for AI citations (GEO), build comparison pages for affiliate revenue
+Week 11: Launch paid newsletter tier to engaged subscribers
+Week 12: Review metrics, double down on what works, kill what doesn't
+FINAL BRUTAL TRUTH
+You have failed 10 times because you probably:
+Aggregated instead of created
+Optimized for traffic instead of revenue
+Built for desktop instead of mobile
+Chased ads instead of products
+Sounded like everyone else
+indiaaibrief.com will work if and only if:
+You have a human editor with a distinct voice who understands Indian AI reality
+You ship products and services from day 1, not after "scale"
+Your site loads in under 2.5 seconds on a ₹8,000 phone
+Every article contains something no competitor can replicate
+You build a community, not just an audience
+The market doesn't need another AI news aggregator. It needs an Indian AI intelligence platform that respects the reader's time, loads instantly, and actually helps them make decisions.
+Stop reading. Start building. You don't have time for an 11th failure.

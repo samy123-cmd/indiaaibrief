@@ -1,0 +1,98 @@
+---
+title: "AI Benchmarks Are Breaking — Here's What Works"
+description: "Public AI benchmarks are saturated and gamed. Indian buyers need private, task-specific eval sets to actually compare vendors."
+publishedAt: "2026-07-22T10:00:00+05:30"
+modifiedAt: "2026-07-24T12:00:00+05:30"
+author: "indiaaibrief-desk"
+category: "explains"
+tags: ["research", "authority-series", "original"]
+image: "/images/articles/benchmarks-breaking.webp"
+imageAlt: "Editorial graphic for AI Benchmarks Are Breaking — Here's What Works"
+featured: false
+trending: false
+readingTime: 10
+excerpt: "Public AI benchmarks are saturated and gamed — Indian buyers need private, task-specific evals to compare vendors properly."
+structuredData:
+  type: "Article"
+  faq:
+    - question: "Why do two models with similar MMLU scores perform so differently in production?"
+      answer: "Public benchmarks are saturated and often contaminated by training data overlap, so headline scores no longer discriminate well between models. Real-world performance depends on your specific task, not a general knowledge test."
+    - question: "How should an Indian company build a private eval set?"
+      answer: "Pull real examples from your own workflow — support tickets, code repositories, compliance Q&A — and refresh them quarterly so vendors and your own fine-tuned models cannot overfit to a static test."
+    - question: "Does a higher leaderboard score justify switching vendors mid-contract?"
+      answer: "Not on its own. Rerun your private eval before migrating traffic, since a model can gain on public benchmarks while regressing on your specific task. Treat leaderboard movement as a signal to re-test, not proof of improvement."
+    - question: "What should procurement ask vendors for besides a benchmark score?"
+      answer: "Ask for confidence intervals, ablation details, and evaluation methodology rather than a single headline number. Also ask how they detect and prevent training-data contamination on the benchmarks they cite."
+---
+
+<Answer>
+Public AI benchmarks like MMLU are saturated, gamed, and increasingly unable to distinguish real capability from benchmark-tuning. Indian buyers who select vendors purely on leaderboard rank are shopping on a broken signal — a private, task-specific eval set on your own data is now the only reliable comparison.
+</Answer>
+
+Indian procurement teams often shortlist AI vendors by comparing public leaderboard scores, but as those scores saturate and get gamed, that comparison increasingly tells you nothing about how a model will perform on your support tickets, contracts, or compliance questions.
+
+## What Changed
+
+- **Frontier models now score near-ceiling on MMLU and similar tests**, roughly matching each other on paper while behaving very differently in real usage — the benchmark has stopped discriminating.
+- **Training-data contamination is widespread.** Models trained on the open internet have often seen benchmark questions during training, inflating scores without proportional real-world gains.
+- **The industry has shifted to human-preference leaderboards (Elo-style arenas)**, which are harder to game but slow, expensive, and not something an individual buyer can replicate for their own use case.
+- Related: for the compute economics behind these models, see [scaling laws and why bigger isn't always better](/explains/scaling-laws); for market context, see [India's AI market statistics for 2026](/data/ai-in-india-market-statistics-2026).
+
+## The Details
+
+### Research Background
+
+Historically, AI progress was tracked on simple datasets: **ImageNet** (identifying cats/dogs) or **GLUE** (grammar). In 2020, researchers introduced **MMLU (Massive Multitask Language Understanding)**, a test covering 57 subjects from math to law, designed to be "too hard" for AI. By 2024, frontier models were scoring around 90%, effectively solving the benchmark.
+
+### Core Technical Explanation
+
+The collapse of benchmarks is driven by **Goodhart's Law**: "When a measure becomes a target, it ceases to be a good measure."
+
+**Contamination**
+
+Because models are trained on the entire internet, they have often "seen" the test questions during training — like a student memorizing the answer key rather than learning the subject. Researchers try to detect this by checking for "n-gram overlap" between the test set and the training set, but models can memorize concepts even without exact text matches.
+
+### What the Data Shows
+
+Standardized tests have lost their discriminating power.
+
+| Model | MMLU Score | GSM8K (Math) | HumanEval (Code) | Real-World "Vibe" |
+| :--- | :--- | :--- | :--- | :--- |
+| **Model A** | 86.4% | 92.0% | 67.0% | Excellent |
+| **Model B (Fine-Tuned)** | 86.5% | 93.0% | 68.0% | Poor |
+
+*The "Model B" phenomenon: models optimized specifically for benchmarks often underperform in real chat usage.*
+
+### Limitations & Open Problems
+
+1. **Metric Gaming**: Companies now optimize specifically for the leaderboard.
+2. **Chatbot Arena-style Elo ratings**: The industry has shifted to Elo ratings based on blind human preference (A/B testing). While effective, it is unscientific, slow, and expensive — you cannot "compute" the score; you must wait for thousands of humans to vote.
+
+If we cannot measure intelligence reliably, we cannot regulate it consistently. "Safety" thresholds tied to benchmark scores are meaningless if the underlying test is broken. The industry increasingly needs private, dynamic evaluation sets that are never exposed to the public internet.
+
+## What This Means for Indian Founders and CTOs
+
+- **Do not select models from public leaderboards alone.** Build an internal eval suite tied to your actual workflows: support tickets, code repos, or compliance Q&A.
+- **Refresh eval questions quarterly** so vendors — and your own fine-tuned models — cannot overfit to a static test set.
+- **Ask vendors for confidence intervals and ablation details**, not a single headline score, when comparing model options.
+- **Share eval results with legal and procurement** so model upgrades trigger formal change control rather than silent API swaps.
+- **Rerun your private eval before migrating traffic** whenever a vendor deprecates or upgrades a model — a version bump can regress your specific task even while gaining on public benchmarks.
+- **Treat leaderboard movement as a signal to re-test**, not as proof of improvement, until private, task-specific evaluation becomes standard practice across the industry.
+
+## Frequently Asked Questions
+
+**Why do two models with similar MMLU scores perform so differently in production?**
+Public benchmarks are saturated and often contaminated by training data overlap, so headline scores no longer discriminate well between models. Real-world performance depends on your specific task, not a general knowledge test.
+
+**How should an Indian company build a private eval set?**
+Pull real examples from your own workflow — support tickets, code repositories, compliance Q&A — and refresh them quarterly so vendors and your own fine-tuned models cannot overfit to a static test.
+
+**Does a higher leaderboard score justify switching vendors mid-contract?**
+Not on its own. Rerun your private eval before migrating traffic, since a model can gain on public benchmarks while regressing on your specific task. Treat leaderboard movement as a signal to re-test, not proof of improvement.
+
+**What should procurement ask vendors for besides a benchmark score?**
+Ask for confidence intervals, ablation details, and evaluation methodology rather than a single headline number. Also ask how they detect and prevent training-data contamination on the benchmarks they cite.
+
+---
+
+Related reading: [AI Regulation in India: A Business Guide](/explains/ai-regulation-india-business-guide) · [AI Compliance Starter Kit](/kit/ai-compliance) · [How to Build an AI Startup in India](/playbooks/how-to-build-ai-startup-india) · [India's AI Market Statistics 2026](/data/ai-in-india-market-statistics-2026)

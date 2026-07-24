@@ -1,0 +1,115 @@
+---
+title: "How Transformers Work — And What They Cost You"
+description: "The attention mechanism behind every modern LLM, explained for the people who actually pay the API bill: context length, latency, and tokens."
+publishedAt: "2026-07-22T10:00:00+05:30"
+modifiedAt: "2026-07-24T12:00:00+05:30"
+author: "indiaaibrief-desk"
+category: "explains"
+tags: ["research", "authority-series", "original"]
+image: "/images/articles/transformers-explained.webp"
+imageAlt: "Editorial graphic for How Transformers Work — And What They Cost You"
+featured: false
+trending: false
+readingTime: 10
+excerpt: "The attention mechanism behind every LLM, explained for whoever pays the API bill: context length, latency, and token costs."
+structuredData:
+  type: "Article"
+  faq:
+    - question: "Why does a longer prompt cost so much more on Indian AI APIs?"
+      answer: "Self-attention compares every token to every other token, so compute grows quadratically with context length. Doubling your document size can more than double latency and per-call cost, not just double it linearly."
+    - question: "Does a bigger context window fix hallucination?"
+      answer: "No. Context length only controls how much text the model can see at once; hallucination comes from the model predicting statistically likely tokens. A 1-million-token window can still confidently invent facts."
+    - question: "Should Indian startups fine-tune the attention layers themselves?"
+      answer: "Almost never. Use retrieval or a smaller context window to cut cost, and only consider architecture-level changes (sparse or sliding-window attention) if you are hosting your own open-weight model."
+    - question: "How do tokenizers affect billing for Hindi or Hinglish text?"
+      answer: "Indic scripts often tokenize less efficiently than English, meaning the same sentence can consume more tokens and cost more per request. Test your actual production text, not English samples, before estimating spend."
+---
+
+<Answer>
+Transformers process entire sequences at once using self-attention instead of reading word by word, which is why they scale — but attention cost grows quadratically with context length. For Indian buyers, that single fact drives your API latency, your per-call bill, and how much document text you can safely stuff into a prompt.
+</Answer>
+
+Most Indian teams evaluating AI vendors never ask how the model actually processes their text — they compare price-per-token and stop there. But context length, tokenizer efficiency, and attention design determine whether that price-per-token turns into a manageable bill or a runaway one, especially once you're processing Hindi, Hinglish, or scanned documents at volume.
+
+## What Changed
+
+- **Context windows have grown fast** — from 4K tokens to 1M+ — but the compute cost of attention still scales quadratically, so vendors quietly cap or price long-context calls differently.
+- **Tokenizers matter more than most procurement teams realize.** Indic-script and mixed-language text can tokenize into more pieces than equivalent English text, inflating both cost and latency for the same content.
+- **Sparse and sliding-window attention** are now common tricks vendors use to fake "long context" cheaply — ask which one your vendor uses before assuming full quadratic attention.
+- Related reading: see how these cost dynamics play into vendor selection in our [AI regulation compliance guide for Indian business](/explains/ai-regulation-india-business-guide) and the funding backdrop in [India's AI market statistics for 2026](/data/ai-in-india-market-statistics-2026).
+
+## The Details
+
+### Research Background
+
+Before 2017, Natural Language Processing was dominated by **Recurrent Neural Networks (RNNs)** and **Long Short-Term Memory (LSTM)** networks. These models processed data sequentially — word by word. This meant:
+
+1. **Slow training**: You couldn't parallelize the process across thousands of GPUs.
+2. **Forgetting**: They struggled to remember context from the beginning of a long sentence by the time they reached the end.
+
+The paper *"Attention Is All You Need"* (Vaswani et al.) proposed discarding recurrence entirely in favor of an architecture based solely on attention mechanisms.
+
+### Core Technical Explanation
+
+The Transformer is an Encoder-Decoder architecture (though GPT uses only the Decoder). Its secret sauce is **Self-Attention**.
+
+**Scaled Dot-Product Attention**
+
+At its core, the model calculates how much every word in a sentence should "attend" to every other word. The formula is:
+
+$Attention(Q, K, V) = softmax(\frac{QK^T}{\sqrt{d_k}})V$
+
+- **Queries (Q)**: What I am looking for?
+- **Keys (K)**: What descriptor do I have?
+- **Values (V)**: What content do I contain?
+
+If a Query matches a Key, the model pays attention to the Value. For example, in "The bank of the river," the word "bank" needs to attend to "river" to know it's not a financial institution. The dot product determines this relevance score.
+
+**Multi-Head Attention**
+
+Instead of doing this once, the Transformer does it multiple times in parallel ("heads"). One head might focus on grammar, another on semantic relationship, another on coreference.
+
+### What the Data Shows
+
+The shift to Transformers led to log-scale improvements in performance (Perplexity scores).
+
+| Architecture | Training Efficiency | Long-Range Dependency | Translation BLEU Score |
+| :--- | :--- | :--- | :--- |
+| **LSTM (Prev SOTA)** | Low (Sequential) | Weak | 26.0 (En-De) |
+| **Transformer (Base)** | High (Parallel) | Strong | 27.3 (En-De) |
+| **Transformer (Big)** | Very High | Strong | **28.4 (En-De)** |
+
+*Source: Vaswani et al., 2017*
+
+### Limitations & Open Problems
+
+1. **Quadratic Complexity $O(N^2)$**: The attention mechanism compares every token to every other token. Doubling the context length quadruples the compute cost. This makes infinite context windows extremely expensive.
+2. **The Hallucination Feature**: Because the model is probabilistic (predicting the next token based on statistical likelihood), it can confidently state falsehoods if they "sound" statistically probable.
+
+Transformers didn't just improve translation; they created generic intelligence. The same architecture used for predicting text is now used for folding proteins (AlphaFold), generating images, and controlling robots.
+
+## What This Means for Indian Founders and CTOs
+
+- **Benchmark your own text, not English demos.** Run your actual Hindi, Hinglish, or regional-language corpus through a tokenizer count before estimating monthly spend — the ratio can differ by 30-50%.
+- **Cap prompt length deliberately.** If you're stuffing entire PDFs into context instead of using retrieval, you're paying quadratic cost for linear information gain.
+- **Ask vendors what attention variant they use** for "long context" claims — full, sparse, or sliding-window — since this changes both accuracy and price at scale.
+- **Don't confuse context window size with reliability.** A larger window does not reduce hallucination risk; keep evals in place regardless of window size.
+- **Track latency by document length**, not just by request count, when setting SLAs for customer-facing products like support bots or document review tools.
+
+## Frequently Asked Questions
+
+**Why does a longer prompt cost so much more on Indian AI APIs?**
+Self-attention compares every token to every other token, so compute grows quadratically with context length. Doubling your document size can more than double latency and per-call cost, not just double it linearly.
+
+**Does a bigger context window fix hallucination?**
+No. Context length only controls how much text the model can see at once; hallucination comes from the model predicting statistically likely tokens. A 1-million-token window can still confidently invent facts.
+
+**Should Indian startups fine-tune the attention layers themselves?**
+Almost never. Use retrieval or a smaller context window to cut cost, and only consider architecture-level changes (sparse or sliding-window attention) if you are hosting your own open-weight model.
+
+**How do tokenizers affect billing for Hindi or Hinglish text?**
+Indic scripts often tokenize less efficiently than English, meaning the same sentence can consume more tokens and cost more per request. Test your actual production text, not English samples, before estimating spend.
+
+---
+
+Related reading: [AI Regulation in India: A Business Guide](/explains/ai-regulation-india-business-guide) · [DPDP Act and AI Training Data](/explains/dpdp-act-ai-training-data) · [AI Compliance Starter Kit](/kit/ai-compliance) · [How to Build an AI Startup in India](/playbooks/how-to-build-ai-startup-india)

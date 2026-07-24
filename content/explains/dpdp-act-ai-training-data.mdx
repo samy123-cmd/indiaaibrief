@@ -1,0 +1,88 @@
+---
+title: "How India's DPDP Act Affects AI Training Data"
+description: "DPDP Act rules for consent, purpose limitation, and cross-border transfer reshape how Indian AI teams collect and train on personal data."
+publishedAt: "2026-07-20T11:30:00+05:30"
+modifiedAt: "2026-07-24T12:00:00+05:30"
+author: "indiaaibrief-desk"
+category: "explains"
+tags: ["dpdp", "privacy", "training-data", "compliance", "enterprise"]
+image: "/images/articles/dpdp-training.webp"
+imageAlt: "Abstract graphic representing DPDP Act implications for AI training data in India"
+featured: true
+trending: true
+readingTime: 10
+excerpt: "Under DPDP, Indian AI teams need lawful purpose, consent or legitimate use, and clear retention for personal data used in model training — scrapes are not a strategy."
+structuredData:
+  type: "FAQPage"
+  faq:
+    - question: "Can Indian startups train AI models on scraped personal data under DPDP?"
+      answer: "Not safely. Scraping personal data without a lawful basis (consent or a permitted ground) and purpose alignment creates DPDP risk — especially for commercial models."
+    - question: "Does DPDP require storing training data in India?"
+      answer: "DPDP focuses on lawful processing and transfer rules. Sector regulators and enterprise contracts often add India-hosting requirements on top of DPDP."
+    - question: "What should MSMEs do first for DPDP-ready AI?"
+      answer: "Map personal data in training and inference pipelines, document purpose, add consent or contractual grounds, and delete or anonymise data past retention."
+    - question: "Can we fine-tune on support tickets if customers agreed to our privacy policy?"
+      answer: "Only if the policy and consent language clearly cover model training or improvement. Vague ‘improve services’ clauses are weak for commercial fine-tunes — tighten notices and contracts."
+---
+
+<Answer>
+India’s Digital Personal Data Protection (DPDP) Act requires a lawful purpose and valid ground (typically consent or a permitted use) before personal data enters AI training or fine-tuning pipelines. Scraped contact lists, chat logs, and KYC dumps without purpose alignment are compliance debt — not a dataset strategy for Indian AI products.
+</Answer>
+
+If you fine-tune on customer support transcripts, WhatsApp leads, or HR resumes in India, DPDP is now a product constraint. Pair it with the [MeitY AI governance draft](/news/meity-ai-governance-framework-2026): one law governs personal data; the other governs high-risk decisions.
+
+## What Changed
+
+- DPDP makes **purpose limitation** and **consent / lawful ground** non-negotiable for personal data in training sets.
+- Enterprise buyers demand **data maps**, retention schedules, and deletion workflows in AI vendor questionnaires.
+- Cross-border model APIs still process Indian personal data — transfer and contractual clauses matter.
+- Anonymisation helps only when re-identification risk is genuinely low; hashing emails is not magic.
+- See also: [Q2 2026 Indian AI funding](/news/indian-ai-funding-q2-2026), [AI Regulation in India](/explains/ai-regulation-india-business-guide), and the [AI Compliance Kit](/kit/ai-compliance).
+
+## The Details
+
+Start with a data inventory: which fields in your training corpus are personal data under DPDP? Names, phone numbers, device IDs, and free-text that names a person all count. Separate **personal** from **non-personal** corpora before you hit “train.”
+
+For each personal field, document (1) purpose of training, (2) lawful ground, (3) retention, (4) who can access embeddings or checkpoints. If purpose was “customer support,” silently reusing transcripts to train a public LLM is purpose creep unless you re-consent or fit a permitted ground.
+
+### Training vs inference — different paperwork
+
+Training/fine-tuning creates lasting artefacts (weights, embeddings, eval sets). Inference may still log personal prompts. Treat both as processing events. Many startups only document training and forget that production RAG indexes of tickets are a second corpus with the same DPDP duties.
+
+Vendor fine-tuning APIs outside India do not erase obligations. Your contract should state processing locations, subprocessors, and deletion SLAs. Regulated BFSI and health buyers will add India-hosting even when DPDP allows transfers under notified conditions.
+
+### Practical red flags in Indian stacks
+
+- Bulk WhatsApp export used to fine-tune a sales bot without refreshed notices
+- Resume databases reused for “AI hiring copilots” beyond recruitment purpose
+- KYC images embedded for “document understanding” demos shared outside the bank’s VPC
+- Customer code from GCC projects sent to public model APIs for coding assist without redaction
+
+Governance overlap: a credit-scoring model needs DPDP-compliant training data **and** MeitY-style logging/human oversight. One checklist covers both — see our [compliance kit](/kit/ai-compliance) and the broader [business regulation guide](/explains/ai-regulation-india-business-guide).
+
+## What This Means for Indian MSMEs and CTOs
+
+1. **Stop silent scrapes** of Indian personal data for training; rebuild corpora with consent or contractual grounds.
+2. **Add a data-map appendix** to every AI RFP response — buyers already expect it.
+3. **Set retention + deletion** for training snapshots; orphaned S3 buckets are audit findings.
+4. **Negotiate India region** for inference when selling to banks, insurers, and government.
+5. **Train sales** to explain DPDP + MeitY together; split answers look unprepared.
+6. **Prefer retrieval over silent fine-tunes on PII** until counsel clears the corpus — see [how to build an AI startup in India](/playbooks/how-to-build-ai-startup-india).
+
+## Frequently Asked Questions
+
+### Can Indian startups train AI models on scraped personal data under DPDP?
+
+Not safely. Scraping personal data without a lawful basis (consent or a permitted ground) and purpose alignment creates DPDP risk — especially for commercial models.
+
+### Does DPDP require storing training data in India?
+
+DPDP focuses on lawful processing and transfer rules. Sector regulators and enterprise contracts often add India-hosting requirements on top of DPDP.
+
+### What should MSMEs do first for DPDP-ready AI?
+
+Map personal data in training and inference pipelines, document purpose, add consent or contractual grounds, and delete or anonymise data past retention.
+
+### Can we fine-tune on support tickets if customers agreed to our privacy policy?
+
+Only if the policy and consent language clearly cover model training or improvement. Vague “improve services” clauses are weak for commercial fine-tunes — tighten notices and contracts.

@@ -1,0 +1,22 @@
+# IndiaAIBrief Brand Colors
+
+Light
+- Background: #FAFAFA
+- Surface: #FFFFFF
+- Text Primary: #0A0A0A
+- Text Secondary: #525252
+- Accent (pulse / AI): #DC2626
+
+Dark
+- Background: #070707
+- Surface: #0F0F0F
+- Text Primary: #F0F0F0
+- Accent (pulse / AI): #F87171
+
+Mark
+- Tile: #0A0A0A
+- Brief lines: #F5F5F5
+- Signal slash + live dot: accent red
+
+Accent usage: CTAs, category labels, links, Signal Brief pulse.
+Do not use purple gradients, neural-net clipart, or generic robot icons.

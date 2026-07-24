@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="IndiaAIBrief">
+  <!-- Signal Brief mark: dossier lines cut by a live red pulse -->
+  <rect width="512" height="512" rx="112" fill="#0A0A0A"/>
+  <!-- Brief lines -->
+  <g fill="none" stroke="#F5F5F5" stroke-width="28" stroke-linecap="round">
+    <path d="M96 168 H300"/>
+    <path d="M96 256 H340"/>
+    <path d="M96 344 H280"/>
+  </g>
+  <!-- Red signal slash (cuts through lines) -->
+  <rect x="292" y="96" width="40" height="320" rx="12" fill="#DC2626"/>
+  <!-- Live pulse dot -->
+  <circle cx="312" cy="84" r="28" fill="#DC2626"/>
+</svg>

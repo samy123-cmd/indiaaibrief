@@ -1,0 +1,133 @@
+---
+title: "RBI AI Model Risk Rules: Compliance Checklist for Fintech"
+description: "RBI’s 2026 draft Model Risk Management guidance — board MRMF, kill switches, third-party validation. Step-by-step checklist with ₹5–10 lakh cost bands."
+publishedAt: "2026-07-24T10:30:00+05:30"
+modifiedAt: "2026-07-24T12:00:00+05:30"
+author: "indiaaibrief-desk"
+category: "playbooks"
+tags: ["rbi", "fintech", "compliance", "model-risk", "playbook"]
+image: "/images/articles/rbi-ai-model-risk-compliance-checklist-fintech.webp"
+imageAlt: "Checklist graphic for RBI AI model risk management compliance for Indian fintech"
+featured: true
+trending: true
+readingTime: 14
+excerpt: "RBI’s draft Model Risk Management guidance needs a board-approved MRMF, inventory, kill switch, and independent validation — here’s the founder checklist."
+structuredData:
+  type: "FAQPage"
+  faq:
+    - question: "Does RBI’s model risk guidance apply to fintechs and NBFCs?"
+      answer: "The draft Guidance on Regulatory Principles for Model Risk Management, 2026 covers RBI-regulated entities including banks, NBFCs, and credit information companies. If you are a vendor to those entities, expect the same controls in RFPs even before you are directly supervised."
+    - question: "What is a kill switch under RBI AI model rules?"
+      answer: "A documented ability to immediately suspend or deactivate a malfunctioning model that produces harmful or erroneous outputs — with a named owner, tested runbook, and human override path."
+    - question: "How much does RBI model-risk compliance cost a mid-size fintech?"
+      answer: "IndiaAIBrief desk estimate for a mid-size NBFC/fintech with 5–15 production models: ₹5–10 lakh in the first 90 days for inventory, policies, logging, and validation retainers — excluding full ISO-style programmes."
+    - question: "How is RBI guidance different from the EU AI Act?"
+      answer: "RBI is sectoral model-risk governance for regulated finance in India. The EU AI Act is horizontal product regulation by risk tier for systems placed on the EU market. Indian fintechs selling into Europe may need both stacks."
+---
+
+<Answer>
+RBI’s draft Guidance on Regulatory Principles for Model Risk Management, 2026 tells banks, NBFCs, and other regulated entities to run a board-approved Model Risk Management Framework covering every model — including third-party and AI/ML — with inventory, risk tiering, independent validation, human oversight, and a kill switch. Fintech founders selling into BFSI should treat this as the new RFP checklist, not optional ethics copy.
+</Answer>
+
+If your credit scorecard, fraud model, collections bot, or GenAI helpdesk touches an RBI-regulated entity, procurement will ask for evidence that matches this draft. Consultation comments closed around **24 July 2026** — assume final guidance stays in the same shape.
+
+## What Changed
+
+- RBI published draft **Guidance on Regulatory Principles for Model Risk Management, 2026** (stakeholder comments invited through ~24 Jul 2026 per multiple summaries; PDF circulating via industry counsel).
+- Scope: **all models**, not only credit — including AI/ML and third-party tools; RE remains accountable for vendor models.
+- Must-haves: **Board-approved MRMF**, model inventory, risk tiering, three lines of defence, HITL / override, **kill switch**, explainability and bias controls for AI.
+- Builds on FREE-AI committee work and earlier credit-model risk papers.
+- Related: [RegTech for AI](/explains/compliance-tech), [EU AI Act guide](/explains/eu-ai-act), [AI Compliance Starter Kit](/kit/ai-compliance).
+
+## The Details
+
+### 12-step compliance checklist (do these in order)
+
+1. **Appoint owners** — Model Risk Officer (can be CRO dual-hat at small NBFCs) + business owners per model.
+2. **Write the MRMF** — Board/RMCB-approved policy: taxonomy, lifecycle, exceptions, decommissioning.
+3. **Build the model inventory** — Every active model listed; no unlisted production use. Keep retired models on register **≥10 years** (per draft summaries).
+4. **Tier every model** — Materiality × complexity; high-risk needs RMCB clearance before deploy.
+5. **Document model cards** — Purpose, data lineage, performance metrics, limits of use, version IDs.
+6. **Independent validation** — Second line validates; vendor certificates alone are not enough.
+7. **Logging** — Inputs/outputs/versions/overrides for disputed decisions; India residency if customer demands.
+8. **Human-in-the-loop** — Named override path for credit, KYC escalation, collections hardship.
+9. **Kill switch** — Tested quarterly; who flips it, how traffic fails closed, how customers are notified.
+10. **Bias & fairness tests** — Especially lending and collections; document mitigations.
+11. **Third-party addendum** — API vendors (LLMs, bureau AI, fraud SaaS) in inventory with your validation plan.
+12. **Consumer disclosure** — Customer-facing AI must disclose automation and offer human handoff.
+
+### Cost band (mid-size fintech / NBFC)
+
+| Workstream | 90-day budget (₹) | Notes |
+| :--- | :--- | :--- |
+| Policy + board pack | 1–1.5 lakh | Counsel + internal risk |
+| Inventory + model cards (5–15 models) | 1–2 lakh | PM + data science time |
+| Logging / override UX | 2–3.5 lakh | Eng sprint |
+| External validation retainer | 1–2 lakh | Sample high-risk models |
+| Kill-switch drill + docs | 0.5–1 lakh | Ops + tech |
+| **Total** | **₹5–10 lakh** | Desk estimate; excludes full ISO 42001 |
+
+Micro-startups with one chatbot and no credit decisioning can land near the floor. Lending NBFCs with bureau-ML stacks will overshoot.
+
+### Timeline (practical)
+
+| Window | Milestone |
+| :--- | :--- |
+| Days 1–30 | Inventory + tiering + draft MRMF |
+| Days 31–60 | Logging + HITL + kill switch drill |
+| Days 61–90 | Independent validation of top 3 high-risk models; board pack |
+| Post-finalisation | Map any new AI-specific circulars under Utkarsh 2029 hints |
+
+### RBI vs EU AI Act (one screen)
+
+| Dimension | RBI MRM draft | EU AI Act |
+| :--- | :--- | :--- |
+| Who | RBI-regulated entities | Providers/deployers on EU market |
+| Shape | Model risk governance | Product risk tiers + GPAI duties |
+| Kill switch / HITL | Explicit AI control theme | Human oversight for high-risk |
+| Vendor models | RE still accountable | Cascade of provider duties |
+| India fintech action | Build MRMF now | Separate if you serve EU users |
+
+See our [EU AI Act explainer](/explains/eu-ai-act) if you export.
+
+But here’s what others won’t tell you: **banks will push this checklist onto vendors before the circular is final.** Waiting for “gazetted text” is how you lose the pilot to a competitor with a four-page annex ready.
+
+## What This Means for Fintech Founders and CTOs
+
+1. **If you are an NBFC**, put MRMF on the next board agenda — not the “AI innovation” offsite.
+2. **If you sell AI to banks**, ship inventory + model card + kill-switch evidence in the security questionnaire.
+3. **Budget ₹5–10 lakh** this quarter if you have multiple production models.
+4. **Reuse DPDP logs** — don’t build a second logging religion ([DPDP guide](/explains/dpdp-act-ai-training-data)).
+5. **Buy the template pack** — [AI Compliance Starter Kit](/kit/ai-compliance) (₹999) for checklists and Notion structure you can adapt into an MRMF annex this week.
+
+## Downloadable: RBI Model Risk Starter Checklist
+
+- [ ] Board/RMCB MRMF approved
+- [ ] Full model inventory (incl. vendors)
+- [ ] Risk tiers + annual review date
+- [ ] Model cards for high-risk
+- [ ] Independent validation evidence
+- [ ] Immutable decision logs
+- [ ] HITL + kill switch tested
+- [ ] Bias test results filed
+- [ ] Customer AI disclosure + human handoff
+- [ ] Vendor contracts updated for audit access
+
+## Frequently Asked Questions
+
+### Does RBI’s model risk guidance apply to fintechs and NBFCs?
+
+The draft Guidance on Regulatory Principles for Model Risk Management, 2026 covers RBI-regulated entities including banks, NBFCs, and credit information companies. If you are a vendor to those entities, expect the same controls in RFPs even before you are directly supervised.
+
+### What is a kill switch under RBI AI model rules?
+
+A documented ability to immediately suspend or deactivate a malfunctioning model that produces harmful or erroneous outputs — with a named owner, tested runbook, and human override path.
+
+### How much does RBI model-risk compliance cost a mid-size fintech?
+
+IndiaAIBrief desk estimate for a mid-size NBFC/fintech with 5–15 production models: ₹5–10 lakh in the first 90 days for inventory, policies, logging, and validation retainers — excluding full ISO-style programmes.
+
+### How is RBI guidance different from the EU AI Act?
+
+RBI is sectoral model-risk governance for regulated finance in India. The EU AI Act is horizontal product regulation by risk tier for systems placed on the EU market. Indian fintechs selling into Europe may need both stacks.
+

@@ -1,0 +1,126 @@
+---
+title: "IndiaAI 'Do No Harm' Guide: Practical Steps for Startup Founders"
+description: "Turn India AI Governance Guidelines’ Do No Harm principle into founder actions — risk template, docs list, and DPDP non-compliance cost bands."
+publishedAt: "2026-07-24T11:00:00+05:30"
+modifiedAt: "2026-07-24T12:00:00+05:30"
+author: "indiaaibrief-desk"
+category: "playbooks"
+tags: ["indiaai", "governance", "compliance", "dpdp", "playbook"]
+image: "/images/articles/indiaai-governance-do-no-harm-guide.webp"
+imageAlt: "Practical playbook graphic for IndiaAI Do No Harm governance for startups"
+featured: true
+trending: false
+readingTime: 13
+excerpt: "MeitY’s India AI Governance Guidelines put Do No Harm at the centre — here’s how founders turn sutras into risk registers, docs, and shipping gates."
+structuredData:
+  type: "FAQPage"
+  faq:
+    - question: "What is the Do No Harm principle in IndiaAI Governance Guidelines?"
+      answer: "It is the spirit of MeitY’s India AI Governance Guidelines: innovate, but mitigate risks to individuals and society through proportionate, evidence-based measures — not a single criminal clause with that name."
+    - question: "Are the India AI Governance Guidelines binding law?"
+      answer: "They are guidelines, not a standalone AI Act. MeitY expects existing laws (IT Act, DPDP, consumer protection, sector rules) to carry enforcement while institutions and sandboxes mature."
+    - question: "What documents should a startup keep for Do No Harm compliance?"
+      answer: "Minimum pack: AI use-case register, risk tier memo, model/version logs, human oversight map, DPDP data map, incident response one-pager, and vendor subprocessor list."
+    - question: "What is the cost of ignoring DPDP while shipping AI?"
+      answer: "DPDP penalties can reach ₹250 crore for certain failures. Practical near-term cost for startups is lost enterprise deals and breach response — budget ₹10–40 lakh for a serious incident without insurance."
+---
+
+<Answer>
+India’s AI Governance Guidelines (MeitY, Nov 2025) put **Do No Harm** at the centre of seven sutras — trust, people first, innovation over restraint, fairness, accountability, understandable by design, safety. This playbook turns that philosophy into shipping gates: risk register, documentation pack, and DPDP-linked cost of getting it wrong — without waiting for a full AI Act.
+</Answer>
+
+You already have announcement coverage of MeitY’s draft risk-tier language in our [governance news brief](/news/meity-ai-governance-framework-2026). This piece is different: **implementation for founders** who need to show buyers they live Do No Harm, not quote PIB.
+
+## What Changed
+
+- MeitY unveiled **India AI Governance Guidelines** under IndiaAI Mission (Nov 2025); PSA framing: guiding spirit is **Do No Harm** ([PIB / Digital India materials](https://cdn.digitalindiacorporation.in/wp-content/uploads/2025/11/Press-Release_Press-Information-Bureau3.pdf)).
+- Seven sutras + six governance pillars + timed action plan + practical industry guidance.
+- Not new primary legislation — leans on **existing laws** + sector regulators + proposed institutions (AI Governance Group, AI Safety Institute pathway).
+- Related: [AI Regulation business guide](/explains/ai-regulation-india-business-guide), [MeitY framework news](/news/meity-ai-governance-framework-2026), [AI Compliance Starter Kit](/kit/ai-compliance).
+
+## The Details
+
+### Map each sutra to a shipping action
+
+| Sutra | Founder action this month |
+| :--- | :--- |
+| Trust is the Foundation | Publish how you disclose AI to users; keep versioned model cards |
+| People First | Human handoff for consequential flows (credit, health, jobs, welfare) |
+| Innovation over Restraint | Use sandboxes / staged rollouts; don’t skip logging “because MVP” |
+| Fairness & Equity | Test Indic language + demographic slices on your real traffic |
+| Accountability | Named owner per AI feature in the use-case register |
+| Understandable by Design | Explain decisions in plain language in the product UI |
+| Safety, Resilience & Sustainability | Incident playbook + rollback; energy/cost budgets for inference |
+
+### Risk assessment template (copy into Notion)
+
+For every AI feature, fill one row:
+
+1. **Feature name / owner**
+2. **User impact** (read-only advice vs writes money/access/identity)
+3. **Data categories** (personal / sensitive / non-personal)
+4. **Model / vendor / version**
+5. **Harm scenarios** (top 3) + mitigations
+6. **Human oversight** (who, SLA)
+7. **Logging fields + retention**
+8. **Go / no-go** signed by eng + product + counsel
+
+Update on every production deploy. Register beats rhetoric — same finding we documented in the [regulation guide](/explains/ai-regulation-india-business-guide).
+
+### Documentation pack buyers ask for
+
+1. AI use-case register (living)
+2. One-page Do No Harm / risk memo
+3. Model & prompt version log schema
+4. Human oversight map
+5. DPDP data map + retention
+6. Subprocessor list (LLM, vector DB, analytics)
+7. Incident response one-pager (deepfake, bias incident, data leak)
+8. Customer disclosure copy
+
+### Cost of non-compliance (DPDP + commercial)
+
+| Failure mode | Regulatory exposure | Commercial reality |
+| :--- | :--- | :--- |
+| Unlawful personal data in prompts/logs | DPDP penalties up to **₹250 crore** for specified breaches | Deal blocked in security review |
+| No accountability trail | Sector regulator / consumer claims | 4–8 week sales slip |
+| Harmful automated decision without oversight | IT Act / CPA / sector rules | Churn + press |
+| Breach without playbook | DPDP + customer contracts | **₹10–40 lakh** desk estimate for counsel + forensics + credits on a mid-size incident |
+
+But here’s what others won’t tell you: **Do No Harm is not “be nice.”** It is “prove you can spot harm before the customer’s lawyer does.” Startups that only publish an ethics PDF still fail RFPs.
+
+## What This Means for AI Startup Founders
+
+1. **This week:** create the use-case register; block any write-action agent without an owner.
+2. **This month:** ship logging + human handoff on your highest-risk flow.
+3. **Before the next enterprise pilot:** assemble the eight-doc pack above.
+4. **Budget:** ₹50k–₹2 lakh for early documentation + eng logging if you’re pre-Series A; more if BFSI ([RBI checklist](/playbooks/rbi-ai-model-risk-compliance-checklist-fintech)).
+5. **Use the [AI Compliance Starter Kit](/kit/ai-compliance)** (₹999) for checklist + Notion template aligned to this stack.
+
+## Downloadable: Do No Harm Weekly Gate
+
+- [ ] New AI feature listed in register before merge to prod
+- [ ] Harm scenarios written (not “N/A”)
+- [ ] Logs storing model version + override ID
+- [ ] Disclosure string reviewed by counsel
+- [ ] Vendor DPA / subprocessor updated
+- [ ] Incident channel tested (Slack/Telegram + pager)
+
+## Frequently Asked Questions
+
+### What is the Do No Harm principle in IndiaAI Governance Guidelines?
+
+It is the spirit of MeitY’s India AI Governance Guidelines: innovate, but mitigate risks to individuals and society through proportionate, evidence-based measures — not a single criminal clause with that name.
+
+### Are the India AI Governance Guidelines binding law?
+
+They are guidelines, not a standalone AI Act. MeitY expects existing laws (IT Act, DPDP, consumer protection, sector rules) to carry enforcement while institutions and sandboxes mature.
+
+### What documents should a startup keep for Do No Harm compliance?
+
+Minimum pack: AI use-case register, risk tier memo, model/version logs, human oversight map, DPDP data map, incident response one-pager, and vendor subprocessor list.
+
+### What is the cost of ignoring DPDP while shipping AI?
+
+DPDP penalties can reach ₹250 crore for certain failures. Practical near-term cost for startups is lost enterprise deals and breach response — budget ₹10–40 lakh for a serious incident without insurance.
+

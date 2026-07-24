@@ -1,0 +1,93 @@
+---
+title: "AI Liability in India: Who Pays When It Fails?"
+description: "Indian courts lack a specific AI liability statute — contract terms, IT Act rules, and consumer law decide who pays when an AI agent errs."
+publishedAt: "2026-07-22T10:00:00+05:30"
+modifiedAt: "2026-07-24T12:00:00+05:30"
+author: "indiaaibrief-desk"
+category: "explains"
+tags: ["regulation", "policy", "liability", "contracts", "authority-series"]
+image: "/images/articles/liability.webp"
+imageAlt: "Editorial graphic for AI Liability in India: Who Pays When It Fails?"
+featured: false
+trending: false
+readingTime: 11
+excerpt: "With no dedicated AI liability law yet, Indian SaaS contracts and consumer protection rules decide who pays when an AI agent makes a costly mistake."
+structuredData:
+  type: "FAQPage"
+  faq:
+    - question: "Does India have a specific law on AI liability?"
+      answer: "No. There is no standalone AI liability statute. Claims fall back on contract law, the Consumer Protection Act, IT Act intermediary rules, and sector regulations (RBI, IRDAI, SEBI)."
+    - question: "Can an Indian SaaS startup disclaim all liability for AI errors in its ToS?"
+      answer: "Only partially. Blanket disclaimers rarely survive scrutiny under the Consumer Protection Act's unfair contract terms provisions, especially against individual consumers rather than enterprise buyers."
+    - question: "Who is liable if a vendor's AI model (OpenAI, Anthropic) causes the failure?"
+      answer: "Your customer will usually sue you first, since they contracted with you. Your recovery from the model vendor depends entirely on the indemnity language in your API agreement."
+    - question: "Should Indian AI startups buy liability insurance?"
+      answer: "For regulated deployments (lending, healthcare, hiring) yes — but confirm the policy does not carry a blanket AI-generated-content or algorithmic-bias exclusion before relying on it."
+---
+
+<Answer>
+India has no dedicated AI liability statute, so when an AI agent causes loss or harm, responsibility is decided by ordinary contract law, the Consumer Protection Act, IT Act intermediary rules, and sector regulator guidance. For Indian SaaS founders, the real liability shield is written into vendor contracts and customer terms — not case law that does not yet exist.
+</Answer>
+
+Indian courts have not yet ruled on an AI-specific liability case, which means every dispute today gets forced into existing frameworks built for humans and ordinary software — leaving founders to write their own protection into contracts before a regulator or judge does it for them.
+
+## What Changed
+
+- Global liability law is shifting from "software is a service you disclaim" to "AI is a product you can be strictly liable for" — the EU's updated Product Liability Directive and eroding US Section 230 defenses are the clearest signals.
+- India has no equivalent statute yet, so Indian claims default to the **Consumer Protection Act, 2019**, the **IT Act, 2000** (intermediary safe harbour under Section 79), the **Indian Contract Act**, and whichever sector regulator applies (RBI for lending, IRDAI for insurance, SEBI for advisory).
+- Enterprise buyers in BFSI and healthcare are now writing AI-specific indemnity clauses into vendor contracts, effectively creating private liability law ahead of Parliament.
+- See [AI Regulation in India: A Business Guide](/explains/ai-regulation-india-business-guide) for how this sits inside the broader compliance stack, and the [MeitY AI governance framework](/news/meity-ai-governance-framework-2026) for where statutory movement may come from next.
+
+## The Details
+
+### The Global Shift: From Service to Product
+
+For decades, software vendors were shielded by EULAs disclaiming all warranties. That "use at your own risk" era is ending abroad, and Indian enterprise buyers are importing the stricter expectation even without a local law forcing it.
+
+**The EU Product Liability Directive (PLD)**: Europe updated its 40-year-old PLD to explicitly cover software and AI systems as products. If an AI causes damage, the manufacturer is strictly liable, and the "black box" defense is dead — if a victim cannot prove how the AI failed because it is opaque, the burden shifts to the company to prove it *didn't* fail.
+
+**The US Section 230 erosion**: In the US, Section 230 historically shielded platforms from liability for user content. Courts are now skeptical that AI-generated output counts as "user-generated" at all — if a model hallucinates a defamatory claim, it is the *creator* of that content, not a neutral publisher.
+
+### The Indian Legal Reality: No Statute, Multiple Fallbacks
+
+India's absence of an AI liability law does not mean an absence of liability. Three routes apply today:
+
+1. **Contract law (Indian Contract Act, 1872)** — the strongest and most predictable route. If your SaaS agreement is silent on AI failure, ordinary breach-of-contract and negligence principles apply, and courts will look at what a "reasonable" provider should have tested for.
+2. **Consumer Protection Act, 2019** — covers B2C AI products and services. Unfair contract terms (including one-sided liability caps) can be struck down, and the Act's product liability chapter can extend to defective "goods," a definition regulators are actively debating for embedded AI.
+3. **Sector regulator rules** — RBI's outsourcing and IT governance guidelines already hold regulated entities (banks, NBFCs) accountable for vendor AI failures, regardless of whose model caused the error. The bank cannot point at its AI vendor to escape an RBI penalty.
+
+### Indemnity Language Indian SaaS Contracts Are Missing
+
+Most Indian SaaS agreements were drafted before generative AI features existed and simply do not address model failure. Three gaps show up repeatedly in due-diligence reviews:
+
+- **No pass-through indemnity** from the underlying model API (OpenAI, Anthropic, Google) to the startup's own customer contract — leaving the startup holding 100% of the risk for a failure it did not cause.
+- **No carve-out for "high-impact" use cases** (credit decisions, medical triage, hiring) where liability caps should not apply, versus low-stakes use (drafting assistance, summarization) where they reasonably should.
+- **No defined human-override obligation** — if a human reviewed and approved the AI's output before it caused harm, that materially changes the liability analysis, but few contracts state who was supposed to review what.
+
+## What This Means for Indian Founders and CTOs
+
+1. **Get pass-through indemnity from your model vendor** before you resell their capability. If OpenAI or Anthropic's API fails, your contract with them should limit what liability lands solely on you.
+2. **Segment your ToS by risk tier.** A liability cap that is reasonable for a writing assistant is indefensible for a lending or diagnosis tool — courts and regulators will treat these differently even if your contract doesn't.
+3. **Keep human-in-the-loop logs for high-stakes decisions.** Documented human review downgrades a claim from "autonomous AI defect" to "ordinary human error," which Indian courts already know how to adjudicate.
+4. **Do not rely on a blanket disclaimer with consumer users.** The Consumer Protection Act's unfair-terms provisions make broad AI liability waivers risky against individuals, even if they hold up in enterprise (B2B) contracts.
+5. **Check your general liability policy for AI exclusions** before you assume you are covered — many standard Indian commercial policies now explicitly exclude "AI-generated content" or "algorithmic decision" claims.
+
+## Frequently Asked Questions
+
+### Does India have a specific law on AI liability?
+
+No. There is no standalone AI liability statute. Claims fall back on contract law, the Consumer Protection Act, IT Act intermediary rules, and sector regulations (RBI, IRDAI, SEBI).
+
+### Can an Indian SaaS startup disclaim all liability for AI errors in its ToS?
+
+Only partially. Blanket disclaimers rarely survive scrutiny under the Consumer Protection Act's unfair contract terms provisions, especially against individual consumers rather than enterprise buyers.
+
+### Who is liable if a vendor's AI model (OpenAI, Anthropic) causes the failure?
+
+Your customer will usually sue you first, since they contracted with you. Your recovery from the model vendor depends entirely on the indemnity language in your API agreement.
+
+### Should Indian AI startups buy liability insurance?
+
+For regulated deployments (lending, healthcare, hiring) yes — but confirm the policy does not carry a blanket AI-generated-content or algorithmic-bias exclusion before relying on it.
+
+Related reading: [AI Regulation in India: A Business Guide](/explains/ai-regulation-india-business-guide), [How India's DPDP Act Affects AI Training Data](/explains/dpdp-act-ai-training-data), [Copyright & Generative AI](/explains/copyright), [Q2 2026 Indian AI Funding](/news/indian-ai-funding-q2-2026), and the [AI Compliance Starter Kit](/kit/ai-compliance).
