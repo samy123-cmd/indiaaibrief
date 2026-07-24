@@ -18,7 +18,7 @@ interface MobileNavProps {
   items: NavItem[];
 }
 
-/** Client-only: hamburger → full-screen Sheet overlay. */
+/** Client-only: hamburger → full-screen opaque Sheet (portaled to body). */
 export function MobileNav({ items }: MobileNavProps) {
   const [open, setOpen] = useState(false);
 
@@ -37,16 +37,16 @@ export function MobileNav({ items }: MobileNavProps) {
       </SheetTrigger>
       <SheetContent
         side="right"
-        className="flex w-full max-w-none flex-col border-l-2 border-border bg-background p-0 text-foreground sm:max-w-none"
+        className="w-full max-w-none border-0 p-0 sm:max-w-none"
       >
-        <SheetHeader className="border-b border-border px-4 py-4">
+        <SheetHeader className="border-b border-border bg-background px-4 py-4 pr-16">
           <SheetTitle className="text-left">
             <BrandMark size={24} />
           </SheetTitle>
         </SheetHeader>
 
         <nav
-          className="flex flex-1 flex-col gap-1 overflow-y-auto px-4 py-6"
+          className="flex flex-1 flex-col gap-1 overflow-y-auto bg-background px-4 py-6"
           aria-label="Mobile"
         >
           {items.map((item) => (
@@ -75,7 +75,7 @@ export function MobileNav({ items }: MobileNavProps) {
           </Link>
         </nav>
 
-        <div className="mt-auto space-y-2 border-t border-border p-4">
+        <div className="mt-auto space-y-2 border-t border-border bg-background p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
           <Link
             href="/subscribe"
             className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-accent px-4 text-sm font-medium text-primary-foreground hover:bg-accent-hover"
@@ -85,21 +85,21 @@ export function MobileNav({ items }: MobileNavProps) {
           </Link>
           <Link
             href="/sign-in"
-            className="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-border px-4 text-sm font-medium text-foreground hover:bg-muted"
+            className="inline-flex min-h-11 w-full items-center justify-center rounded-md border-2 border-border bg-muted px-4 text-sm font-medium text-foreground hover:bg-secondary"
             onClick={() => setOpen(false)}
           >
             Sign in
           </Link>
           <Link
             href="/dashboard"
-            className="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-border px-4 text-sm font-medium text-foreground hover:bg-muted"
+            className="inline-flex min-h-11 w-full items-center justify-center rounded-md border-2 border-border bg-muted px-4 text-sm font-medium text-foreground hover:bg-secondary"
             onClick={() => setOpen(false)}
           >
             Account
           </Link>
           <Link
             href="/search"
-            className="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-border px-4 text-sm font-medium text-foreground hover:bg-muted"
+            className="inline-flex min-h-11 w-full items-center justify-center rounded-md border-2 border-border bg-muted px-4 text-sm font-medium text-foreground hover:bg-secondary"
             onClick={() => setOpen(false)}
           >
             Search

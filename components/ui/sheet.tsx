@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -51,12 +52,16 @@ function SheetTrigger({
   const { setOpen } = useSheetContext();
 
   if (asChild && React.isValidElement(children)) {
-    return React.cloneElement(children as React.ReactElement<{ onClick?: () => void; className?: string }>, {
-      onClick: () => setOpen(true),
-      className: cn(
-        (children.props as { className?: string }).className,
-        className,
-      ),
+    const child = children as React.ReactElement<{
+      onClick?: (event: React.MouseEvent) => void;
+      className?: string;
+    }>;
+    return React.cloneElement(child, {
+      onClick: (event: React.MouseEvent) => {
+        child.props.onClick?.(event);
+        setOpen(true);
+      },
+      className: cn(child.props.className, className),
     });
   }
 
@@ -92,6 +97,11 @@ function SheetContent({
   className?: string;
 }) {
   const { open, setOpen } = useSheetContext();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   React.useEffect(() => {
     if (!open) return;
@@ -107,47 +117,57 @@ function SheetContent({
     };
   }, [open, setOpen]);
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
-  return (
-    <div className="fixed inset-0 z-50">
+  const panel = (
+    <div className="fixed inset-0 z-[10050]" data-mobile-sheet="">
+      {/* Opaque scrim — blocks page content completely */}
       <button
         type="button"
         aria-label="Close menu overlay"
-        className="absolute inset-0 bg-black/50"
+        className="absolute inset-0 bg-background"
+        style={{ backgroundColor: "var(--background)" }}
         onClick={() => setOpen(false)}
       />
       <div
         role="dialog"
         aria-modal="true"
         className={cn(
-          "absolute z-50 bg-background p-6 text-foreground shadow-2xl",
-          side === "right" && "inset-y-0 right-0 h-full w-full max-w-sm border-l-2 border-border",
-          side === "left" && "inset-y-0 left-0 h-full w-full max-w-sm border-r-2 border-border",
-          side === "top" && "inset-x-0 top-0 border-b-2 border-border",
-          side === "bottom" && "inset-x-0 bottom-0 border-t-2 border-border",
+          "absolute z-[10051] flex flex-col bg-background p-6 text-foreground shadow-2xl",
+          side === "right" &&
+            "inset-y-0 right-0 h-dvh w-full max-w-none border-l border-border sm:max-w-sm",
+          side === "left" &&
+            "inset-y-0 left-0 h-dvh w-full max-w-none border-r border-border sm:max-w-sm",
+          side === "top" && "inset-x-0 top-0 border-b border-border",
+          side === "bottom" && "inset-x-0 bottom-0 border-t border-border",
           className,
         )}
+        style={{ backgroundColor: "var(--background)" }}
       >
         {children}
         <button
           type="button"
-          className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-muted text-foreground hover:bg-secondary"
+          className="absolute right-4 top-4 z-[10052] inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-muted text-foreground hover:bg-secondary"
           onClick={() => setOpen(false)}
           aria-label="Close"
         >
-          <X className="h-5 w-5" />
+          <X className="h-5 w-5" aria-hidden />
         </button>
       </div>
     </div>
   );
+
+  // Portal out of sticky header stacking context (backdrop-blur + z-40)
+  return createPortal(panel, document.body);
 }
 
 function SheetHeader({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("flex flex-col gap-1.5 text-left", className)} {...props} />;
+  return (
+    <div className={cn("flex flex-col gap-1.5 text-left", className)} {...props} />
+  );
 }
 
 function SheetFooter({
@@ -156,7 +176,10 @@ function SheetFooter({
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn("mt-auto flex flex-col-reverse gap-2 sm:flex-row sm:justify-end", className)}
+      className={cn(
+        "mt-auto flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
+        className,
+      )}
       {...props}
     />
   );
@@ -167,7 +190,10 @@ function SheetTitle({
   ...props
 }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
-    <h2 className={cn("text-lg font-semibold text-foreground", className)} {...props} />
+    <h2
+      className={cn("text-lg font-semibold text-foreground", className)}
+      {...props}
+    />
   );
 }
 
@@ -175,7 +201,9 @@ function SheetDescription({
   className,
   ...props
 }: React.HTMLAttributes<HTMLParagraphElement>) {
-  return <p className={cn("text-sm text-text-secondary", className)} {...props} />;
+  return (
+    <p className={cn("text-sm text-text-secondary", className)} {...props} />
+  );
 }
 
 export {
