@@ -121,18 +121,18 @@ function SheetContent({
         role="dialog"
         aria-modal="true"
         className={cn(
-          "absolute z-50 bg-surface p-6 shadow-lg",
-          side === "right" && "inset-y-0 right-0 h-full w-full max-w-sm border-l border-border",
-          side === "left" && "inset-y-0 left-0 h-full w-full max-w-sm border-r border-border",
-          side === "top" && "inset-x-0 top-0 border-b border-border",
-          side === "bottom" && "inset-x-0 bottom-0 border-t border-border",
+          "absolute z-50 bg-background p-6 text-foreground shadow-2xl",
+          side === "right" && "inset-y-0 right-0 h-full w-full max-w-sm border-l-2 border-border",
+          side === "left" && "inset-y-0 left-0 h-full w-full max-w-sm border-r-2 border-border",
+          side === "top" && "inset-x-0 top-0 border-b-2 border-border",
+          side === "bottom" && "inset-x-0 bottom-0 border-t-2 border-border",
           className,
         )}
       >
         {children}
         <button
           type="button"
-          className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-md opacity-70 hover:opacity-100"
+          className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-muted text-foreground hover:bg-secondary"
           onClick={() => setOpen(false)}
           aria-label="Close"
         >

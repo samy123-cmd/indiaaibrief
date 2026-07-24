@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select } from "@/components/ui/select";
 import { formatRelative } from "@/components/editorial/utils";
 import type { Source } from "@/drizzle/schema";
 
@@ -113,8 +114,7 @@ export function SourcesManager({ initialSources }: SourcesManagerProps) {
           onChange={(e) => setForm({ ...form, url: e.target.value })}
           required
         />
-        <select
-          className="rounded-md border border-border bg-background px-3 py-2 text-sm"
+        <Select
           value={form.type}
           onChange={(e) => setForm({ ...form, type: e.target.value })}
         >
@@ -123,15 +123,14 @@ export function SourcesManager({ initialSources }: SourcesManagerProps) {
               {t}
             </option>
           ))}
-        </select>
+        </Select>
         <Input
           placeholder="Category"
           value={form.category}
           onChange={(e) => setForm({ ...form, category: e.target.value })}
           required
         />
-        <select
-          className="rounded-md border border-border bg-background px-3 py-2 text-sm"
+        <Select
           value={form.fetchFrequency}
           onChange={(e) =>
             setForm({ ...form, fetchFrequency: e.target.value })
@@ -142,7 +141,7 @@ export function SourcesManager({ initialSources }: SourcesManagerProps) {
               {t}
             </option>
           ))}
-        </select>
+        </Select>
         <textarea
           className="min-h-24 rounded-md border border-border bg-background p-3 font-mono text-xs md:col-span-2"
           value={form.config}

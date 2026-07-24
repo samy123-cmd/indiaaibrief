@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select } from "@/components/ui/select";
 import type { DbArticle } from "@/drizzle/schema";
 import type { Post } from "@/types";
 
@@ -194,8 +195,7 @@ export function ArticlesManager({
                 setForm({ ...form, description: e.target.value })
               }
             />
-            <select
-              className="rounded-md border border-border bg-background px-3 py-2 text-sm"
+            <Select
               value={form.category}
               onChange={(e) => setForm({ ...form, category: e.target.value })}
             >
@@ -206,7 +206,7 @@ export function ArticlesManager({
                   </option>
                 ),
               )}
-            </select>
+            </Select>
             <Input
               placeholder="slug (optional)"
               value={form.slug}
@@ -217,15 +217,14 @@ export function ArticlesManager({
               value={form.tags}
               onChange={(e) => setForm({ ...form, tags: e.target.value })}
             />
-            <select
-              className="rounded-md border border-border bg-background px-3 py-2 text-sm"
+            <Select
               value={form.status}
               onChange={(e) => setForm({ ...form, status: e.target.value })}
             >
               <option value="draft">draft</option>
               <option value="published">published</option>
               <option value="archived">archived</option>
-            </select>
+            </Select>
             <Input
               placeholder="image path"
               value={form.image}

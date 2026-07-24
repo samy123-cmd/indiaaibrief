@@ -4,6 +4,7 @@ import { useState, type FormEvent, type ReactNode } from "react";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select } from "@/components/ui/select";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Enter your name").max(80),
@@ -115,7 +116,7 @@ export function ContactForm({ className }: { className?: string }) {
         </Field>
 
         <Field label="Subject" error={errors.subject}>
-          <select
+          <Select
             name="subject"
             value={values.subject}
             onChange={(e) =>
@@ -124,7 +125,6 @@ export function ContactForm({ className }: { className?: string }) {
                 subject: e.target.value as ContactValues["subject"],
               }))
             }
-            className="flex h-11 w-full rounded-md border border-input bg-surface px-3 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             aria-invalid={Boolean(errors.subject)}
           >
             {SUBJECTS.map((subject) => (
@@ -132,7 +132,7 @@ export function ContactForm({ className }: { className?: string }) {
                 {subject}
               </option>
             ))}
-          </select>
+          </Select>
         </Field>
 
         <Field label="Message" error={errors.message}>

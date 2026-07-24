@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { StartupCard } from "@/components/trackers/startup-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select } from "@/components/ui/select";
 import type { Startup } from "@/types";
 import { cn } from "@/lib/utils";
 
@@ -200,14 +201,13 @@ function FilterSelect({
 }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-xs font-medium uppercase tracking-[0.05em] text-text-tertiary">
+      <span className="mb-1.5 block text-xs font-medium uppercase tracking-[0.05em] text-text-secondary">
         {label}
       </span>
-      <select
+      <Select
         value={value}
         disabled={disabled}
         onChange={(event) => onChange(event.target.value)}
-        className="flex h-11 w-full rounded-md border border-input bg-surface px-3 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
       >
         <option value="all">All</option>
         {options.map((option) => (
@@ -215,7 +215,7 @@ function FilterSelect({
             {option}
           </option>
         ))}
-      </select>
+      </Select>
     </label>
   );
 }

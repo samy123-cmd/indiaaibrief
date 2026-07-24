@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select } from "@/components/ui/select";
 import type {
   PolicyInstrument,
   PolicyJurisdiction,
@@ -94,33 +95,31 @@ export function PolicyTracker({
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-xs font-medium uppercase tracking-[0.05em] text-text-tertiary">
+          <span className="mb-1.5 block text-xs font-medium uppercase tracking-[0.05em] text-text-secondary">
             Level
           </span>
-          <select
+          <Select
             value={jurisdiction}
             onChange={(event) =>
               setJurisdiction(event.target.value as JurisdictionFilter)
             }
-            className="flex h-11 w-full rounded-md border border-input bg-surface px-3 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             aria-label="Filter by central or state"
           >
             <option value="all">All levels</option>
             <option value="central">Central</option>
             <option value="state">State</option>
-          </select>
+          </Select>
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-xs font-medium uppercase tracking-[0.05em] text-text-tertiary">
+          <span className="mb-1.5 block text-xs font-medium uppercase tracking-[0.05em] text-text-secondary">
             Instrument
           </span>
-          <select
+          <Select
             value={instrument}
             onChange={(event) =>
               setInstrument(event.target.value as InstrumentFilter)
             }
-            className="flex h-11 w-full rounded-md border border-input bg-surface px-3 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             aria-label="Filter by instrument type"
           >
             <option value="all">All types</option>
@@ -132,7 +131,7 @@ export function PolicyTracker({
                 {INSTRUMENT_LABEL[key as PolicyInstrument] ?? key}
               </option>
             ))}
-          </select>
+          </Select>
         </label>
       </div>
 
@@ -165,14 +164,13 @@ export function PolicyTracker({
           aria-disabled={!advancedUnlocked}
         >
           <label className="block">
-            <span className="mb-1.5 block text-xs font-medium uppercase tracking-[0.05em] text-text-tertiary">
+            <span className="mb-1.5 block text-xs font-medium uppercase tracking-[0.05em] text-text-secondary">
               Sector
             </span>
-            <select
+            <Select
               value={sector}
               disabled={!advancedUnlocked}
               onChange={(event) => setSector(event.target.value)}
-              className="flex h-11 w-full rounded-md border border-input bg-surface px-3 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             >
               <option value="all">All sectors</option>
               {sectors.map((item) => (
@@ -180,7 +178,7 @@ export function PolicyTracker({
                   {item}
                 </option>
               ))}
-            </select>
+            </Select>
           </label>
           <div className="flex items-end">
             <Button

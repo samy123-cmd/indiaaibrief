@@ -5,6 +5,7 @@ import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Select } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import {
   formatRelative,
@@ -94,11 +95,11 @@ export function SignalsInbox({ initialSignals, total }: SignalsInboxProps) {
           />
         </div>
         <div>
-          <label className="text-xs font-semibold uppercase tracking-wide text-text-tertiary">
+          <label className="text-xs font-semibold uppercase tracking-wide text-text-secondary">
             Category
           </label>
-          <select
-            className="mt-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+          <Select
+            className="mt-2"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -118,14 +119,14 @@ export function SignalsInbox({ initialSignals, total }: SignalsInboxProps) {
                 {c}
               </option>
             ))}
-          </select>
+          </Select>
         </div>
         <div>
-          <label className="text-xs font-semibold uppercase tracking-wide text-text-tertiary">
+          <label className="text-xs font-semibold uppercase tracking-wide text-text-secondary">
             Impact
           </label>
-          <select
-            className="mt-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+          <Select
+            className="mt-2"
             value={impact}
             onChange={(e) => setImpact(e.target.value)}
           >
@@ -135,7 +136,7 @@ export function SignalsInbox({ initialSignals, total }: SignalsInboxProps) {
                 {c}
               </option>
             ))}
-          </select>
+          </Select>
         </div>
         <p className="text-xs text-text-tertiary">
           Showing {filtered.length} of {total} inbox signals

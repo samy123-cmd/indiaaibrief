@@ -37,7 +37,7 @@ export function MobileNav({ items }: MobileNavProps) {
       </SheetTrigger>
       <SheetContent
         side="right"
-        className="flex w-full max-w-none flex-col border-0 bg-surface p-0 sm:max-w-none"
+        className="flex w-full max-w-none flex-col border-l-2 border-border bg-background p-0 text-foreground sm:max-w-none"
       >
         <SheetHeader className="border-b border-border px-4 py-4">
           <SheetTitle className="text-left">
