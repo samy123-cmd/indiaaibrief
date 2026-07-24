@@ -5,6 +5,7 @@ import { ArticleCard } from "@/components/content/article-card";
 import { JsonLd } from "@/components/seo/json-ld";
 import { getAllAuthors } from "@/lib/authors";
 import { getAllPosts, toArticleCardData } from "@/lib/content";
+import { TEAM } from "@/lib/team";
 import { breadcrumbSchema, personSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/utils";
@@ -42,6 +43,9 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   const { slug } = await params;
   const author = getAllAuthors().find((a) => a.slug === slug);
   if (!author) notFound();
+
+  const teamMember = TEAM.find((m) => m.slug === author.slug);
+  const credentials = teamMember?.credentials;
 
   const authored = (await getAllPosts())
     .filter((post) => post.author === author.slug)
@@ -85,7 +89,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
           alt=""
           width={96}
           height={96}
-                  className="h-24 w-24 rounded-full object-cover object-top"
+          className="h-24 w-24 rounded-full object-cover object-top"
         />
         <div>
           <h1 className="text-[32px] font-extrabold tracking-[-0.02em] text-foreground md:text-5xl">
@@ -118,13 +122,64 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
         </div>
       </header>
 
+      {credentials ? (
+        <section className="mt-10 max-w-3xl border-t border-border pt-8">
+          <h2 className="text-xl font-semibold text-foreground">
+            Background &amp; focus
+          </h2>
+          <p className="mt-3 text-base leading-7 text-text-secondary">
+            {credentials}
+          </p>
+          <p className="mt-4 text-base leading-7 text-text-secondary">
+            Coverage follows IndiaAIBrief standards: answer-first structure,
+            primary-source verification, and India-specific implications for
+            founders, CTOs, MSMEs, and policymakers. Follow{" "}
+            {author.name.split(" ")[0]} for updates on{" "}
+            <Link href="/news" className="text-accent hover:text-accent-hover">
+              Indian AI news
+            </Link>
+            ,{" "}
+            <Link
+              href="/explains"
+              className="text-accent hover:text-accent-hover"
+            >
+              explainers
+            </Link>
+            , and{" "}
+            <Link
+              href="/playbooks"
+              className="text-accent hover:text-accent-hover"
+            >
+              playbooks
+            </Link>
+            . Corrections:{" "}
+            <a
+              href="mailto:hello@indiaaibrief.com"
+              className="text-accent hover:text-accent-hover"
+            >
+              hello@indiaaibrief.com
+            </a>
+            .
+          </p>
+        </section>
+      ) : null}
+
       <section className="mt-12">
         <h2 className="text-2xl font-bold tracking-tight text-foreground">
           Latest from {author.name}
         </h2>
         {authored.length === 0 ? (
           <p className="mt-4 text-sm text-text-secondary">
-            Articles by this author will appear here once published.
+            Articles by this author will appear here once published. Until then,
+            browse the open library on{" "}
+            <Link href="/explains" className="text-accent hover:text-accent-hover">
+              explainers
+            </Link>{" "}
+            and{" "}
+            <Link href="/news" className="text-accent hover:text-accent-hover">
+              news
+            </Link>
+            .
           </p>
         ) : (
           <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

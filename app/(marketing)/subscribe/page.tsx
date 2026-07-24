@@ -25,10 +25,24 @@ export default function SubscribePage() {
         <h1 className="mt-3 text-[32px] font-extrabold tracking-[-0.02em] md:text-5xl md:leading-[56px]">
           Subscribe to The Brief
         </h1>
-        <p className="mt-3 text-text-secondary">
+        <p className="mt-3 text-base leading-7 text-text-secondary">
           Create a free account now. Paid memberships open with UPI checkout for
-          founding members — join the list below. Products you can buy today sit
-          under the plans.
+          founding members — join the list below without being charged today.
+          Digital products you can buy immediately (compliance kit and readiness
+          audit) sit under the plans and checkout via Razorpay.
+        </p>
+        <p className="mt-4 text-sm leading-6 text-text-secondary">
+          Free readers get the open library and weekly newsletter. Brief unlocks
+          unlimited reading when metering ships, plus advanced tracker filters.
+          Intelligence adds exclusive data downloads and a monthly 1:1. See{" "}
+          <Link href="/newsletter" className="text-accent hover:text-accent-hover">
+            The Brief archive
+          </Link>{" "}
+          and{" "}
+          <Link href="/refund" className="text-accent hover:text-accent-hover">
+            refund policy
+          </Link>{" "}
+          before you buy.
         </p>
       </div>
 

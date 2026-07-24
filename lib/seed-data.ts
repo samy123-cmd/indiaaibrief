@@ -28,7 +28,7 @@ export const SEED_STARTUPS: Startup[] = [
     foundedYear: 2023,
     website: "https://www.sarvam.ai",
     summary:
-      "Indic foundation models and voice stack for Indian enterprise and government workloads.",
+      "Indic foundation models and voice stack for Indian enterprise and government workloads. Founders evaluating Hindi/Indic LLMs should track Sarvam’s API pricing, government convertible-debenture news, and how the stack fits DPDP and on-prem requirements versus global APIs.",
     tags: ["indic", "llm", "voice"],
   },
   {
@@ -62,7 +62,7 @@ export const SEED_STARTUPS: Startup[] = [
     foundedYear: 2016,
     website: "https://www.gnani.ai",
     summary:
-      "Voice and conversational AI for contact centers across Indian languages.",
+      "Voice and conversational AI for contact centers across Indian languages. BFSI and telecom buyers comparing CX agents should weigh Gnani’s Indic voice stack, Series B runway, and compliance posture against global contact-center AI vendors with India delivery.",
     tags: ["voice", "cx", "bfsi"],
   },
   {

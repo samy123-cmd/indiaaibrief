@@ -20,10 +20,38 @@ export default function AuthorsIndexPage() {
       <h1 className="text-[32px] font-extrabold tracking-[-0.02em] text-foreground md:text-5xl">
         Authors
       </h1>
-      <p className="mt-3 max-w-2xl text-text-secondary">
-        India-first AI intelligence from editors who verify every claim against
-        primary sources.
+      <p className="mt-3 max-w-2xl text-base leading-7 text-text-secondary">
+        IndiaAIBrief is written by people who verify claims against primary
+        sources — MeitY documents, company filings, court orders, and production
+        systems — not by recycling aggregator headlines. Every byline is
+        accountable for India-specific context founders and CTOs can act on.
       </p>
+
+      <section className="prose-article mt-8 max-w-3xl !px-0 !py-0">
+        <h2 className="!mt-0 text-xl font-semibold text-foreground">
+          How our desk works
+        </h2>
+        <p className="text-base leading-7 text-text-secondary">
+          AI may draft outlines; humans fact-check funding amounts, policy
+          references, and quotes before publish. We refuse pay-for-play coverage
+          and label sponsored briefs when they appear. Authors disclose conflicts
+          on their profiles and on articles when relevant. If you spot an error,
+          email the desk with the URL and evidence — material corrections land
+          within 48 hours with a visible note.
+        </p>
+        <p className="text-base leading-7 text-text-secondary">
+          Browse explainers, news, and playbooks from each author below, or read
+          our{" "}
+          <Link href="/editorial" className="text-accent hover:text-accent-hover">
+            editorial policy
+          </Link>{" "}
+          and{" "}
+          <Link href="/about" className="text-accent hover:text-accent-hover">
+            about page
+          </Link>{" "}
+          for standards and mission.
+        </p>
+      </section>
 
       <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {authors.map((author) => (

@@ -107,6 +107,28 @@ export default async function StartupDetailPage({
         {startup.summary}
       </p>
 
+      <section className="mt-8 space-y-3 text-base leading-7 text-text-secondary">
+        <h2 className="text-xl font-semibold text-foreground">
+          Why this profile matters
+        </h2>
+        <p>
+          IndiaAIBrief startup profiles are decision briefs for founders, CTOs,
+          and investors — not directory stubs. We surface stage, city, sector,
+          last disclosed funding, and team-size bands so you can compare{" "}
+          {startup.name} against peers in {startup.sector} without opening ten
+          tabs. Always verify amounts against primary filings before investment
+          or vendor selection.
+        </p>
+        <p>
+          Use the Startup Tracker filters on{" "}
+          <Link href="/startups" className="text-accent hover:text-accent-hover">
+            /startups
+          </Link>{" "}
+          to find similar companies by city or stage, then read related news and
+          explainers linked below when we have coverage.
+        </p>
+      </section>
+
       <dl className="mt-8 grid gap-4 border border-border bg-surface p-5 font-mono text-sm sm:grid-cols-2">
         <div>
           <dt className="text-xs uppercase tracking-[0.05em] text-text-tertiary">

@@ -51,9 +51,16 @@ export async function generateMetadata({
     : page > 1 ? `${copy.path}?page=${page}`
     : copy.path;
 
+  const description =
+    page > 1
+      ? `${copy.description} Page ${page} of the ${copy.title} archive.`
+      : tag
+        ? `${copy.description} Filtered by tag: ${tag}.`
+        : copy.description;
+
   return buildMetadata({
     title: categoryPageTitle(copy.title, page, tag),
-    description: copy.description,
+    description,
     path: canonicalPath,
     // Tag filters are utility UI — do not index thin filtered URL variants.
     noIndex: Boolean(tag),
