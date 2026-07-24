@@ -5,15 +5,39 @@ import { PRODUCTS } from "@/lib/products";
 
 export { PRODUCTS };
 
-function getRazorpayClient(): Razorpay {
-  const key_id = process.env.RAZORPAY_KEY_ID ?? process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
-  const key_secret = process.env.RAZORPAY_KEY_SECRET;
+/**
+ * Resolve Razorpay credentials.
+ * Tolerates a common mistake: pasting the Key Secret into RAZORPAY_KEY_ID
+ * (secrets are not rzp_* prefixed; Key IDs always are).
+ */
+export function getRazorpayCredentials(): { keyId: string; keySecret: string } {
+  const publicKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID?.trim() || "";
+  let keyId = (process.env.RAZORPAY_KEY_ID ?? publicKey).trim();
+  let keySecret = process.env.RAZORPAY_KEY_SECRET?.trim() || "";
 
-  if (!key_id || !key_secret) {
-    throw new Error("Razorpay credentials are not configured");
+  // Secret pasted into KEY_ID slot, secret env empty
+  if (keyId && !keyId.startsWith("rzp_") && !keySecret) {
+    keySecret = keyId;
+    keyId = publicKey;
   }
 
-  return new Razorpay({ key_id, key_secret });
+  // Prefer public Key ID for Checkout when server KEY_ID is not a Key ID
+  if (keyId && !keyId.startsWith("rzp_") && publicKey.startsWith("rzp_")) {
+    keyId = publicKey;
+  }
+
+  if (!keyId.startsWith("rzp_") || !keySecret) {
+    throw new Error(
+      "Razorpay credentials are not configured. Set NEXT_PUBLIC_RAZORPAY_KEY_ID (rzp_test_… / rzp_live_…) and RAZORPAY_KEY_SECRET from the Razorpay Dashboard → API Keys.",
+    );
+  }
+
+  return { keyId, keySecret };
+}
+
+function getRazorpayClient(): Razorpay {
+  const { keyId, keySecret } = getRazorpayCredentials();
+  return new Razorpay({ key_id: keyId, key_secret: keySecret });
 }
 
 export interface CreateOrderInput {
@@ -47,32 +71,55 @@ export function verifyRazorpayPaymentSignature(params: {
   paymentId: string;
   signature: string;
 }): boolean {
-  const secret = process.env.RAZORPAY_KEY_SECRET;
+  let secret = process.env.RAZORPAY_KEY_SECRET?.trim() || "";
+  // Same mispaste recovery as getRazorpayCredentials
+  const keyId = process.env.RAZORPAY_KEY_ID?.trim() || "";
+  if (!secret && keyId && !keyId.startsWith("rzp_")) {
+    secret = keyId;
+  }
   if (!secret) return false;
 
   const body = `${params.orderId}|${params.paymentId}`;
   const expected = crypto.createHmac("sha256", secret).update(body).digest("hex");
-  return expected === params.signature;
+  try {
+    return crypto.timingSafeEqual(
+      Buffer.from(expected),
+      Buffer.from(params.signature),
+    );
+  } catch {
+    return false;
+  }
 }
 
 export function verifyRazorpayWebhookSignature(
   rawBody: string,
   signature: string,
 ): boolean {
-  const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
+  const secret = process.env.RAZORPAY_WEBHOOK_SECRET?.trim();
   if (!secret) return false;
 
   const expected = crypto
     .createHmac("sha256", secret)
     .update(rawBody)
     .digest("hex");
-  return expected === signature;
+  try {
+    return crypto.timingSafeEqual(
+      Buffer.from(expected),
+      Buffer.from(signature),
+    );
+  } catch {
+    return false;
+  }
 }
 
 function downloadSecret(): string {
+  const keyId = process.env.RAZORPAY_KEY_ID?.trim() || "";
+  const misplacedSecret =
+    keyId && !keyId.startsWith("rzp_") ? keyId : undefined;
   return (
     process.env.DOWNLOAD_TOKEN_SECRET ??
     process.env.RAZORPAY_KEY_SECRET ??
+    misplacedSecret ??
     "indiaaibrief-dev-download-secret"
   );
 }

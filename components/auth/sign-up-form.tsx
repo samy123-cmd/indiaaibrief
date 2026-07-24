@@ -75,7 +75,7 @@ function SignUpFormInner() {
       }
 
       setMessage(
-        "Check your inbox for a confirmation link — then you’re in.",
+        "Check your inbox for a confirmation link (and spam folder), then sign in. Until you confirm, sign-in will not work.",
       );
       setLoading(false);
     } catch (err) {

@@ -7,6 +7,15 @@ const bodySchema = z.object({
   tags: z.array(z.string()).optional(),
 });
 
+function clientIp(request: Request): string | undefined {
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) {
+    const first = forwarded.split(",")[0]?.trim();
+    if (first) return first;
+  }
+  return request.headers.get("x-real-ip")?.trim() || undefined;
+}
+
 export async function POST(request: Request) {
   try {
     const json: unknown = await request.json();
@@ -19,6 +28,7 @@ export async function POST(request: Request) {
     const subscriber = await subscribeToNewsletter({
       email: parsed.data.email,
       tags: parsed.data.tags,
+      ipAddress: clientIp(request),
     });
 
     return NextResponse.json({ ok: true, id: subscriber.id });

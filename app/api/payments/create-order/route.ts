@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { createRazorpayOrder, PRODUCTS } from "@/lib/payments";
+import {
+  createRazorpayOrder,
+  getRazorpayCredentials,
+  PRODUCTS,
+} from "@/lib/payments";
 
 const productSchema = z.enum(["ai-compliance", "ai-readiness"]);
 
@@ -43,12 +47,14 @@ export async function POST(request: Request) {
       },
     });
 
+    const { keyId } = getRazorpayCredentials();
+
     return NextResponse.json({
       ok: true,
       orderId: order.id,
       amount: order.amount,
       currency: order.currency,
-      keyId: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      keyId,
       product: catalog.slug,
     });
   } catch (error) {

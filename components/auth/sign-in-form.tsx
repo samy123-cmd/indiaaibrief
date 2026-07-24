@@ -30,7 +30,16 @@ export function SignInForm() {
         password,
       });
       if (signError) {
-        setError(signError.message);
+        const msg = signError.message;
+        if (/confirm|not confirmed|email not confirmed/i.test(msg)) {
+          setError(
+            "Confirm your email first — check your inbox (and spam) for the Supabase link, then sign in.",
+          );
+        } else if (/invalid login credentials/i.test(msg)) {
+          setError("Wrong email or password. Try again or reset your password.");
+        } else {
+          setError(msg);
+        }
         setLoading(false);
         return;
       }
