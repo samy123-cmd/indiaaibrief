@@ -9,10 +9,16 @@ function isProtected(pathname: string): boolean {
   );
 }
 
+/**
+ * Auth middleware only — do NOT run on public content pages.
+ * Calling Supabase getUser() on every request Set-Cookies and forces
+ * Cache-Control: no-store, which blocks bfcache and hurts LCP/TBT.
+ */
 export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
   const response = await updateSession(request);
 
-  if (!isProtected(request.nextUrl.pathname)) {
+  if (!isProtected(pathname)) {
     return response;
   }
 
@@ -21,11 +27,10 @@ export async function middleware(request: NextRequest) {
 
   if (!url || !key) {
     const signIn = new URL("/sign-in", request.url);
-    signIn.searchParams.set("redirect_url", request.nextUrl.pathname);
+    signIn.searchParams.set("redirect_url", pathname);
     return NextResponse.redirect(signIn);
   }
 
-  // Re-check user from refreshed cookies on the request
   const { createServerClient } = await import("@supabase/ssr");
   const supabase = createServerClient(url, key, {
     cookies: {
@@ -46,7 +51,7 @@ export async function middleware(request: NextRequest) {
     const signIn = new URL("/sign-in", request.url);
     signIn.searchParams.set(
       "redirect_url",
-      `${request.nextUrl.pathname}${request.nextUrl.search}`,
+      `${pathname}${request.nextUrl.search}`,
     );
     return NextResponse.redirect(signIn);
   }
@@ -56,6 +61,12 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff2?)$).*)",
+    "/dashboard/:path*",
+    "/account/:path*",
+    "/sign-in",
+    "/sign-up",
+    "/forgot-password",
+    "/update-password",
+    "/auth/callback",
   ],
 };

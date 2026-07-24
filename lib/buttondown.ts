@@ -84,7 +84,7 @@ export async function subscribeToNewsletter(
       );
     }
     throw new Error(
-      `Buttondown subscribe failed (${response.status}). ${detail.slice(0, 200)}`,
+      `Newsletter subscribe failed (${response.status}).`,
     );
   }
 

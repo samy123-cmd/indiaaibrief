@@ -62,14 +62,15 @@ export default async function KitDownloadPage({
         </h1>
         <p className="mt-3 text-text-secondary">
           This page unlocks after a successful Razorpay payment for{" "}
-          {product.name}. If you already paid, use the link from checkout or email{" "}
+          {product.name}. If you already paid, use the link from checkout or
+          email{" "}
           <a
             href="mailto:hello@indiaaibrief.com"
             className="text-accent hover:text-accent-hover"
           >
             hello@indiaaibrief.com
           </a>{" "}
-          with your payment ID.
+          with your payment ID (download links expire after 7 days).
         </p>
         <Button asChild className="mt-6" size="lg">
           <Link href={`/kit/${product.slug}`}>
@@ -80,6 +81,12 @@ export default async function KitDownloadPage({
     );
   }
 
+  const qs = new URLSearchParams({
+    order_id: order_id ?? "",
+    payment_id: payment_id ?? "",
+    token: token ?? "",
+  });
+
   return (
     <DownloadShell>
       <Badge>Payment verified</Badge>
@@ -87,45 +94,47 @@ export default async function KitDownloadPage({
         Your kit is ready
       </h1>
       <p className="mt-3 text-text-secondary">
-        Thanks for purchasing {product.name}. Download every file below. Bookmark
-        this page — it is tied to payment{" "}
-        <span className="font-mono text-xs text-foreground">{payment_id}</span>.
+        Thanks for purchasing {product.name}. Download every file below.
+        Bookmark this page — it is tied to payment{" "}
+        <span className="font-mono text-xs text-foreground">{payment_id}</span>{" "}
+        and expires in 7 days.
       </p>
 
       <div className="mt-6 rounded-lg border border-accent/30 bg-accent/5 p-4 text-sm text-text-secondary">
-        Start with the <strong className="text-foreground">checklist</strong>, then
-        skim the playbook, then import the workspace boards. The PDF is the
+        Start with the <strong className="text-foreground">checklist</strong>,
+        then skim the playbook, then import the workspace boards. The PDF is the
         printable cover for stakeholders.
       </div>
 
       <ul className="mt-8 space-y-4">
-        {product.deliverables.map((item) => (
-          <li
-            key={item.id}
-            className="flex flex-col gap-3 border border-border bg-surface p-4 sm:flex-row sm:items-center sm:justify-between"
-          >
-            <div>
-              <p className="text-xs font-medium uppercase tracking-[0.05em] text-accent">
-                {item.format}
-              </p>
-              <p className="mt-1 font-semibold text-foreground">{item.title}</p>
-              <p className="mt-1 text-sm text-text-secondary">{item.description}</p>
-            </div>
-            {item.downloadPath ? (
-              <Button asChild variant="outline" className="shrink-0">
-                <a href={item.downloadPath} download>
-                  Download
-                </a>
-              </Button>
-            ) : item.href ? (
-              <Button asChild variant="outline" className="shrink-0">
-                <a href={item.href} target="_blank" rel="noopener noreferrer">
-                  Open
-                </a>
-              </Button>
-            ) : null}
-          </li>
-        ))}
+        {product.deliverables.map((item) => {
+          const href = item.downloadPath
+            ? `/api/downloads/${product.slug}/${item.downloadPath}?${qs.toString()}`
+            : item.href;
+          return (
+            <li
+              key={item.id}
+              className="flex flex-col gap-3 border border-border bg-surface p-4 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <div>
+                <p className="text-xs font-medium uppercase tracking-[0.05em] text-accent">
+                  {item.format}
+                </p>
+                <p className="mt-1 font-semibold text-foreground">{item.title}</p>
+                <p className="mt-1 text-sm text-text-secondary">
+                  {item.description}
+                </p>
+              </div>
+              {href ? (
+                <Button asChild variant="outline" className="shrink-0">
+                  <a href={href} download={item.downloadPath}>
+                    Download
+                  </a>
+                </Button>
+              ) : null}
+            </li>
+          );
+        })}
       </ul>
 
       <div className="mt-10 flex flex-wrap gap-3">

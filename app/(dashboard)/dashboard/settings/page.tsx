@@ -49,6 +49,9 @@ export default async function SettingsPage() {
             <Button asChild>
               <Link href="/subscribe">View membership</Link>
             </Button>
+            <Button asChild variant="outline">
+              <Link href="/update-password">Change password</Link>
+            </Button>
             <SignOutButton />
             <Button asChild variant="outline">
               <Link href="/dashboard">Back to dashboard</Link>

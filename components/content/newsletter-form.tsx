@@ -14,6 +14,7 @@ export function NewsletterForm({
   className,
 }: NewsletterFormProps) {
   const [email, setEmail] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
     "idle",
   );
@@ -28,7 +29,11 @@ export function NewsletterForm({
       const response = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, tags: [source] }),
+        body: JSON.stringify({
+          email,
+          tags: [source],
+          company_url: honeypot,
+        }),
       });
 
       const data = (await response.json()) as { error?: string };
@@ -48,6 +53,23 @@ export function NewsletterForm({
 
   return (
     <form onSubmit={onSubmit} className={className}>
+      {/* Honeypot — hidden from humans */}
+      <div
+        className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+        aria-hidden="true"
+      >
+        <label>
+          Company website
+          <input
+            type="text"
+            name="company_url"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+          />
+        </label>
+      </div>
       <div className="flex flex-col gap-2 sm:flex-row">
         <Input
           type="email"

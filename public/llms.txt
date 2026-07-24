@@ -2,29 +2,31 @@
 
 > Indian AI intelligence for decision-makers. Breaking news, original analysis, and actionable intelligence on India's AI ecosystem for founders, CTOs, and policymakers.
 
-Site: https://www.indiaaibrief.com
-Contact: editor@indiaaibrief.com
-Sitemap: https://www.indiaaibrief.com/sitemap.xml
+- [Homepage](https://www.indiaaibrief.com)
+- [Sitemap](https://www.indiaaibrief.com/sitemap.xml)
+- [Contact editor@indiaaibrief.com](mailto:editor@indiaaibrief.com)
 
 ## Sections
 
-- News: https://www.indiaaibrief.com/news
-- Explainers: https://www.indiaaibrief.com/explains
-- Comparisons: https://www.indiaaibrief.com/compares
-- Playbooks: https://www.indiaaibrief.com/playbooks
-- Original data: https://www.indiaaibrief.com/data
-- Startup tracker: https://www.indiaaibrief.com/startups
-- Policy tracker: https://www.indiaaibrief.com/policy
-- Newsletter archive: https://www.indiaaibrief.com/newsletter
+- [News](https://www.indiaaibrief.com/news)
+- [Explainers](https://www.indiaaibrief.com/explains)
+- [Comparisons](https://www.indiaaibrief.com/compares)
+- [Playbooks](https://www.indiaaibrief.com/playbooks)
+- [Original data](https://www.indiaaibrief.com/data)
+- [Startup tracker](https://www.indiaaibrief.com/startups)
+- [Policy tracker](https://www.indiaaibrief.com/policy)
+- [Newsletter archive](https://www.indiaaibrief.com/newsletter)
 
 ## Products
 
-- AI Compliance Starter Kit: https://www.indiaaibrief.com/kit/ai-compliance
-- AI Readiness Audit: https://www.indiaaibrief.com/audit
-- Subscribe: https://www.indiaaibrief.com/subscribe
+- [AI Compliance Starter Kit](https://www.indiaaibrief.com/kit/ai-compliance)
+- [AI Readiness Audit](https://www.indiaaibrief.com/audit)
+- [Subscribe](https://www.indiaaibrief.com/subscribe)
 
-## Optional
+## About
 
-- About: https://www.indiaaibrief.com/about
-- Authors: https://www.indiaaibrief.com/authors
-- Editorial policy: https://www.indiaaibrief.com/editorial
+- [About](https://www.indiaaibrief.com/about)
+- [Authors](https://www.indiaaibrief.com/authors)
+- [Editorial policy](https://www.indiaaibrief.com/editorial)
+- [Privacy](https://www.indiaaibrief.com/privacy)
+- [Terms](https://www.indiaaibrief.com/terms)

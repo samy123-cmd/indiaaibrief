@@ -32,13 +32,17 @@ const AUDIT_AMOUNT_PAISE = Number(
   process.env.RAZORPAY_AUDIT_AMOUNT_PAISE ?? 499900,
 );
 
+function paiseToInr(paise: number): number {
+  return Math.round(paise / 100);
+}
+
 export const COMPLIANCE_KIT: DigitalProduct = {
   slug: "ai-compliance",
   name: "AI Compliance Starter Kit for Indian MSMEs",
   headline: "Ship AI in India without guessing compliance",
   description:
     "India-first playbook, 47-point checklist, and workspace template covering DPDP-aware data practices, vendor diligence, and RFP-ready artefacts — ₹999 one-time.",
-  priceInr: 999,
+  priceInr: paiseToInr(KIT_AMOUNT_PAISE),
   pricePaise: KIT_AMOUNT_PAISE,
   currency: "INR",
   image: "/images/products/ai-compliance-kit.webp",
@@ -61,7 +65,7 @@ export const COMPLIANCE_KIT: DigitalProduct = {
       description:
         "India-first operating guide: DPDP purpose mapping, risk tiers, oversight patterns, vendor diligence, and a 30-day sequence.",
       format: "Markdown",
-      downloadPath: "/downloads/ai-compliance/ai-compliance-playbook.md",
+      downloadPath: "ai-compliance-playbook.md",
     },
     {
       id: "pdf",
@@ -69,7 +73,7 @@ export const COMPLIANCE_KIT: DigitalProduct = {
       description:
         "Printable cover + contents for sharing with stakeholders. Full detail lives in the Markdown playbook.",
       format: "PDF",
-      downloadPath: "/downloads/ai-compliance/ai-compliance-playbook.pdf",
+      downloadPath: "ai-compliance-playbook.pdf",
     },
     {
       id: "checklist",
@@ -77,7 +81,7 @@ export const COMPLIANCE_KIT: DigitalProduct = {
       description:
         "Walkable controls across data, governance, vendors, and RFP pack — before any BFSI, health, or government pilot.",
       format: "Checklist",
-      downloadPath: "/downloads/ai-compliance/ai-compliance-checklist.md",
+      downloadPath: "ai-compliance-checklist.md",
     },
     {
       id: "workspace",
@@ -85,7 +89,7 @@ export const COMPLIANCE_KIT: DigitalProduct = {
       description:
         "Duplicate-ready boards for data inventory, vendor diligence, and escalation owners — Notion, Linear, or Sheets.",
       format: "Workspace",
-      downloadPath: "/downloads/ai-compliance/workspace-template.md",
+      downloadPath: "workspace-template.md",
     },
   ],
   outcomes: [
@@ -148,7 +152,7 @@ export const PRODUCTS = {
   readinessAudit: {
     slug: "ai-readiness",
     name: "AI Readiness Audit — 47-Point Scorecard",
-    priceInr: 4999,
+    priceInr: paiseToInr(AUDIT_AMOUNT_PAISE),
     amountPaise: AUDIT_AMOUNT_PAISE,
     pricePaise: AUDIT_AMOUNT_PAISE,
     description:

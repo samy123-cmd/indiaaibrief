@@ -1,5 +1,5 @@
 import { NewsletterForm } from "@/components/content/newsletter-form";
-import { NewsletterStickyBar } from "@/components/content/newsletter-sticky-bar";
+import { NewsletterStickyLoader } from "@/components/content/newsletter-sticky-loader";
 import { cn } from "@/lib/utils";
 
 interface NewsletterCtaProps {
@@ -12,8 +12,7 @@ interface NewsletterCtaProps {
 
 /**
  * Newsletter CTA — Server Component shell.
- * Inline: in-flow block. Sticky: mobile bottom bar (client dismiss only).
- * Form interactivity lives in NewsletterForm (client).
+ * Inline: in-flow block. Sticky: deferred client loader (idle) for TBT.
  */
 export function NewsletterCTA({
   variant = "inline",
@@ -24,7 +23,7 @@ export function NewsletterCTA({
 }: NewsletterCtaProps) {
   if (variant === "sticky") {
     return (
-      <NewsletterStickyBar
+      <NewsletterStickyLoader
         source={source}
         title={title}
         description={description}

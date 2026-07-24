@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PRODUCTS } from "@/lib/products";
+import { verifyDownloadToken } from "@/lib/payments";
 import { buildMetadata } from "@/lib/seo";
 import { formatInr } from "@/lib/utils";
 
@@ -17,28 +18,36 @@ interface ConfirmedPageProps {
   searchParams: Promise<{
     payment_id?: string;
     order_id?: string;
+    token?: string;
   }>;
 }
 
 export default async function AuditConfirmedPage({
   searchParams,
 }: ConfirmedPageProps) {
-  const { payment_id, order_id } = await searchParams;
-  const paid = Boolean(payment_id || order_id);
+  const { payment_id, order_id, token } = await searchParams;
+  const authorized =
+    Boolean(order_id && payment_id && token) &&
+    verifyDownloadToken({
+      product: "ai-readiness",
+      orderId: order_id ?? "",
+      paymentId: payment_id ?? "",
+      token: token ?? "",
+    });
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-12 md:py-16">
-      <Badge>{paid ? "Payment received" : "Audit booking"}</Badge>
+      <Badge>{authorized ? "Payment received" : "Audit booking"}</Badge>
       <h1 className="mt-3 text-[28px] font-extrabold tracking-[-0.02em] md:text-4xl">
-        {paid ? "You're booked" : "Confirm your booking"}
+        {authorized ? "You're booked" : "Confirm your booking"}
       </h1>
       <p className="mt-3 text-base leading-7 text-text-secondary">
-        {paid
+        {authorized
           ? `Thanks for purchasing ${PRODUCTS.readinessAudit.name}. We start the 47-point scorecard within one business day and email your PDF within 3 business days.`
-          : `Complete Razorpay checkout on the audit page (${formatInr(PRODUCTS.readinessAudit.priceInr)}) to lock your slot.`}
+          : `Complete Razorpay checkout on the audit page (${formatInr(PRODUCTS.readinessAudit.priceInr)}) to lock your slot. If you already paid, open the confirmation link from your receipt email.`}
       </p>
 
-      {payment_id ? (
+      {authorized && payment_id ? (
         <p className="mt-6 rounded-lg border border-border bg-surface p-4 font-mono text-xs text-foreground">
           Payment ID: {payment_id}
         </p>
@@ -60,7 +69,7 @@ export default async function AuditConfirmedPage({
       </ol>
 
       <div className="mt-10 flex flex-wrap gap-3">
-        {!paid ? (
+        {!authorized ? (
           <Button asChild size="lg">
             <Link href="/audit">Back to audit</Link>
           </Button>

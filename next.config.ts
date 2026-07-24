@@ -89,6 +89,26 @@ const nextConfig: NextConfig = {
   compress: true,
   turbopack: {
     root,
+    resolveAlias: {
+      // Drop Next's unconditional modern polyfills — Lighthouse "Legacy JavaScript"
+      "next/dist/build/polyfills/polyfill-module": "./lib/empty-polyfill.js",
+      "next/dist/build/polyfills/polyfill-module.js": "./lib/empty-polyfill.js",
+    },
+  },
+  webpack: (config) => {
+    config.resolve = config.resolve ?? {};
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "next/dist/build/polyfills/polyfill-module": path.join(
+        root,
+        "lib/empty-polyfill.js",
+      ),
+      "next/dist/build/polyfills/polyfill-module.js": path.join(
+        root,
+        "lib/empty-polyfill.js",
+      ),
+    };
+    return config;
   },
   images: {
     formats: ["image/avif", "image/webp"],
@@ -131,6 +151,19 @@ const nextConfig: NextConfig = {
           {
             key: "Cache-Control",
             value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/llms.txt",
+        headers: [
+          {
+            key: "Content-Type",
+            value: "text/markdown; charset=utf-8",
+          },
+          {
+            key: "Cache-Control",
+            value: "public, max-age=3600, stale-while-revalidate=86400",
           },
         ],
       },

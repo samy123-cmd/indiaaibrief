@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import { cookies } from "next/headers";
 import { PlausibleAnalytics } from "@/components/analytics/plausible";
 import { NewsletterCTA } from "@/components/content/newsletter-cta";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -13,7 +12,7 @@ import {
   SITE_DESCRIPTION,
   buildMetadata,
 } from "@/lib/seo";
-import { THEME_COOKIE_NAME, isThemeValue, themeInitScript } from "@/lib/theme";
+import { themeInitScript } from "@/lib/theme";
 import "./globals.css";
 
 const inter = Inter({
@@ -48,20 +47,21 @@ export const viewport: Viewport = {
   ],
 };
 
-export default async function RootLayout({
+/**
+ * Root layout stays fully static / ISR-friendly.
+ * Theme is applied via inline script + cookie (no cookies() read here) so
+ * pages are not forced to Cache-Control: no-store (bfcache-compatible).
+ */
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-  const themeCookie = cookieStore.get(THEME_COOKIE_NAME)?.value;
-  const themePreference = isThemeValue(themeCookie) ? themeCookie : "system";
-
   return (
     <html
       lang="en-IN"
       className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
-      data-theme={themePreference}
+      data-theme="system"
       suppressHydrationWarning
     >
       <head>

@@ -23,7 +23,7 @@ export function PlausibleAnalytics({
       data-domain={domain}
       data-api={api}
       src={scriptSrc}
-      strategy="afterInteractive"
+      strategy="lazyOnload"
     />
   );
 }

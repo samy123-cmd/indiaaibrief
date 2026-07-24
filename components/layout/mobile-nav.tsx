@@ -16,11 +16,10 @@ import type { NavItem } from "@/types";
 
 interface MobileNavProps {
   items: NavItem[];
-  signedIn?: boolean;
 }
 
 /** Client-only: hamburger → full-screen Sheet overlay. */
-export function MobileNav({ items, signedIn = false }: MobileNavProps) {
+export function MobileNav({ items }: MobileNavProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -85,11 +84,18 @@ export function MobileNav({ items, signedIn = false }: MobileNavProps) {
             Subscribe
           </Link>
           <Link
-            href={signedIn ? "/dashboard" : "/sign-in"}
+            href="/sign-in"
             className="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-border px-4 text-sm font-medium text-foreground hover:bg-muted"
             onClick={() => setOpen(false)}
           >
-            {signedIn ? "Account" : "Sign in"}
+            Sign in
+          </Link>
+          <Link
+            href="/dashboard"
+            className="inline-flex min-h-11 w-full items-center justify-center rounded-md border border-border px-4 text-sm font-medium text-foreground hover:bg-muted"
+            onClick={() => setOpen(false)}
+          >
+            Account
           </Link>
           <Link
             href="/search"

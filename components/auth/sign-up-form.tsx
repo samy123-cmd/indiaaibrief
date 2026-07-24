@@ -6,6 +6,7 @@ import { Suspense, useMemo, useState, type FormEvent } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { safeRedirectPath } from "@/lib/request-guards";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
@@ -26,7 +27,7 @@ function passwordStrength(password: string): {
 function SignUpFormInner() {
   const router = useRouter();
   const params = useSearchParams();
-  const redirectTo = params.get("redirect_url") || "/dashboard";
+  const redirectTo = safeRedirectPath(params.get("redirect_url"));
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -85,7 +86,7 @@ function SignUpFormInner() {
   }
 
   const signInHref =
-    redirectTo && redirectTo !== "/dashboard"
+    redirectTo !== "/dashboard"
       ? `/sign-in?redirect_url=${encodeURIComponent(redirectTo)}`
       : "/sign-in";
 

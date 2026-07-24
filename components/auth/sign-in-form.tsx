@@ -2,21 +2,31 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { safeRedirectPath } from "@/lib/request-guards";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export function SignInForm() {
   const router = useRouter();
   const params = useSearchParams();
-  const redirectTo = params.get("redirect_url") || "/dashboard";
+  const redirectTo = safeRedirectPath(params.get("redirect_url"));
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const err = params.get("error");
+    if (err === "auth_callback") {
+      setError(
+        "That sign-in link expired or failed. Request a new one, or sign in with email and password.",
+      );
+    }
+  }, [params]);
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -37,6 +47,8 @@ export function SignInForm() {
           );
         } else if (/invalid login credentials/i.test(msg)) {
           setError("Wrong email or password. Try again or reset your password.");
+        } else if (/rate limit|too many/i.test(msg)) {
+          setError("Too many attempts. Wait a minute and try again.");
         } else {
           setError(msg);
         }
@@ -52,7 +64,7 @@ export function SignInForm() {
   }
 
   const signUpHref =
-    redirectTo && redirectTo !== "/dashboard"
+    redirectTo !== "/dashboard"
       ? `/sign-up?redirect_url=${encodeURIComponent(redirectTo)}`
       : "/sign-up";
 

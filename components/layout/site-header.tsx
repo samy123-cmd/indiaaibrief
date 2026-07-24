@@ -4,16 +4,14 @@ import { BrandMark } from "@/components/layout/brand-mark";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { Button } from "@/components/ui/button";
-import { getSessionUser } from "@/lib/auth";
 import { PRIMARY_NAV } from "@/lib/navigation";
 
 /**
- * Site navigation — Server Component.
- * Interactive pieces: ThemeToggle + MobileNav (Sheet) only.
+ * Site navigation — static Server Component (no auth cookies()).
+ * Account always links to /dashboard; middleware gates unauthenticated users.
+ * Keeps marketing pages cacheable + bfcache-friendly.
  */
-export async function SiteHeader() {
-  const user = await getSessionUser();
-
+export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 h-14 border-b border-border bg-surface/80 backdrop-blur-md md:h-16">
       <div className="mx-auto flex h-full w-full max-w-6xl items-center gap-2 px-4">
@@ -51,21 +49,15 @@ export async function SiteHeader() {
 
           <ThemeToggle />
 
-          {user ? (
-            <Button asChild variant="outline" className="hidden sm:inline-flex">
-              <Link href="/dashboard">Account</Link>
-            </Button>
-          ) : (
-            <Button asChild variant="ghost" className="hidden sm:inline-flex">
-              <Link href="/sign-in">Sign in</Link>
-            </Button>
-          )}
+          <Button asChild variant="ghost" className="hidden sm:inline-flex">
+            <Link href="/sign-in">Sign in</Link>
+          </Button>
 
           <Button asChild className="hidden sm:inline-flex">
             <Link href="/subscribe">Subscribe</Link>
           </Button>
 
-          <MobileNav items={PRIMARY_NAV} signedIn={Boolean(user)} />
+          <MobileNav items={PRIMARY_NAV} />
         </div>
       </div>
     </header>

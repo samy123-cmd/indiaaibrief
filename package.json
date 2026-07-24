@@ -2,6 +2,13 @@
   "name": "indiaaibrief",
   "version": "0.1.0",
   "private": true,
+  "browserslist": [
+    "chrome >= 111",
+    "edge >= 111",
+    "firefox >= 111",
+    "safari >= 16.4",
+    "not dead"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -24,6 +31,7 @@
     "@neondatabase/serverless": "^1.1.0",
     "@supabase/ssr": "^0.12.3",
     "@supabase/supabase-js": "^2.110.8",
+    "@vercel/analytics": "^2.0.1",
     "ai": "^7.0.37",
     "cheerio": "^1.2.0",
     "class-variance-authority": "^0.7.1",

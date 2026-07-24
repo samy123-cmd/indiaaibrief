@@ -1,14 +1,6 @@
 import { NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-
-/** Only allow same-origin relative paths (blocks //evil.com open redirects). */
-function safeRedirectPath(raw: string | null): string {
-  if (!raw) return "/dashboard";
-  if (!raw.startsWith("/") || raw.startsWith("//") || raw.includes("://")) {
-    return "/dashboard";
-  }
-  return raw;
-}
+import { safeRedirectPath } from "@/lib/request-guards";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);

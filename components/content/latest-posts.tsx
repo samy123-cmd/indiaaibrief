@@ -1,8 +1,4 @@
-"use client";
-
-import { useState } from "react";
 import { ArticleCard, type ArticleCardData } from "@/components/content/article-card";
-import { Button } from "@/components/ui/button";
 
 interface LatestPostsProps {
   initial: ArticleCardData[];
@@ -10,17 +6,14 @@ interface LatestPostsProps {
 }
 
 /**
- * Latest posts with a single "Load more" reveal (no infinite scroll / no CLS cascade).
- * Both batches are preloaded from the Server Component.
+ * Latest posts — zero client JS.
+ * Extra cards open via native <details> (no React hydration for this block).
  */
 export function LatestPosts({ initial, more }: LatestPostsProps) {
-  const [showMore, setShowMore] = useState(false);
-  const articles = showMore ? [...initial, ...more] : initial;
-
   return (
     <div>
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {articles.map((article, index) => (
+        {initial.map((article, index) => (
           <ArticleCard
             key={article.url}
             article={article}
@@ -28,19 +21,19 @@ export function LatestPosts({ initial, more }: LatestPostsProps) {
           />
         ))}
       </div>
-      {!showMore && more.length > 0 ?
-        <div className="mt-8 flex justify-center">
-          <Button
-            type="button"
-            variant="outline"
-            size="lg"
-            className="min-h-11"
-            onClick={() => setShowMore(true)}
-          >
-            Load more
-          </Button>
-        </div>
-      : null}
+      {more.length > 0 ? (
+        <details className="group mt-8">
+          <summary className="mx-auto flex min-h-11 w-fit cursor-pointer list-none items-center justify-center rounded-md border border-border bg-background px-6 text-sm font-medium text-foreground transition-colors hover:bg-muted [&::-webkit-details-marker]:hidden">
+            <span className="group-open:hidden">Load more</span>
+            <span className="hidden group-open:inline">Showing more</span>
+          </summary>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {more.map((article) => (
+              <ArticleCard key={article.url} article={article} />
+            ))}
+          </div>
+        </details>
+      ) : null}
     </div>
   );
 }

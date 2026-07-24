@@ -3,6 +3,9 @@ import { absoluteUrl } from "@/lib/utils";
 
 const INBOX = process.env.CONTACT_INBOX ?? "hello@indiaaibrief.com";
 
+/** Deduplicate fulfill emails within a single serverless isolate. */
+const fulfilledPaymentIds = new Set<string>();
+
 interface PaymentEntity {
   id?: string;
   order_id?: string;
@@ -12,17 +15,22 @@ interface PaymentEntity {
 }
 
 /**
- * Fulfill a verified Razorpay payment.event.
+ * Fulfill a verified Razorpay payment.
  * Emails customer + ops when Resend is configured; always structured-logs.
  */
 export async function fulfillRazorpayPayment(
   payment: PaymentEntity,
-): Promise<{ fulfilled: boolean; product: string | null }> {
+): Promise<{ fulfilled: boolean; product: string | null; skipped?: boolean }> {
   const notes = payment.notes ?? {};
   const product = notes.product ?? null;
   const email = payment.email ?? notes.email ?? null;
   const orderId = payment.order_id ?? "";
   const paymentId = payment.id ?? "";
+
+  if (paymentId && fulfilledPaymentIds.has(paymentId)) {
+    return { fulfilled: true, product, skipped: true };
+  }
+  if (paymentId) fulfilledPaymentIds.add(paymentId);
 
   let downloadUrl: string | null = null;
   let confirmedUrl: string | null = null;
@@ -38,10 +46,17 @@ export async function fulfillRazorpayPayment(
     );
   }
 
-  if (product === "ai-readiness" && (orderId || paymentId)) {
-    const params = new URLSearchParams();
-    if (orderId) params.set("order_id", orderId);
-    if (paymentId) params.set("payment_id", paymentId);
+  if (product === "ai-readiness" && orderId && paymentId) {
+    const token = createDownloadToken({
+      product,
+      orderId,
+      paymentId,
+    });
+    const params = new URLSearchParams({
+      order_id: orderId,
+      payment_id: paymentId,
+      token,
+    });
     confirmedUrl = absoluteUrl(`/audit/confirmed?${params.toString()}`);
   }
 
@@ -99,6 +114,8 @@ async function sendFulfillmentEmail(input: {
         input.downloadUrl
           ? `Download your files: ${input.downloadUrl}`
           : "Open your download page from the checkout success screen.",
+        "",
+        "This link expires in 7 days. Reply if you need a fresh link.",
         "",
         `Payment ID: ${input.paymentId}`,
         "",
