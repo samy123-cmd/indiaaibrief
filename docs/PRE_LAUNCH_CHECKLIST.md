@@ -42,13 +42,15 @@ Internal runbook. Do not publish this page publicly until launch day ops are don
 
 - [x] Privacy, Terms, Cookies, Refund, Editorial, DMCA
 - [x] About + Contact
-- [ ] ≥ 20 original articles before AdSense apply
-- [ ] AdSense approval → then `public/ads.txt` + live ad code
+- [x] ≥ 20 original articles (41 live) — AdSense-ready content bar met
+- [x] `/ads.txt` clean 404 until approval (no HTML soft-200)
+- [x] Reserved `AdSlot` only — **do not apply / do not enable ads yet**
+- [ ] AdSense approval (future) → then `public/ads.txt` + live ad code + CSP
 
 ## GSC & analytics
 
-- [ ] Set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` (see `docs/GOOGLE_SEARCH_CONSOLE.md`)
-- [ ] Submit sitemaps
+- [ ] Set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` on Vercel (HTML meta; see `docs/GOOGLE_SEARCH_CONSOLE.md`) — **needs your token**
+- [ ] Submit www sitemaps after GSC verify
 - [ ] Plausible domain live
 - [ ] Bing Webmaster Tools sitemap submit
 

@@ -130,6 +130,17 @@ const nextConfig: NextConfig = {
       static: 86400,
     },
   },
+  async redirects() {
+    // Collapse apex → www in one hop (Vercel still upgrades http→https).
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "indiaaibrief.com" }],
+        destination: "https://www.indiaaibrief.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

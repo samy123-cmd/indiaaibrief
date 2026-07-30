@@ -1,39 +1,57 @@
 # Google Search Console — IndiaAIBrief
 
-## 1. Add property
+Canonical host is **`https://www.indiaaibrief.com`**. Apex (`indiaaibrief.com`) permanently redirects to www.
+
+## 1. Add property (HTML meta — preferred for this launch)
 
 1. Open [Google Search Console](https://search.google.com/search-console)
-2. Add property: **Domain** `indiaaibrief.com` (preferred) or URL prefix `https://indiaaibrief.com`
-3. Prefer **DNS TXT** verification via Cloudflare
+2. Add property type: **URL prefix** → `https://www.indiaaibrief.com`
+3. Choose **HTML tag** verification
+4. Copy only the **content** token (the string inside `content="…"`), not the full meta tag
 
-### DNS verification (domain property)
+### Set the env var
 
-Add a TXT record at the apex:
-
-```
-Type: TXT
-Name: @
-Value: google-site-verification=XXXXXXXX (from GSC)
-```
-
-### HTML meta verification (URL-prefix fallback)
-
-1. Copy the verification token from GSC
-2. Set in Vercel / `.env.local`:
+In Vercel → Project → Settings → Environment Variables (Production):
 
 ```
 NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=your_token_here
 ```
 
-3. Redeploy — `buildMetadata` injects `<meta name="google-site-verification" …>` site-wide
+Or locally in `.env.local` for a preview check. Redeploy after saving.
+
+`buildMetadata` in `lib/seo.ts` injects:
+
+```html
+<meta name="google-site-verification" content="your_token_here" />
+```
+
+### Verify
+
+1. View source on `https://www.indiaaibrief.com/` and confirm the meta tag
+2. Click **Verify** in Search Console
+
+### Alternate: Domain property (DNS TXT)
+
+If you prefer a domain-wide property covering all subdomains:
+
+1. Add property: **Domain** `indiaaibrief.com`
+2. Add TXT at the apex (GoDaddy DNS today):
+
+```
+Type: TXT
+Name: @
+Value: google-site-verification=XXXXXXXX
+```
+
+HTML meta is still the launch path for this audit.
 
 ## 2. Submit sitemaps
 
-After verification, submit:
+After verification, submit these **www** URLs:
 
-- `https://indiaaibrief.com/sitemap.xml`
-- `https://indiaaibrief.com/news-sitemap.xml`
-- `https://indiaaibrief.com/image-sitemap.xml`
+- `https://www.indiaaibrief.com/sitemap.xml`
+- `https://www.indiaaibrief.com/news-sitemap.xml`
+- `https://www.indiaaibrief.com/image-sitemap.xml`
 
 ## 3. Day-1 URL inspection
 

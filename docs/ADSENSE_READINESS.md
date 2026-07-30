@@ -1,18 +1,23 @@
 # AdSense Readiness — IndiaAIBrief
 
-**Do not place ads or publish `ads.txt` until Google AdSense approves the site.**
+**Do not place ads, publish `ads.txt`, or apply to AdSense until you deliberately decide to.**
+
+Launch stance (2026-07-30): **AdSense-ready only** — policy/content/layout compliant; no live ad scripts; `/ads.txt` returns a clean **404** until approval.
+
+CLAUDE.md target: consider display ads only after meaningful traffic (~100K monthly pageviews). Kit/audit products and newsletter are the primary monetization until then.
 
 ## Policy checklist (Phase 5.1)
 
-- [ ] 20–30+ original, substantial articles live
-- [ ] No thin / placeholder / lorem pages
-- [ ] No copyrighted images without license
-- [ ] Clear navigation on all pages
+- [x] 20–30+ original, substantial articles live (**41** MDX articles)
+- [x] No thin / placeholder / lorem pages in public content
+- [x] Clear navigation on all pages
 - [x] About page with team + editorial standards
 - [x] Contact page / email
 - [x] Privacy (GDPR + DPDP), Terms, Cookies, Refund, Editorial, DMCA
-- [ ] No broken internal links (`npm run audit:perf` + manual crawl)
-- [ ] Site live on HTTPS without password gate
+- [x] Site live on HTTPS without password gate (`https://www.indiaaibrief.com`)
+- [x] `/ads.txt` returns **404 text/plain** (not HTML soft-200) until approval
+- [ ] No broken internal links — re-run `npm run audit:perf -- https://www.indiaaibrief.com` after each deploy
+- [ ] Copyrighted images licensed / original (editorial responsibility)
 
 ## Reserved ad slots (code ready, inactive)
 
@@ -25,19 +30,19 @@
 | `below-article` | After article body | Responsive |
 | `sidebar` | Desktop only (when layout adds sidebar) | 300×250 / 300×600 |
 
-Label visible: **Advertisement**. Scripts stay out until approval.
+Label visible: **Advertisement**. Scripts stay out until approval. Production CSP does **not** allow `googlesyndication` yet — add domains only when wiring ads.
 
-## After approval
+## After approval (not now)
 
-1. Copy `public/ads.txt.example` → `public/ads.txt`
+1. Copy `public/ads.txt.example` → `public/ads.txt` (replace the 404 route)
 2. Replace `pub-XXXXXXXXXXXXXXXX` with your publisher ID
 3. Wire AdSense script via Partytown or deferred loader only
-4. Map slots to AdSense ad unit IDs in `AdSlot`
+4. Extend CSP for AdSense domains
+5. Map slots to AdSense ad unit IDs in `AdSlot`
 
-## Application steps
+## Application steps (future)
 
-1. Complete checklist above
-2. AdSense → add `https://indiaaibrief.com`
-3. Temporary verification meta via `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` or AdSense snippet
-4. Keep publishing during review; **no ads live**
-5. On approval: ads.txt + units
+1. Complete checklist above + traffic threshold decision
+2. AdSense → add `https://www.indiaaibrief.com`
+3. Keep publishing during review; **no ads live** until approved
+4. On approval: ads.txt + units + CSP update

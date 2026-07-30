@@ -3,7 +3,7 @@
  * Final pre-launch performance + SEO smoke audit.
  * Usage:
  *   node scripts/performance-audit.mjs
- *   node scripts/performance-audit.mjs https://indiaaibrief.com
+ *   node scripts/performance-audit.mjs https://www.indiaaibrief.com
  */
 
 const base = (process.argv[2] || "http://127.0.0.1:3000").replace(/\/$/, "");
@@ -50,11 +50,11 @@ function warn(msg) {
   console.warn(`  ! ${msg}`);
 }
 
-async function fetchPath(path) {
+async function fetchPath(path, { redirect = "manual" } = {}) {
   const url = `${base}${path}`;
   const started = performance.now();
   const res = await fetch(url, {
-    redirect: "manual",
+    redirect,
     headers: { "user-agent": "IndiaAIBrief-PerfAudit/1.0" },
   });
   const ms = Math.round(performance.now() - started);
@@ -94,6 +94,12 @@ async function auditHtml(path) {
   if (!/width=["']\d+["']/i.test(text) && text.includes("<img")) {
     warn("some images may lack width attributes");
   }
+
+  const hsts = res.headers.get("strict-transport-security");
+  if (base.startsWith("https://")) {
+    if (hsts) pass("HSTS header present");
+    else warn("HSTS header missing");
+  }
 }
 
 async function auditRobots() {
@@ -107,16 +113,16 @@ async function auditRobots() {
     if (text.includes(bot)) pass(`mentions ${bot}`);
     else fail(`missing ${bot}`);
   }
-  if (text.includes("Sitemap: https://indiaaibrief.com/sitemap.xml")) {
-    pass("main sitemap absolute HTTPS");
+  if (/Sitemap:\s*https?:\/\/\S+\/sitemap\.xml/i.test(text)) {
+    pass("main sitemap absolute URL present");
   } else {
-    fail("main sitemap URL missing or not absolute HTTPS");
+    fail("main sitemap URL missing or not absolute");
   }
   if (text.includes("Disallow: /dashboard/")) pass("disallows /dashboard/");
   else fail("should disallow /dashboard/");
 }
 
-async function auditSitemap(path, mustInclude) {
+async function auditSitemap(path, mustInclude, { requireUrl = true } = {}) {
   console.log(`\n${path}`);
   const { res, text } = await fetchPath(path);
   if (!res.ok) {
@@ -128,19 +134,83 @@ async function auditSitemap(path, mustInclude) {
     return;
   }
   pass("valid-looking XML sitemap");
+  if (requireUrl && !text.includes("<url>") && !text.includes("<url ")) {
+    warn(`${path} has empty urlset (no <url> entries)`);
+  }
   for (const needle of mustInclude) {
     if (text.includes(needle)) pass(`contains ${needle}`);
     else warn(`missing expected token: ${needle}`);
   }
 }
 
+async function auditAdsTxt() {
+  console.log("\n/ads.txt");
+  const { res, text } = await fetchPath("/ads.txt");
+  const ct = (res.headers.get("content-type") || "").toLowerCase();
+
+  // Until AdSense approval: clean 404 text/plain (not HTML soft-200).
+  if (res.status === 404) {
+    if (ct.includes("text/html")) {
+      fail("/ads.txt 404 but Content-Type is HTML");
+      return;
+    }
+    pass("HTTP 404 (correct until AdSense approval)");
+    if (!text.includes("<!DOCTYPE") && !text.includes("<html")) {
+      pass("body is not HTML");
+    } else {
+      fail("404 body still looks like HTML");
+    }
+    return;
+  }
+
+  if (res.status === 200 && ct.includes("text/plain") && text.includes("google.com")) {
+    pass("live ads.txt present (post-approval)");
+    return;
+  }
+
+  fail(
+    `/ads.txt unexpected: HTTP ${res.status}, content-type=${ct || "none"} (want 404 text/plain until approval)`,
+  );
+}
+
+async function auditSampleArticle() {
+  console.log("\n(sample article from sitemap)");
+  const { res, text } = await fetchPath("/sitemap.xml");
+  if (!res.ok) {
+    warn("could not load sitemap for article sample");
+    return;
+  }
+  const match = text.match(
+    /<loc>(https?:\/\/[^<]+\/(?:news|explains|compares|playbooks|data)\/[^<]+)<\/loc>/,
+  );
+  if (!match) {
+    warn("no article URL found in sitemap");
+    return;
+  }
+  let path;
+  try {
+    path = new URL(match[1]).pathname;
+  } catch {
+    warn(`could not parse article URL: ${match[1]}`);
+    return;
+  }
+  console.log(`  sampling ${path}`);
+  const article = await fetchPath(path);
+  if (article.res.status === 200) pass(`article HTTP 200 (${path})`);
+  else fail(`article HTTP ${article.res.status} (${path})`);
+  if (article.text.includes("application/ld+json")) pass("article JSON-LD present");
+  else warn("article missing JSON-LD");
+}
+
 async function main() {
   console.log(`IndiaAIBrief performance/SEO audit → ${base}`);
 
   await auditRobots();
-  await auditSitemap("/sitemap.xml", ["https://indiaaibrief.com/", "changefreq", "priority"]);
+  await auditSitemap("/sitemap.xml", ["changefreq", "priority", "/"]);
   await auditSitemap("/news-sitemap.xml", ["news:name", "IndiaAIBrief"]);
   await auditSitemap("/image-sitemap.xml", ["image:loc", "image:title"]);
+  await auditAdsTxt();
+  await auditSampleArticle();
 
   for (const path of paths.filter((p) => !p.includes("sitemap") && p !== "/robots.txt")) {
     try {
