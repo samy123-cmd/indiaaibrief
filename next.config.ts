@@ -129,6 +129,7 @@ const nextConfig: NextConfig = {
       dynamic: 60,
       static: 86400,
     },
+    globalNotFound: true,
   },
   async redirects() {
     // Collapse apex → www in one hop (Vercel still upgrades http→https).

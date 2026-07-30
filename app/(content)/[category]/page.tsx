@@ -38,7 +38,7 @@ export async function generateMetadata({
 }: CategoryPageProps): Promise<Metadata> {
   const { category: categoryParam } = await params;
   const { page: pageParam, tag: tagParam } = await searchParams;
-  if (!isContentCategory(categoryParam)) return {};
+  if (!isContentCategory(categoryParam)) notFound();
 
   const copy = CATEGORY_COPY[categoryParam];
   const page = Math.max(1, Number.parseInt(pageParam ?? "1", 10) || 1);

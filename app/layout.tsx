@@ -10,6 +10,7 @@ import { organizationSchema, websiteSchema } from "@/lib/schema";
 import {
   SITE,
   SITE_DESCRIPTION,
+  SITE_NAME,
   buildMetadata,
 } from "@/lib/seo";
 import { themeInitScript } from "@/lib/theme";
@@ -31,11 +32,23 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
-export const metadata: Metadata = buildMetadata({
-  title: "Indian AI Intelligence for Decision-Makers",
-  description: SITE_DESCRIPTION,
-  path: "/",
-});
+// Keep root metadata generic — page-level metadata owns titles/canonicals.
+// Homepage-specific title lives on app/(marketing)/page.tsx so 404s do not
+// inherit the homepage <title> / canonical (soft-404 SEO hazard).
+export const metadata: Metadata = {
+  ...buildMetadata({
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    path: "/",
+  }),
+  title: {
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
+  },
+  alternates: undefined,
+  openGraph: undefined,
+  twitter: undefined,
+};
 
 export const viewport: Viewport = {
   width: "device-width",

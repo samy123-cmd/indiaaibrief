@@ -71,7 +71,7 @@ export function buildMetadata({
     process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim() || undefined;
 
   return {
-    title: fullTitle,
+    title: { absolute: fullTitle },
     description,
     applicationName: SITE_NAME,
     authors: authors?.map((name) => ({ name, url: authorUrl })),

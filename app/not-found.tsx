@@ -6,7 +6,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Page Not Found",
   description: "The page you requested could not be found on IndiaAIBrief.",
-  path: "/",
+  path: "/404",
   noIndex: true,
 });
 

@@ -52,10 +52,10 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: ArticlePageProps) {
   const { category, slug } = await params;
-  if (!isContentCategory(category)) return {};
+  if (!isContentCategory(category)) notFound();
 
   const post = await getPostBySlug(category, slug);
-  if (!post) return {};
+  if (!post) notFound();
 
   const author = getAuthor(post.author);
 
