@@ -67,17 +67,31 @@ async function main() {
     urlList: urls,
   };
 
-  const res = await fetch("https://api.indexnow.org/indexnow", {
-    method: "POST",
-    headers: { "Content-Type": "application/json; charset=utf-8" },
-    body: JSON.stringify(payload),
-  });
-  const text = await res.text();
-  console.log(`IndexNow → ${res.status} ${text || res.statusText}`);
-  console.log(`Submitted ${urls.length} URLs`);
-  if (res.status !== 200 && res.status !== 202) process.exit(1);
-}
+  const endpoints = [
+    "https://www.bing.com/indexnow",
+    "https://api.indexnow.org/indexnow",
+  ];
 
+  let lastError;
+  for (const endpoint of endpoints) {
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify(payload),
+      });
+      const text = await res.text();
+      console.log(`IndexNow (${endpoint}) → ${res.status} ${text || res.statusText}`);
+      console.log(`Submitted ${urls.length} URLs`);
+      if (res.status === 200 || res.status === 202) return;
+      lastError = new Error(`${endpoint} → ${res.status}`);
+    } catch (err) {
+      console.warn(`IndexNow (${endpoint}) failed:`, err.cause?.code || err.message);
+      lastError = err;
+    }
+  }
+  throw lastError ?? new Error("IndexNow submit failed");
+}
 main().catch((err) => {
   console.error(err);
   process.exit(1);

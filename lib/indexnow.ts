@@ -1,6 +1,9 @@
 import { absoluteUrl } from "@/lib/utils";
 
-const INDEXNOW_ENDPOINT = "https://api.indexnow.org/indexnow";
+const INDEXNOW_ENDPOINTS = [
+  "https://www.bing.com/indexnow",
+  "https://api.indexnow.org/indexnow",
+];
 
 /** Public IndexNow key — must match the hosted `/{key}.txt` file. */
 export function getIndexNowKey(): string | undefined {
@@ -40,17 +43,35 @@ export async function submitIndexNow(
     urlList: unique,
   };
 
-  const response = await fetch(INDEXNOW_ENDPOINT, {
-    method: "POST",
-    headers: { "Content-Type": "application/json; charset=utf-8" },
-    body: JSON.stringify(payload),
-  });
+  let lastStatus = 0;
+  let lastBody = "";
 
-  const body = await response.text();
-  // IndexNow returns 200/202 on success; 422 if key invalid.
+  for (const endpoint of INDEXNOW_ENDPOINTS) {
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify(payload),
+      });
+      lastBody = await response.text();
+      lastStatus = response.status;
+      if (response.status === 200 || response.status === 202) {
+        return {
+          ok: true,
+          status: response.status,
+          body: lastBody || response.statusText,
+        };
+      }
+    } catch (error) {
+      lastBody =
+        error instanceof Error ? error.message : "IndexNow request failed";
+      lastStatus = 0;
+    }
+  }
+
   return {
-    ok: response.status === 200 || response.status === 202,
-    status: response.status,
-    body: body || response.statusText,
+    ok: false,
+    status: lastStatus,
+    body: lastBody || "IndexNow request failed",
   };
 }
