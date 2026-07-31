@@ -64,7 +64,17 @@ function SignUpFormInner() {
         },
       });
       if (signError) {
-        setError(signError.message);
+        if (/already registered|already been registered|user already/i.test(signError.message)) {
+          setError(
+            "This email is already registered. Sign in, or use Forgot password if you need a new password.",
+          );
+        } else if (/rate limit|email.*limit/i.test(signError.message)) {
+          setError(
+            "Too many auth emails just now. Wait a few minutes, then try Sign in or Forgot password.",
+          );
+        } else {
+          setError(signError.message);
+        }
         setLoading(false);
         return;
       }
@@ -75,8 +85,22 @@ function SignUpFormInner() {
         return;
       }
 
+      // Supabase returns a user with empty identities when the email is already registered
+      // (and does not send another confirmation email).
+      const alreadyRegistered =
+        Array.isArray(data.user?.identities) && data.user.identities.length === 0;
+
+      if (alreadyRegistered) {
+        setError(null);
+        setMessage(
+          "This email already has an IndiaAIBrief account. Use Sign in with your existing password, or Forgot password to reset it. No new confirmation email is sent for existing accounts.",
+        );
+        setLoading(false);
+        return;
+      }
+
       setMessage(
-        "Check your inbox for a confirmation link (and spam folder), then sign in. Until you confirm, sign-in will not work.",
+        "If this is a new account, check your inbox (and spam) for a confirmation link, then sign in. Confirmation emails need custom SMTP in production — if nothing arrives in a few minutes, use Forgot password or email hello@indiaaibrief.com.",
       );
       setLoading(false);
     } catch (err) {
@@ -180,12 +204,26 @@ function SignUpFormInner() {
         </p>
       ) : null}
       {message ? (
-        <p
-          className="rounded-md border border-border bg-surface px-3 py-2.5 text-sm text-text-secondary"
+        <div
+          className="space-y-2 rounded-md border border-border bg-surface px-3 py-2.5 text-sm text-text-secondary"
           role="status"
         >
-          {message}
-        </p>
+          <p>{message}</p>
+          <p className="flex flex-wrap gap-x-3 gap-y-1 text-sm">
+            <Link
+              href={signInHref}
+              className="font-medium text-accent hover:text-accent-hover"
+            >
+              Sign in
+            </Link>
+            <Link
+              href="/forgot-password"
+              className="font-medium text-accent hover:text-accent-hover"
+            >
+              Forgot password
+            </Link>
+          </p>
+        </div>
       ) : null}
 
       <Button type="submit" size="lg" className="w-full" disabled={loading}>

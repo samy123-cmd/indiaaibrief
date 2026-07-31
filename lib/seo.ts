@@ -6,6 +6,28 @@ export const SITE_TAGLINE = "Indian AI intelligence for decision-makers.";
 export const SITE_DESCRIPTION =
   "Breaking news, original analysis, and actionable intelligence on India's AI ecosystem. For founders, CTOs, and policymakers.";
 
+/** Bing/Google-safe meta description length (chars). */
+export const META_DESCRIPTION_MAX = 155;
+
+/**
+ * Clamp meta descriptions for Search/Bing (≤155 chars, word-boundary).
+ * Prevents "Meta Description too long or too short" warnings.
+ */
+export function clampMetaDescription(
+  text: string,
+  max = META_DESCRIPTION_MAX,
+): string {
+  const cleaned = text.replace(/\s+/g, " ").trim();
+  if (cleaned.length <= max) return cleaned;
+
+  const budget = max - 1; // room for ellipsis
+  const sliced = cleaned.slice(0, budget);
+  const lastSpace = sliced.lastIndexOf(" ");
+  const base =
+    lastSpace > Math.floor(max * 0.55) ? sliced.slice(0, lastSpace) : sliced;
+  return `${base.replace(/[\s.,;:!?–—-]+$/u, "")}…`;
+}
+
 export const SITE = {
   name: SITE_NAME,
   legalName: "IndiaAIBrief",
@@ -30,6 +52,8 @@ interface BuildMetadataInput {
   title: string;
   description: string;
   path?: string;
+  /** Absolute URL override (e.g. syndicated / frontmatter canonical). */
+  canonical?: string;
   image?: string;
   imageAlt?: string;
   type?: "website" | "article";
@@ -48,6 +72,7 @@ export function buildMetadata({
   title,
   description,
   path = "/",
+  canonical,
   image = "/images/og-default.webp",
   imageAlt,
   type = "website",
@@ -61,7 +86,7 @@ export function buildMetadata({
   readingTimeMinutes,
   noIndex = false,
 }: BuildMetadataInput): Metadata {
-  const url = absoluteUrl(path);
+  const url = canonical?.trim() || absoluteUrl(path);
   const imageUrl = absoluteUrl(image);
   const fullTitle = title.includes(SITE_NAME)
     ? title
@@ -69,10 +94,11 @@ export function buildMetadata({
   const ogAlt = imageAlt ?? title;
   const verificationToken =
     process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim() || undefined;
+  const metaDescription = clampMetaDescription(description);
 
   return {
     title: { absolute: fullTitle },
-    description,
+    description: metaDescription,
     applicationName: SITE_NAME,
     authors: authors?.map((name) => ({ name, url: authorUrl })),
     creator: authors?.[0] ?? SITE_NAME,
@@ -103,7 +129,7 @@ export function buildMetadata({
       url,
       siteName: SITE_NAME,
       title: fullTitle,
-      description,
+      description: metaDescription,
       images: [
         {
           url: imageUrl,
@@ -132,7 +158,7 @@ export function buildMetadata({
       site: SITE.twitterHandle,
       creator: authorTwitter ?? SITE.twitterHandle,
       title: fullTitle,
-      description,
+      description: metaDescription,
       images: [
         {
           url: imageUrl,

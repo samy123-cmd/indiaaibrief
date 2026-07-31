@@ -74,15 +74,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <IndiaPulseStrip
-        stats={INDIA_PULSE_HERO}
-        eyebrow="India AI Watch"
-        title="Ecosystem pulse"
-        variant="hero"
-      />
-
       {trending.length > 0 ? (
-        <section className="cv-auto mx-auto w-full max-w-6xl px-4 py-12">
+        <section className="mx-auto w-full max-w-6xl px-4 py-12">
           <div className="flex items-end justify-between gap-4">
             <div>
               <h2 className="text-2xl font-bold tracking-tight text-foreground md:text-4xl">
@@ -110,6 +103,13 @@ export default async function HomePage() {
           </div>
         </section>
       ) : null}
+
+      <IndiaPulseStrip
+        stats={INDIA_PULSE_HERO}
+        eyebrow="India AI Watch"
+        title="Ecosystem pulse"
+        variant="hero"
+      />
 
       <section className="cv-auto border-t border-border bg-background">
         <div className="mx-auto w-full max-w-6xl px-4 py-12">

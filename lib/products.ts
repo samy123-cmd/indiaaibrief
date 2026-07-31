@@ -41,7 +41,7 @@ export const COMPLIANCE_KIT: DigitalProduct = {
   name: "AI Compliance Starter Kit for Indian MSMEs",
   headline: "Ship AI in India without guessing compliance",
   description:
-    "India-first playbook, 47-point checklist, and workspace template covering DPDP-aware data practices, vendor diligence, and RFP-ready artefacts — ₹999 one-time.",
+    "India-first playbook, 47-point checklist, and workspace template for DPDP-aware AI practices, vendor diligence, and RFP artefacts — ₹999.",
   priceInr: paiseToInr(KIT_AMOUNT_PAISE),
   pricePaise: KIT_AMOUNT_PAISE,
   currency: "INR",

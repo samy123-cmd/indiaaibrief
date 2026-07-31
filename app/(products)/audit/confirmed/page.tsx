@@ -9,7 +9,7 @@ import { formatInr } from "@/lib/utils";
 
 export const metadata: Metadata = buildMetadata({
   title: "Audit booked — confirmation",
-  description: "Payment confirmed for the AI Readiness Audit.",
+  description: "Your AI Readiness Audit payment is confirmed. Next steps for the 47-point scorecard are in your inbox.",
   path: "/audit/confirmed",
   noIndex: true,
 });

@@ -2,6 +2,8 @@
 
 Canonical host is **`https://www.indiaaibrief.com`**. Apex (`indiaaibrief.com`) permanently redirects to www.
 
+**Status (2026-07-30):** Code is ready for HTML-meta verification. Property verify + sitemap submit are **manual ops** — they require your GSC token and cannot be finished from the repo alone.
+
 ## 1. Add property (HTML meta — preferred for this launch)
 
 1. Open [Google Search Console](https://search.google.com/search-console)
@@ -69,3 +71,11 @@ Request indexing for:
 - Core Web Vitals (field data ~28 days)
 - Manual actions / Security issues: should be empty
 - Enable email notifications for critical issues
+
+## 5. After this remediation deploy
+
+1. Deploy the Mode 1A remediation (sitemap `/authors`, footer Cookies, canonical frontmatter, home LCP tweaks)
+2. Paste `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` if not already set
+3. Complete steps 1–3 above
+4. Re-run `npm run audit:perf -- https://www.indiaaibrief.com`
+5. Optional: [Rich Results Test](https://search.google.com/test/rich-results) on one article URL

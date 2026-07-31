@@ -5,6 +5,7 @@ import type {
   FaqItem,
   OrganizationInfo,
 } from "@/types";
+import { getPostAbsoluteUrl } from "@/lib/content";
 import { SITE } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/utils";
 
@@ -140,7 +141,7 @@ export function newsArticleSchema(
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": absoluteUrl(article.url),
+      "@id": getPostAbsoluteUrl(article),
     },
     articleSection: article.category,
     keywords: article.tags.join(", "),

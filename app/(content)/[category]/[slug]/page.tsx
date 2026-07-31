@@ -14,6 +14,7 @@ import { getAuthor } from "@/lib/authors";
 import { CATEGORY_COPY } from "@/lib/categories";
 import {
   getAllPosts,
+  getPostAbsoluteUrl,
   getPostBySlug,
   getRelatedPosts,
   isContentCategory,
@@ -63,6 +64,7 @@ export async function generateMetadata({ params }: ArticlePageProps) {
     title: articleTitle(post.title),
     description: post.description,
     path: post.url,
+    canonical: post.canonical,
     image: post.image,
     imageAlt: post.imageAlt,
     type: "article",
@@ -101,7 +103,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const breadcrumbs = [
     { name: "Home", item: absoluteUrl("/") },
     { name: categoryCopy.title, item: absoluteUrl(categoryCopy.path) },
-    { name: post.title, item: absoluteUrl(post.url) },
+    { name: post.title, item: getPostAbsoluteUrl(post) },
   ];
 
   const schemas = [

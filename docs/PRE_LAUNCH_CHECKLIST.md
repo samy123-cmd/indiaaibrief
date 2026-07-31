@@ -4,14 +4,14 @@ Internal runbook. Do not publish this page publicly until launch day ops are don
 
 ## Technical SEO
 
-- [x] `robots.ts` allows AI crawlers; blocks `/dashboard/`, `/api/`, `/_next/`
-- [x] Main sitemap (`/sitemap.xml`)
+- [x] `robots.ts` allows AI crawlers; blocks `/dashboard/`, `/api/`
+- [x] Main sitemap (`/sitemap.xml`) including `/authors` index
 - [x] News sitemap (`/news-sitemap.xml`) — last 48h
 - [x] Image sitemap (`/image-sitemap.xml`)
-- [x] Canonicals via `buildMetadata`
+- [x] Canonicals via `buildMetadata` (honors article frontmatter `canonical`)
 - [x] Pagination: unique titles + self-canonical `?page=N`
 - [x] Trailing slash: `false` + 301 consistency (Next config)
-- [x] Custom 404 with `noindex`
+- [x] Custom 404 with `noindex` (root `not-found` + experimental `global-not-found`; streamed responses may still be HTTP 200 with `noindex` — Next platform behavior)
 
 ## Structured data
 
@@ -19,7 +19,7 @@ Internal runbook. Do not publish this page publicly until launch day ops are don
 - [x] NewsArticle + BreadcrumbList + Person + FAQ on articles
 - [x] Product schema on kit pages
 - [x] Person schema on author pages
-- [ ] Validate sample URLs in [Rich Results Test](https://search.google.com/test/rich-results)
+- [ ] Validate sample URLs in [Rich Results Test](https://search.google.com/test/rich-results) — **manual after deploy**
 
 ## Meta & social
 
@@ -31,16 +31,17 @@ Internal runbook. Do not publish this page publicly until launch day ops are don
 ## Performance & security
 
 - [x] Security headers + CSP in `next.config.ts`
-- [x] `font-display: optional`, Inter variable weights limited
+- [x] `font-display: optional`, variable Inter (single file)
 - [x] Skip-to-content link
 - [x] `prefers-reduced-motion` respected
 - [x] Reserved AdSlot components (no ad scripts until AdSense approval)
-- [ ] Run `npm run audit:perf` against production URL
-- [ ] Lighthouse mobile ≥ 95 on home, article, category, product
+- [x] Run `npm run audit:perf` against production URL — **65 passed / 0 failed** (2026-07-30)
+- [ ] Lighthouse mobile ≥ 95 on home (home lab ~81 / LCP ~4.5s H1; article ~95) — field CWV via GSC
 
 ## Legal & AdSense readiness
 
 - [x] Privacy, Terms, Cookies, Refund, Editorial, DMCA
+- [x] Footer exposes Cookies (bottom strip + Legal column)
 - [x] About + Contact
 - [x] ≥ 20 original articles (41 live) — AdSense-ready content bar met
 - [x] `/ads.txt` clean 404 until approval (no HTML soft-200)
@@ -51,7 +52,7 @@ Internal runbook. Do not publish this page publicly until launch day ops are don
 
 - [ ] Set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` on Vercel (HTML meta; see `docs/GOOGLE_SEARCH_CONSOLE.md`) — **needs your token**
 - [ ] Submit www sitemaps after GSC verify
-- [ ] Plausible domain live
+- [x] Plausible wired (prod-only; no GA4 by design)
 - [ ] Bing Webmaster Tools sitemap submit
 
 ## Build

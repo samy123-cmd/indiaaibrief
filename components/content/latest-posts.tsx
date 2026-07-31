@@ -13,12 +13,8 @@ export function LatestPosts({ initial, more }: LatestPostsProps) {
   return (
     <div>
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {initial.map((article, index) => (
-          <ArticleCard
-            key={article.url}
-            article={article}
-            priority={index === 0}
-          />
+        {initial.map((article) => (
+          <ArticleCard key={article.url} article={article} />
         ))}
       </div>
       {more.length > 0 ? (

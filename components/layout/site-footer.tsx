@@ -67,6 +67,12 @@ export function SiteFooter() {
               Terms
             </Link>
             <Link
+              href="/cookies"
+              className="inline-flex min-h-11 items-center hover:text-foreground"
+            >
+              Cookies
+            </Link>
+            <Link
               href="/editorial"
               className="inline-flex min-h-11 items-center hover:text-foreground"
             >

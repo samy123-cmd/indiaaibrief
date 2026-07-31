@@ -16,12 +16,12 @@ import {
 import { themeInitScript } from "@/lib/theme";
 import "./globals.css";
 
+// Variable Inter — one file instead of four static weights (helps home LCP).
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "optional",
   preload: true,
-  weight: ["400", "600", "700", "800"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
