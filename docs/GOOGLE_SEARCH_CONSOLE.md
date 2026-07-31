@@ -79,3 +79,21 @@ Request indexing for:
 3. Complete steps 1–3 above
 4. Re-run `npm run audit:perf -- https://www.indiaaibrief.com`
 5. Optional: [Rich Results Test](https://search.google.com/test/rich-results) on one article URL
+
+## 6. Bing IndexNow
+
+Key file (Option 1 — site root):
+
+```
+https://www.indiaaibrief.com/e8fb5aa82fc64eef87da5bdcc606a150.txt
+```
+
+After deploy, submit priority URLs:
+
+```bash
+npm run indexnow
+# or specific paths:
+npm run indexnow -- /explains/india-ai-strategy-sovereign-safety
+```
+
+Set `INDEXNOW_KEY` on Vercel to match the filename (same value as the `.txt` body). Optional authenticated endpoint: `POST /api/indexnow` with `Authorization: Bearer $CRON_SECRET`.
