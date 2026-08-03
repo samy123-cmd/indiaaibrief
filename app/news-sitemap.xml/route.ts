@@ -1,12 +1,18 @@
 import { NextResponse } from "next/server";
-import { getAllPosts } from "@/lib/content";
+import { getRecentNewsForSitemap } from "@/lib/news-sitemap";
 import { absoluteUrl } from "@/lib/utils";
 
 export async function GET() {
-  const cutoff = Date.now() - 48 * 60 * 60 * 1000;
-  const recentNews = (await getAllPosts("news")).filter(
-    (post) => new Date(post.publishedAt).getTime() >= cutoff,
-  );
+  const recentNews = await getRecentNewsForSitemap();
+
+  if (recentNews.length === 0) {
+    return new NextResponse(null, {
+      status: 404,
+      headers: {
+        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=60",
+      },
+    });
+  }
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"

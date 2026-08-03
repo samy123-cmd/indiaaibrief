@@ -174,6 +174,70 @@ export function websiteSchema(): Record<string, unknown> {
   };
 }
 
+export type ProductReviewInput = {
+  author: string;
+  ratingValue: number;
+  reviewBody: string;
+  datePublished: string;
+};
+
+export type ProductReturnPolicyInput = {
+  /** Calendar days in the refund window (kit: 7, audit: 2). */
+  merchantReturnDays: number;
+};
+
+function priceValidUntilOneYear(): string {
+  const d = new Date();
+  d.setUTCFullYear(d.getUTCFullYear() + 1);
+  return d.toISOString().slice(0, 10);
+}
+
+function digitalShippingDetails(): Record<string, unknown> {
+  return {
+    "@type": "OfferShippingDetails",
+    shippingRate: {
+      "@type": "MonetaryAmount",
+      value: "0",
+      currency: "INR",
+    },
+    deliveryTime: {
+      "@type": "ShippingDeliveryTime",
+      handlingTime: {
+        "@type": "QuantitativeValue",
+        minValue: 0,
+        maxValue: 0,
+        unitCode: "DAY",
+      },
+      transitTime: {
+        "@type": "QuantitativeValue",
+        minValue: 0,
+        maxValue: 0,
+        unitCode: "DAY",
+      },
+    },
+    shippingDestination: {
+      "@type": "DefinedRegion",
+      addressCountry: "IN",
+    },
+  };
+}
+
+function merchantReturnPolicy(
+  policy: ProductReturnPolicyInput,
+): Record<string, unknown> {
+  return {
+    "@type": "MerchantReturnPolicy",
+    applicableCountry: "IN",
+    returnPolicyCategory:
+      "https://schema.org/MerchantReturnFiniteReturnWindow",
+    merchantReturnDays: policy.merchantReturnDays,
+    returnMethod: "https://schema.org/ReturnByMail",
+    refundType: "https://schema.org/FullRefund",
+    returnFees: "https://schema.org/FreeReturn",
+    url: absoluteUrl("/refund"),
+  };
+}
+
 export function productSchema(product: {
   name: string;
   description: string;
@@ -182,9 +246,19 @@ export function productSchema(product: {
   image: string;
   currency?: "INR";
   path?: string;
+  /** Refund window in days — matches /refund copy (kit 7, audit 2). */
+  merchantReturnDays?: number;
+  /** Authentic customer reviews only — omit when none exist. */
+  reviews?: ProductReviewInput[];
+  aggregateRating?: {
+    ratingValue: number;
+    reviewCount: number;
+  };
 }): Record<string, unknown> {
   const url = absoluteUrl(product.path ?? `/kit/${product.slug}`);
-  return {
+  const returnDays = product.merchantReturnDays ?? 7;
+
+  const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
@@ -200,11 +274,50 @@ export function productSchema(product: {
       url,
       priceCurrency: product.currency ?? "INR",
       price: String(product.priceInr),
+      priceValidUntil: priceValidUntilOneYear(),
       availability: "https://schema.org/InStock",
+      itemCondition: "https://schema.org/NewCondition",
       seller: {
         "@type": "Organization",
         name: SITE.name,
       },
+      hasMerchantReturnPolicy: merchantReturnPolicy({
+        merchantReturnDays: returnDays,
+      }),
+      shippingDetails: digitalShippingDetails(),
     },
   };
+
+  if (product.reviews && product.reviews.length > 0) {
+    schema.review = product.reviews.map((r) => ({
+      "@type": "Review",
+      author: {
+        "@type": "Person",
+        name: r.author,
+      },
+      datePublished: r.datePublished,
+      reviewBody: r.reviewBody,
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: r.ratingValue,
+        bestRating: 5,
+        worstRating: 1,
+      },
+    }));
+  }
+
+  if (
+    product.aggregateRating &&
+    product.aggregateRating.reviewCount > 0
+  ) {
+    schema.aggregateRating = {
+      "@type": "AggregateRating",
+      ratingValue: product.aggregateRating.ratingValue,
+      reviewCount: product.aggregateRating.reviewCount,
+      bestRating: 5,
+      worstRating: 1,
+    };
+  }
+
+  return schema;
 }

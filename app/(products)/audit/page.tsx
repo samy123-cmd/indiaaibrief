@@ -2,7 +2,7 @@ import Link from "next/link";
 import { CheckoutButton } from "@/components/products/checkout-button";
 import { Badge } from "@/components/ui/badge";
 import { JsonLd } from "@/components/seo/json-ld";
-import { PRODUCTS } from "@/lib/products";
+import { getProductReviewSchemaProps, PRODUCTS } from "@/lib/products";
 import { breadcrumbSchema, faqPageSchema, productSchema } from "@/lib/schema";
 import { buildMetadata } from "@/lib/seo";
 import { absoluteUrl, formatInr } from "@/lib/utils";
@@ -67,6 +67,8 @@ export default function AuditPage() {
             image: "/images/products/ai-compliance-kit.webp",
             currency: AUDIT.currency,
             path: "/audit",
+            merchantReturnDays: AUDIT.merchantReturnDays,
+            ...getProductReviewSchemaProps(AUDIT.slug),
           }),
           faqPageSchema(FAQS),
           breadcrumbSchema(breadcrumbs),

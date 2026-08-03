@@ -3,7 +3,11 @@ import { notFound } from "next/navigation";
 import { CheckoutButton } from "@/components/products/checkout-button";
 import { Badge } from "@/components/ui/badge";
 import { JsonLd } from "@/components/seo/json-ld";
-import { getDigitalProduct } from "@/lib/products";
+import {
+  getDigitalProduct,
+  getProductReviewSchemaProps,
+  PRODUCTS,
+} from "@/lib/products";
 import {
   breadcrumbSchema,
   faqPageSchema,
@@ -60,6 +64,8 @@ export default async function KitPage({
             priceInr: product.priceInr,
             image: product.image,
             currency: product.currency,
+            merchantReturnDays: PRODUCTS.complianceKit.merchantReturnDays,
+            ...getProductReviewSchemaProps(product.slug),
           }),
           faqPageSchema(product.faqs),
           breadcrumbSchema(breadcrumbs),

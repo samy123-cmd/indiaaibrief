@@ -1,7 +1,17 @@
 import type { MetadataRoute } from "next";
+import { getRecentNewsForSitemap } from "@/lib/news-sitemap";
 import { absoluteUrl } from "@/lib/utils";
 
-export default function robots(): MetadataRoute.Robots {
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const recentNews = await getRecentNewsForSitemap();
+  const sitemaps = [
+    absoluteUrl("/sitemap.xml"),
+    absoluteUrl("/image-sitemap.xml"),
+  ];
+  if (recentNews.length > 0) {
+    sitemaps.splice(1, 0, absoluteUrl("/news-sitemap.xml"));
+  }
+
   return {
     rules: [
       {
@@ -30,10 +40,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: [
-      absoluteUrl("/sitemap.xml"),
-      absoluteUrl("/news-sitemap.xml"),
-      absoluteUrl("/image-sitemap.xml"),
-    ],
+    sitemap: sitemaps,
   };
 }

@@ -122,9 +122,13 @@ async function auditRobots() {
   else fail("should disallow /dashboard/");
 }
 
-async function auditSitemap(path, mustInclude, { requireUrl = true } = {}) {
+async function auditSitemap(path, mustInclude, { requireUrl = true, allowEmpty404 = false } = {}) {
   console.log(`\n${path}`);
   const { res, text } = await fetchPath(path);
+  if (allowEmpty404 && res.status === 404) {
+    pass(`${path} HTTP 404 (empty news window — expected)`);
+    return;
+  }
   if (!res.ok) {
     fail(`${path} HTTP ${res.status}`);
     return;
@@ -207,7 +211,9 @@ async function main() {
 
   await auditRobots();
   await auditSitemap("/sitemap.xml", ["changefreq", "priority", "/"]);
-  await auditSitemap("/news-sitemap.xml", ["news:name", "IndiaAIBrief"]);
+  await auditSitemap("/news-sitemap.xml", ["news:name", "IndiaAIBrief"], {
+    allowEmpty404: true,
+  });
   await auditSitemap("/image-sitemap.xml", ["image:loc", "image:title"]);
   await auditAdsTxt();
   await auditSampleArticle();

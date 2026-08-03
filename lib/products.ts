@@ -1,3 +1,4 @@
+import type { ProductReviewInput } from "@/lib/schema";
 import type { FaqItem, ProductKit } from "@/types";
 
 export interface ProductDeliverable {
@@ -148,6 +149,8 @@ export const PRODUCTS = {
     description: COMPLIANCE_KIT.description,
     currency: COMPLIANCE_KIT.currency,
     features: COMPLIANCE_KIT.features,
+    /** Matches /refund: 7-day window if not substantially downloaded. */
+    merchantReturnDays: 7,
   },
   readinessAudit: {
     slug: "ai-readiness",
@@ -164,8 +167,36 @@ export const PRODUCTS = {
       "3-day turnaround",
       "1 follow-up call",
     ],
+    /** Matches /refund: 48 hours if work has not started. */
+    merchantReturnDays: 2,
   },
 } as const;
+
+/**
+ * Authentic customer reviews only. Leave empty until real testimonials exist —
+ * do not invent names, ratings, or quotes (Google spam policy).
+ * Keyed by product slug (`ai-compliance` | `ai-readiness`).
+ */
+export const PRODUCT_REVIEWS: Record<string, ProductReviewInput[]> = {
+  "ai-compliance": [],
+  "ai-readiness": [],
+};
+
+export function getProductReviewSchemaProps(slug: string): {
+  reviews?: ProductReviewInput[];
+  aggregateRating?: { ratingValue: number; reviewCount: number };
+} {
+  const reviews = PRODUCT_REVIEWS[slug] ?? [];
+  if (reviews.length === 0) return {};
+  const sum = reviews.reduce((acc, r) => acc + r.ratingValue, 0);
+  return {
+    reviews,
+    aggregateRating: {
+      ratingValue: Math.round((sum / reviews.length) * 10) / 10,
+      reviewCount: reviews.length,
+    },
+  };
+}
 
 export function getDigitalProduct(slug: string): DigitalProduct | null {
   if (slug === COMPLIANCE_KIT.slug) return COMPLIANCE_KIT;

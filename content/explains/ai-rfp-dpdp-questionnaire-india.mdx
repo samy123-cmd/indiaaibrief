@@ -1,0 +1,113 @@
+---
+title: "AI RFP Questionnaires: DPDP Answers That Win"
+description: "How Indian AI vendors answer DPDP and AI governance questions in enterprise RFPs — copy-ready artefacts, red flags, and a scorecard buyers already use."
+publishedAt: "2026-08-06T10:00:00+05:30"
+modifiedAt: "2026-08-06T10:00:00+05:30"
+author: "indiaaibrief-desk"
+category: "explains"
+tags: ["dpdp", "rfp", "enterprise", "compliance", "procurement"]
+image: "/images/articles/ai-rfp-dpdp-questionnaire-india.webp"
+imageAlt: "Editorial graphic on answering DPDP and AI governance questions in Indian enterprise RFPs"
+featured: true
+trending: true
+readingTime: 11
+excerpt: "Indian AI RFPs now ask for data maps, lawful grounds, logging, and human oversight — here’s how to answer without a 40-page waffle deck."
+structuredData:
+  type: "FAQPage"
+  faq:
+    - question: "What DPDP artefacts do Indian enterprises ask for in AI RFPs?"
+      answer: "Expect a personal-data map for training and inference, lawful ground or consent language, retention/deletion owners, subprocessors, and transfer clauses — plus logging fields for high-impact outputs."
+    - question: "Is a privacy policy link enough for DPDP in an AI RFP?"
+      answer: "No. Buyers want purpose-specific answers for model training, RAG indexes, and prompt logs. A generic privacy URL without a data map usually scores as non-compliant in security review."
+    - question: "How long does a DPDP-ready AI questionnaire take to prepare?"
+      answer: "IndiaAIBrief desk estimate for a first-time MSME vendor: 5–10 working days if you already know your pipelines; 3–4 weeks if you must inventory personal data and vendors from scratch."
+    - question: "Should we hire a law firm before every AI RFP?"
+      answer: "Use counsel for regulated BFSI/health/government deals and novel training on personal data. For hygiene questionnaires, ship operational artefacts first — then escalate material legal risk."
+---
+
+<Answer>
+Indian enterprise AI RFPs in 2026 treat DPDP as a product question, not a legal footnote. Winning answers include a data map, lawful grounds for training and inference, retention owners, subprocessors, logging for high-impact decisions, and a human override path. A privacy-policy hyperlink alone fails security review.
+</Answer>
+
+If you sell chatbots, RAG copilots, or document AI into Indian BFSI, manufacturing, or GCCs, procurement already copies language from [MeitY’s AI governance draft](/news/meity-ai-governance-framework-2026) and [DPDP training-data rules](/explains/dpdp-act-ai-training-data). This explainer is the questionnaire playbook — not a statute reprint.
+
+## What Changed
+
+- Security questionnaires now bundle **DPDP + AI oversight** in one section.
+- Buyers ask for **artefacts** (tables, owners, log fields) more than philosophy slides.
+- Cross-border model APIs trigger **transfer and subprocessor** follow-ups even when the UI is India-hosted.
+- Regulated sectors add India-region and kill-switch language on top of DPDP — see [RBI model-risk checklist](/playbooks/rbi-ai-model-risk-compliance-checklist-fintech).
+- Related: [AI regulation business guide](/explains/ai-regulation-india-business-guide), [AI Compliance Kit](/kit/ai-compliance).
+
+## The Details
+
+### The eight questions that decide the RFP
+
+Treat these as a fixed set. If your deck cannot answer them in writing, do not submit “we take privacy seriously.”
+
+1. **What personal data enters training, fine-tuning, or RAG indexes?**
+2. **What is the lawful ground / purpose for each field?**
+3. **Where do prompts, embeddings, and logs live (region + vendor)?**
+4. **Who can access production logs, and for how long?**
+5. **How do you delete or anonymise on customer request?**
+6. **Which subprocessors touch personal data (model APIs, observability, support)?**
+7. **For high-impact decisions, where is human review and override?**
+8. **What is your incident path if a model leaks personal data?**
+
+### Copy-ready artefact: one-page data map
+
+| Pipeline stage | Personal fields | Purpose | Ground | Retention owner | Region |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Support RAG index | Ticket text, email | Answer employee queries | Contract / notice | Eng lead | India VPC |
+| Fine-tune snapshot | Redacted tickets | Improve retrieval | Explicit consent addendum | ML lead | India + named cloud |
+| Prompt logs | Free text | Debug + abuse | Legitimate ops + notice | SRE | 30 days, then delete |
+
+Fill real rows. Empty cells are audit findings.
+
+### Scoring rubric buyers already use (desk synthesis)
+
+| Score | Pattern |
+| :--- | :--- |
+| Fail | Privacy URL only; “we use OpenAI” with no subprocessor table |
+| Weak | Policies exist; no owners, no retention, no log fields |
+| Pass | Data map + subprocessors + HITL for high-tier flows |
+| Strong | Pass + tested deletion SLA + India-region option + sample log schema |
+
+But here’s what others won’t tell you: **procurement grades speed and specificity.** A four-page annex delivered in 48 hours beats a polished 40-page PDF arriving after the shortlist closes.
+
+### Red flags that kill deals
+
+- Training on customer data “to improve the model” without refreshed notices
+- Sharing production prompts with public model endpoints for “debugging”
+- No distinction between **training** and **inference** processing
+- Claiming anonymisation when free-text still names employees or customers
+- No link between AI logs and your DPDP grievance / incident process
+
+For a deeper training-data treatment, read [How India’s DPDP Act Affects AI Training Data](/explains/dpdp-act-ai-training-data). For sovereign and MeitY context, see [India’s AI strategy](/explains/india-ai-strategy-sovereign-safety).
+
+## What This Means for Indian MSMEs and CTOs
+
+1. **Build the eight-answer pack once**; reuse across RFPs with customer-specific data-map rows.
+2. **Name owners** — anonymous “security team” fails when the buyer asks for an email.
+3. **Budget 5–10 days** for the first questionnaire; less thereafter.
+4. **Use the [AI Compliance Starter Kit](/kit/ai-compliance)** for checklist + workspace templates before counsel hours.
+5. **Book an [AI Readiness Audit](/audit)** if you need a scored gap list before a BFSI pilot.
+6. **Track policy changes** on the [Policy Tracker](/policy) so your annex does not cite last year’s advisories.
+
+## Frequently Asked Questions
+
+### What DPDP artefacts do Indian enterprises ask for in AI RFPs?
+
+Expect a personal-data map for training and inference, lawful ground or consent language, retention/deletion owners, subprocessors, and transfer clauses — plus logging fields for high-impact outputs.
+
+### Is a privacy policy link enough for DPDP in an AI RFP?
+
+No. Buyers want purpose-specific answers for model training, RAG indexes, and prompt logs. A generic privacy URL without a data map usually scores as non-compliant in security review.
+
+### How long does a DPDP-ready AI questionnaire take to prepare?
+
+IndiaAIBrief desk estimate for a first-time MSME vendor: 5–10 working days if you already know your pipelines; 3–4 weeks if you must inventory personal data and vendors from scratch.
+
+### Should we hire a law firm before every AI RFP?
+
+Use counsel for regulated BFSI/health/government deals and novel training on personal data. For hygiene questionnaires, ship operational artefacts first — then escalate material legal risk.

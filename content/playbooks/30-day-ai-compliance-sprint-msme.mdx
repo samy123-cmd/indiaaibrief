@@ -1,0 +1,135 @@
+---
+title: "30-Day AI Compliance Sprint for Indian MSMEs"
+description: "A 30-day sprint for MSMEs shipping chatbots or RAG under DPDP and MeitY-style asks — week-by-week checklist, cost bands, and RFP artefacts."
+publishedAt: "2026-08-08T10:00:00+05:30"
+modifiedAt: "2026-08-08T10:00:00+05:30"
+author: "indiaaibrief-desk"
+category: "playbooks"
+tags: ["compliance", "msme", "dpdp", "playbook", "chatbots"]
+image: "/images/articles/30-day-ai-compliance-sprint-msme.webp"
+imageAlt: "Checklist graphic for a 30-day AI compliance sprint for Indian MSMEs"
+featured: true
+trending: true
+readingTime: 12
+excerpt: "Ship DPDP-aware AI hygiene in 30 days: data map, vendors, logging, HITL, and RFP annex — without a ₹1L consultant retainer."
+structuredData:
+  type: "FAQPage"
+  faq:
+    - question: "Can an MSME finish AI compliance hygiene in 30 days?"
+      answer: "Yes for operational hygiene — data map, notices, logging, vendor list, and HITL for high-tier flows. Regulated BFSI/health programmes and full legal opinions take longer and need counsel."
+    - question: "What does a 30-day AI compliance sprint cost?"
+      answer: "IndiaAIBrief desk estimate: ₹25,000–₹80,000 in internal time for a 5–15 person product team, plus ₹999–₹4,999 if you use our kit or readiness audit — before external counsel."
+    - question: "Do we need MeitY registration to start the sprint?"
+      answer: "No. Start with DPDP purpose mapping and oversight controls buyers already ask for. Track MeitY instruments on the Policy Tracker as they firm up."
+    - question: "What is the minimum deliverable after 30 days?"
+      answer: "A living data map, subprocessor table, log field list, human-override runbook for high-risk flows, and a 4–6 page RFP annex you can reuse."
+---
+
+<Answer>
+Indian MSMEs can reach RFP-ready AI compliance hygiene in 30 days: inventory personal data in training and inference, document lawful grounds, list subprocessors, ship immutable logs and human override for high-impact flows, and package a short annex for buyers. This is operational readiness — not a substitute for counsel on regulated deals.
+</Answer>
+
+You do not need a six-month “AI governance programme” to stop failing security questionnaires. You need a sprint with owners and artefacts. Use this beside the [DPDP training guide](/explains/dpdp-act-ai-training-data), [RFP questionnaire explainer](/explains/ai-rfp-dpdp-questionnaire-india), and [MeitY framework news](/news/meity-ai-governance-framework-2026).
+
+## What Changed
+
+- Enterprise buyers now expect **DPDP + AI oversight** evidence before pilots.
+- MSMEs lose deals to **missing tables**, not missing ISO certificates.
+- Chatbots and RAG on Indian customer data are the common blast radius — not giant foundation-model labs.
+- Templates beat blank Notion pages: [AI Compliance Starter Kit](/kit/ai-compliance) (₹999) and [AI Readiness Audit](/audit) (₹4,999).
+- Track evolving instruments on the [Policy Tracker](/policy).
+
+## The Details
+
+### Week 1 — Inventory and purpose (days 1–7)
+
+**Owner:** Founder or Head of Product.
+
+- List every AI feature in production or pilot (chatbot, lead score, OCR, coding assist).
+- For each, mark personal data fields in prompts, indexes, fine-tunes, and logs.
+- Write one purpose sentence per field; flag purpose creep.
+- Draft or refresh customer-facing notice language covering model improvement and logging.
+
+**Exit criteria:** One spreadsheet (or workspace board) with stage → fields → purpose → owner.
+
+### Week 2 — Vendors and regions (days 8–14)
+
+**Owner:** Engineering lead.
+
+- Subprocessor table: model APIs, vector DB, observability, support tools, email.
+- Region and transfer notes for each; India-hosting options for BFSI/health prospects.
+- Contracts or DPAs: who deletes on request; who can train on your inputs (default: nobody).
+- Kill public “paste production data into ChatGPT” habits — replace with redacted eval sets.
+
+**Exit criteria:** Subprocessor table v1 + named deletion contact.
+
+### Week 3 — Oversight and logs (days 15–21)
+
+**Owner:** Eng + ops.
+
+- Risk-tier features: low (FAQ bot) vs high (credit, hiring, medical triage).
+- High-tier: human review path, override, and a tested “stop the model” step.
+- Log fields (minimum): `model_version`, `prompt_hash`, `output_hash`, `reviewer_id`, `decision`, `ts_utc`.
+- Incident stub: who gets paged if personal data leaks via model output.
+
+**Exit criteria:** Runbook PDF/Markdown + sample log line in staging.
+
+### Week 4 — RFP annex and dry run (days 22–30)
+
+**Owner:** Founder + sales engineer.
+
+- Assemble 4–6 page annex answering the [eight RFP questions](/explains/ai-rfp-dpdp-questionnaire-india).
+- Dry-run with a friendly security contact or internal red team.
+- Schedule quarterly review date; put it on the calendar.
+- Optional: score gaps with an [AI Readiness Audit](/audit) before a bank pilot.
+
+### Cost band (desk estimate)
+
+| Item | Low | High |
+| :--- | :--- | :--- |
+| Internal time (5–15 person team) | ₹25,000 | ₹80,000 |
+| Compliance kit templates | ₹999 | ₹999 |
+| Readiness audit (optional) | — | ₹4,999 |
+| External counsel (if regulated) | ₹50,000+ | Deal-dependent |
+
+But here’s what others won’t tell you: **Week 2 is where sprints die.** Teams love Week 1 inventories and Week 3 architecture diagrams; they avoid calling vendors to ask “do you train on our prompts?” Put vendor emails on day 8, not day 28.
+
+### Copy-ready 10-point checklist
+
+- [ ] AI feature inventory complete
+- [ ] Personal-data map for training + inference
+- [ ] Purpose / ground documented per field
+- [ ] Notices updated
+- [ ] Subprocessor table with regions
+- [ ] Deletion owner named
+- [ ] High-tier HITL + stop procedure
+- [ ] Log fields in staging
+- [ ] Incident stub written
+- [ ] RFP annex drafted and versioned
+
+## What This Means for Indian MSME Founders and CTOs
+
+1. **Time-box 30 days** with a single accountable owner — committee theatre fails.
+2. **Buy templates** ([kit](/kit/ai-compliance)) instead of blank docs if your team is under 20 people.
+3. **Do not wait for a final MeitY rulebook** to start DPDP hygiene buyers already require.
+4. **Reuse this sprint** before every new AI feature launch — append rows, don’t restart.
+5. **Escalate to counsel** for BFSI/health/government personal-data training — see [AI regulation guide](/explains/ai-regulation-india-business-guide).
+6. **If you sell into fintech**, extend Week 3 with the [RBI model-risk checklist](/playbooks/rbi-ai-model-risk-compliance-checklist-fintech).
+
+## Frequently Asked Questions
+
+### Can an MSME finish AI compliance hygiene in 30 days?
+
+Yes for operational hygiene — data map, notices, logging, vendor list, and HITL for high-tier flows. Regulated BFSI/health programmes and full legal opinions take longer and need counsel.
+
+### What does a 30-day AI compliance sprint cost?
+
+IndiaAIBrief desk estimate: ₹25,000–₹80,000 in internal time for a 5–15 person product team, plus ₹999–₹4,999 if you use our kit or readiness audit — before external counsel.
+
+### Do we need MeitY registration to start the sprint?
+
+No. Start with DPDP purpose mapping and oversight controls buyers already ask for. Track MeitY instruments on the [Policy Tracker](/policy) as they firm up.
+
+### What is the minimum deliverable after 30 days?
+
+A living data map, subprocessor table, log field list, human-override runbook for high-risk flows, and a 4–6 page RFP annex you can reuse.

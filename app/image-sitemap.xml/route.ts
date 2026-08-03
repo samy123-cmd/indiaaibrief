@@ -5,6 +5,15 @@ import { absoluteUrl } from "@/lib/utils";
 export async function GET() {
   const posts = await getAllPosts();
 
+  if (posts.length === 0) {
+    return new NextResponse(null, {
+      status: 404,
+      headers: {
+        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=300",
+      },
+    });
+  }
+
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
