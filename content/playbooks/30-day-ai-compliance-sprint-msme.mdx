@@ -1,8 +1,8 @@
 ---
 title: "30-Day AI Compliance Sprint for Indian MSMEs"
-description: "A 30-day sprint for MSMEs shipping chatbots or RAG under DPDP and MeitY-style asks — week-by-week checklist, cost bands, and RFP artefacts."
-publishedAt: "2026-08-08T10:00:00+05:30"
-modifiedAt: "2026-08-08T10:00:00+05:30"
+description: "A 30-day sprint for MSMEs shipping chatbots or RAG under DPDP and MeitY-style asks — day-level checklist, cost bands, owners, and RFP artefacts."
+publishedAt: "2026-08-03T11:00:00+05:30"
+modifiedAt: "2026-08-03T20:45:00+05:30"
 author: "indiaaibrief-desk"
 category: "playbooks"
 tags: ["compliance", "msme", "dpdp", "playbook", "chatbots"]
@@ -10,7 +10,7 @@ image: "/images/articles/30-day-ai-compliance-sprint-msme.webp"
 imageAlt: "Checklist graphic for a 30-day AI compliance sprint for Indian MSMEs"
 featured: true
 trending: true
-readingTime: 12
+readingTime: 16
 excerpt: "Ship DPDP-aware AI hygiene in 30 days: data map, vendors, logging, HITL, and RFP annex — without a ₹1L consultant retainer."
 structuredData:
   type: "FAQPage"
@@ -23,6 +23,8 @@ structuredData:
       answer: "No. Start with DPDP purpose mapping and oversight controls buyers already ask for. Track MeitY instruments on the Policy Tracker as they firm up."
     - question: "What is the minimum deliverable after 30 days?"
       answer: "A living data map, subprocessor table, log field list, human-override runbook for high-risk flows, and a 4–6 page RFP annex you can reuse."
+    - question: "Who should own the sprint if we have no compliance hire?"
+      answer: "Name one accountable owner (usually founder or Head of Product) with Eng lead as co-owner for vendors/logs. A rotating ‘AI ethics committee’ without a single owner fails Week 2."
 ---
 
 <Answer>
@@ -41,71 +43,114 @@ You do not need a six-month “AI governance programme” to stop failing securi
 
 ## The Details
 
+### Before day 1 — set the operating rules
+
+| Rule | Why |
+| :--- | :--- |
+| One accountable owner | Committees without a named owner stall at vendor emails |
+| 30-minute weekly standup | Surface blockers; do not reinvent governance theatre |
+| Definition of done = annex + dry run | Policies without artefacts still fail RFPs |
+| Counsel only for regulated / novel training | Hygiene first; legal opinion second |
+
+**Team size assumption:** 5–15 people, one production chatbot or RAG product, selling to Indian enterprises.
+
 ### Week 1 — Inventory and purpose (days 1–7)
 
 **Owner:** Founder or Head of Product.
 
-- List every AI feature in production or pilot (chatbot, lead score, OCR, coding assist).
-- For each, mark personal data fields in prompts, indexes, fine-tunes, and logs.
-- Write one purpose sentence per field; flag purpose creep.
-- Draft or refresh customer-facing notice language covering model improvement and logging.
+| Day | Task | Output |
+| :--- | :--- | :--- |
+| 1 | List every AI feature in prod/pilot | Feature inventory sheet |
+| 2–3 | Mark personal fields in prompts, indexes, fine-tunes, logs | Draft data map |
+| 4 | Write one purpose sentence per field; flag purpose creep | Purpose column filled |
+| 5–6 | Draft/refresh customer notice covering model improvement + logging | Notice v1 |
+| 7 | Review with eng; lock owners | Data map v1 signed |
 
-**Exit criteria:** One spreadsheet (or workspace board) with stage → fields → purpose → owner.
+**Exit criteria:** Spreadsheet or workspace board with stage → fields → purpose → owner.
+
+**Common miss:** Treating embeddings as “not personal data” when the source text names customers. If free text can identify a person, map it.
 
 ### Week 2 — Vendors and regions (days 8–14)
 
 **Owner:** Engineering lead.
 
-- Subprocessor table: model APIs, vector DB, observability, support tools, email.
-- Region and transfer notes for each; India-hosting options for BFSI/health prospects.
-- Contracts or DPAs: who deletes on request; who can train on your inputs (default: nobody).
-- Kill public “paste production data into ChatGPT” habits — replace with redacted eval sets.
+| Day | Task | Output |
+| :--- | :--- | :--- |
+| 8 | Email every model/API/observability vendor: train-on-inputs? region? delete SLA? | Vendor questionnaire sent |
+| 9–10 | Build subprocessor table (API, vector DB, logs, email, support) | Table v1 |
+| 11 | Document India-hosting options for BFSI/health prospects | Region notes |
+| 12 | Ban “paste prod data into public ChatGPT” — redacted eval sets only | Team policy + sample set |
+| 13–14 | Chase vendor replies; escalate missing DPAs | Subprocessor table v1.1 |
 
-**Exit criteria:** Subprocessor table v1 + named deletion contact.
+**Exit criteria:** Subprocessor table + named deletion contact.
+
+**Copy-ready vendor email (short):**
+
+> We process Indian personal data in prompts/logs. Please confirm in writing: (1) whether you train on our inputs, (2) processing regions, (3) deletion SLA on request, (4) subprocessor list URL. Needed for enterprise DPDP diligence.
 
 ### Week 3 — Oversight and logs (days 15–21)
 
 **Owner:** Eng + ops.
 
-- Risk-tier features: low (FAQ bot) vs high (credit, hiring, medical triage).
-- High-tier: human review path, override, and a tested “stop the model” step.
-- Log fields (minimum): `model_version`, `prompt_hash`, `output_hash`, `reviewer_id`, `decision`, `ts_utc`.
-- Incident stub: who gets paged if personal data leaks via model output.
+| Day | Task | Output |
+| :--- | :--- | :--- |
+| 15 | Tier features: low (FAQ) vs high (credit, hiring, medical triage) | Risk tier table |
+| 16–17 | High-tier: human review path, override, stop-the-model step | Runbook draft |
+| 18 | Implement log fields in staging | Sample log line |
+| 19 | Incident stub: who pages if model leaks personal data | On-call note |
+| 20–21 | Drill kill switch once; fix gaps | Drill log + date |
 
-**Exit criteria:** Runbook PDF/Markdown + sample log line in staging.
+**Minimum log fields:** `model_version`, `prompt_hash`, `output_hash`, `reviewer_id`, `decision`, `ts_utc`.
+
+**Exit criteria:** Runbook Markdown/PDF + sample log line in staging + drill date.
+
+If you sell into fintech, extend Week 3 with the [RBI model-risk checklist](/playbooks/rbi-ai-model-risk-compliance-checklist-fintech) — board MRMF language will show up in bank RFPs even when you are “only a vendor.”
 
 ### Week 4 — RFP annex and dry run (days 22–30)
 
 **Owner:** Founder + sales engineer.
 
-- Assemble 4–6 page annex answering the [eight RFP questions](/explains/ai-rfp-dpdp-questionnaire-india).
-- Dry-run with a friendly security contact or internal red team.
-- Schedule quarterly review date; put it on the calendar.
-- Optional: score gaps with an [AI Readiness Audit](/audit) before a bank pilot.
+| Day | Task | Output |
+| :--- | :--- | :--- |
+| 22–24 | Assemble 4–6 page annex for the [eight RFP questions](/explains/ai-rfp-dpdp-questionnaire-india) | Annex v1 |
+| 25–26 | Dry-run with friendly security contact or internal red team | Punch list |
+| 27–28 | Fix gaps; version annex | Annex v1.1 |
+| 29 | Put quarterly review on calendar | Calendar invite |
+| 30 | Optional: book [AI Readiness Audit](/audit) before a bank pilot | Scorecard request |
 
 ### Cost band (desk estimate)
 
-| Item | Low | High |
-| :--- | :--- | :--- |
-| Internal time (5–15 person team) | ₹25,000 | ₹80,000 |
-| Compliance kit templates | ₹999 | ₹999 |
-| Readiness audit (optional) | — | ₹4,999 |
-| External counsel (if regulated) | ₹50,000+ | Deal-dependent |
+| Item | Low | High | Notes |
+| :--- | :--- | :--- | :--- |
+| Internal time (5–15 person team) | ₹25,000 | ₹80,000 | Mostly founder + eng lead hours |
+| Compliance kit templates | ₹999 | ₹999 | [AI Compliance Starter Kit](/kit/ai-compliance) |
+| Readiness audit (optional) | — | ₹4,999 | [AI Readiness Audit](/audit) |
+| External counsel (if regulated) | ₹50,000+ | Deal-dependent | BFSI/health/gov training on PII |
 
 But here’s what others won’t tell you: **Week 2 is where sprints die.** Teams love Week 1 inventories and Week 3 architecture diagrams; they avoid calling vendors to ask “do you train on our prompts?” Put vendor emails on day 8, not day 28.
 
+### Failure modes (and fixes)
+
+| Failure | Symptom | Fix |
+| :--- | :--- | :--- |
+| Inventory theatre | 40 features listed, zero owners | Cap to production + next pilot only |
+| Vendor ghosting | Empty region column at day 14 | Default to “unknown — do not use for BFSI” until confirmed |
+| Log theatre | Policy says logging; prod has none | Ship staging sample before writing the annex |
+| Annex bloat | 40-page PDF, no tables | Cut to six artefacts; link policies |
+| No drill | Kill switch exists on paper | Run one stop test; record date |
+
 ### Copy-ready 10-point checklist
 
-- [ ] AI feature inventory complete
+- [ ] AI feature inventory complete (prod + next pilot)
 - [ ] Personal-data map for training + inference
 - [ ] Purpose / ground documented per field
 - [ ] Notices updated
-- [ ] Subprocessor table with regions
+- [ ] Subprocessor table with regions + review date
 - [ ] Deletion owner named
-- [ ] High-tier HITL + stop procedure
+- [ ] High-tier HITL + stop procedure drilled
 - [ ] Log fields in staging
 - [ ] Incident stub written
-- [ ] RFP annex drafted and versioned
+- [ ] RFP annex drafted, versioned, dry-runned
 
 ## What This Means for Indian MSME Founders and CTOs
 
@@ -133,3 +178,7 @@ No. Start with DPDP purpose mapping and oversight controls buyers already ask fo
 ### What is the minimum deliverable after 30 days?
 
 A living data map, subprocessor table, log field list, human-override runbook for high-risk flows, and a 4–6 page RFP annex you can reuse.
+
+### Who should own the sprint if we have no compliance hire?
+
+Name one accountable owner (usually founder or Head of Product) with Eng lead as co-owner for vendors/logs. A rotating “AI ethics committee” without a single owner fails Week 2.

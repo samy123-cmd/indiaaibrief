@@ -1,8 +1,8 @@
 ---
 title: "AI RFP Questionnaires: DPDP Answers That Win"
-description: "How Indian AI vendors answer DPDP and AI governance questions in enterprise RFPs — copy-ready artefacts, red flags, and a scorecard buyers already use."
-publishedAt: "2026-08-06T10:00:00+05:30"
-modifiedAt: "2026-08-06T10:00:00+05:30"
+description: "How Indian AI vendors answer DPDP and AI governance questions in enterprise RFPs — copy-ready artefacts, sample answers, red flags, and a buyer scorecard."
+publishedAt: "2026-08-02T10:00:00+05:30"
+modifiedAt: "2026-08-03T20:45:00+05:30"
 author: "indiaaibrief-desk"
 category: "explains"
 tags: ["dpdp", "rfp", "enterprise", "compliance", "procurement"]
@@ -10,7 +10,7 @@ image: "/images/articles/ai-rfp-dpdp-questionnaire-india.webp"
 imageAlt: "Editorial graphic on answering DPDP and AI governance questions in Indian enterprise RFPs"
 featured: true
 trending: true
-readingTime: 11
+readingTime: 14
 excerpt: "Indian AI RFPs now ask for data maps, lawful grounds, logging, and human oversight — here’s how to answer without a 40-page waffle deck."
 structuredData:
   type: "FAQPage"
@@ -23,6 +23,8 @@ structuredData:
       answer: "IndiaAIBrief desk estimate for a first-time MSME vendor: 5–10 working days if you already know your pipelines; 3–4 weeks if you must inventory personal data and vendors from scratch."
     - question: "Should we hire a law firm before every AI RFP?"
       answer: "Use counsel for regulated BFSI/health/government deals and novel training on personal data. For hygiene questionnaires, ship operational artefacts first — then escalate material legal risk."
+    - question: "What is a good deletion SLA to put in an AI RFP annex?"
+      answer: "State a named owner, channel (email/ticket), acknowledgment within 2 business days, and completion within 7–30 days depending on whether data sits in hot logs, RAG indexes, or cold backups — then prove it once in a dry run."
 ---
 
 <Answer>
@@ -33,11 +35,11 @@ If you sell chatbots, RAG copilots, or document AI into Indian BFSI, manufacturi
 
 ## What Changed
 
-- Security questionnaires now bundle **DPDP + AI oversight** in one section.
-- Buyers ask for **artefacts** (tables, owners, log fields) more than philosophy slides.
+- Security questionnaires now bundle **DPDP + AI oversight** in one section instead of a one-line “GDPR-like” checkbox.
+- Buyers ask for **artefacts** (tables, owners, log fields, deletion SLAs) more than philosophy slides.
 - Cross-border model APIs trigger **transfer and subprocessor** follow-ups even when the UI is India-hosted.
 - Regulated sectors add India-region and kill-switch language on top of DPDP — see [RBI model-risk checklist](/playbooks/rbi-ai-model-risk-compliance-checklist-fintech).
-- Related: [AI regulation business guide](/explains/ai-regulation-india-business-guide), [AI Compliance Kit](/kit/ai-compliance).
+- Related: [AI regulation business guide](/explains/ai-regulation-india-business-guide), [30-day MSME sprint](/playbooks/30-day-ai-compliance-sprint-msme), [AI Compliance Kit](/kit/ai-compliance).
 
 ## The Details
 
@@ -54,6 +56,17 @@ Treat these as a fixed set. If your deck cannot answer them in writing, do not s
 7. **For high-impact decisions, where is human review and override?**
 8. **What is your incident path if a model leaks personal data?**
 
+### Sample answers that pass (and ones that fail)
+
+| Question | Fails | Passes |
+| :--- | :--- | :--- |
+| Training data | “We use anonymised data” | “Tickets used for fine-tunes are redacted of email/phone; purpose = retrieval quality; ground = contractual notice §4.2; owner = ML lead” |
+| Model API region | “OpenAI / Azure” | “Inference via Azure OpenAI `swedencentral` with DPA on file; India option available within 30 days for BFSI pilots” |
+| Logging | “We log for security” | “Fields: `model_version`, `prompt_hash`, `output_hash`, `reviewer_id`, `ts_utc`; retention 30 days hot / 90 days cold; access: SRE + security only” |
+| HITL | “Humans can intervene” | “Credit and HR flows require reviewer approval before customer-visible action; kill switch owner = on-call eng; last drill: date” |
+
+Copy the pass column into your annex. Vague verbs (“ensure”, “strive”, “best efforts”) score as Weak.
+
 ### Copy-ready artefact: one-page data map
 
 | Pipeline stage | Personal fields | Purpose | Ground | Retention owner | Region |
@@ -61,17 +74,30 @@ Treat these as a fixed set. If your deck cannot answer them in writing, do not s
 | Support RAG index | Ticket text, email | Answer employee queries | Contract / notice | Eng lead | India VPC |
 | Fine-tune snapshot | Redacted tickets | Improve retrieval | Explicit consent addendum | ML lead | India + named cloud |
 | Prompt logs | Free text | Debug + abuse | Legitimate ops + notice | SRE | 30 days, then delete |
+| Eval set | Synthetic + redacted samples | Regression tests | Internal R&D; no live PII | ML lead | India staging |
+| Support export | Name, ticket ID | Customer success | Contract | CS lead | India CRM |
 
-Fill real rows. Empty cells are audit findings.
+Fill real rows. Empty cells are audit findings. Re-export this table per customer — do not send the same screenshot to a bank and a SaaS SMB.
+
+### Sector overlays (what gets added after DPDP hygiene)
+
+| Buyer | Extra asks beyond the eight questions |
+| :--- | :--- |
+| BFSI / NBFC | Model inventory language, kill switch, India-region preference — map to [RBI MRM checklist](/playbooks/rbi-ai-model-risk-compliance-checklist-fintech) |
+| Health / hospitals | Purpose limitation on clinical text; no silent fine-tunes on discharge summaries |
+| GCC / IT services | Customer-code redaction; no paste into public model endpoints; subprocessor list for client security |
+| Government / PSU | Disclosure of AI use to end users; grievance officer contact; India hosting preference |
 
 ### Scoring rubric buyers already use (desk synthesis)
 
-| Score | Pattern |
-| :--- | :--- |
-| Fail | Privacy URL only; “we use OpenAI” with no subprocessor table |
-| Weak | Policies exist; no owners, no retention, no log fields |
-| Pass | Data map + subprocessors + HITL for high-tier flows |
-| Strong | Pass + tested deletion SLA + India-region option + sample log schema |
+| Score | Pattern | Typical outcome |
+| :--- | :--- | :--- |
+| Fail | Privacy URL only; “we use OpenAI” with no subprocessor table | Out before technical round |
+| Weak | Policies exist; no owners, no retention, no log fields | Clarification loops; lose to faster vendor |
+| Pass | Data map + subprocessors + HITL for high-tier flows | Shortlist |
+| Strong | Pass + tested deletion SLA + India-region option + sample log schema | Preferred for regulated pilots |
+
+IndiaAIBrief desk estimate from founder conversations in 2026: **Weak annexes cost 2–6 weeks** of back-and-forth; Strong annexes cut security review to one or two calls.
 
 But here’s what others won’t tell you: **procurement grades speed and specificity.** A four-page annex delivered in 48 hours beats a polished 40-page PDF arriving after the shortlist closes.
 
@@ -82,6 +108,18 @@ But here’s what others won’t tell you: **procurement grades speed and specif
 - No distinction between **training** and **inference** processing
 - Claiming anonymisation when free-text still names employees or customers
 - No link between AI logs and your DPDP grievance / incident process
+- Subprocessor list last updated “at launch” with no review date
+
+### 48-hour annex pack (minimum viable)
+
+1. Cover note (half page): product, data categories, India/non-India regions  
+2. Data map table (one page)  
+3. Subprocessor table with DPAs / regions  
+4. Log field list + retention  
+5. HITL / kill-switch for high-tier flows  
+6. Deletion + incident contacts  
+
+If you lack time, start the [30-day compliance sprint](/playbooks/30-day-ai-compliance-sprint-msme) and ship this pack at day 22 — not day 90.
 
 For a deeper training-data treatment, read [How India’s DPDP Act Affects AI Training Data](/explains/dpdp-act-ai-training-data). For sovereign and MeitY context, see [India’s AI strategy](/explains/india-ai-strategy-sovereign-safety).
 
@@ -111,3 +149,7 @@ IndiaAIBrief desk estimate for a first-time MSME vendor: 5–10 working days if 
 ### Should we hire a law firm before every AI RFP?
 
 Use counsel for regulated BFSI/health/government deals and novel training on personal data. For hygiene questionnaires, ship operational artefacts first — then escalate material legal risk.
+
+### What is a good deletion SLA to put in an AI RFP annex?
+
+State a named owner, channel (email/ticket), acknowledgment within 2 business days, and completion within 7–30 days depending on whether data sits in hot logs, RAG indexes, or cold backups — then prove it once in a dry run.

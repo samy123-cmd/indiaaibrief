@@ -1,8 +1,8 @@
 ---
 title: "IndiaAI Mission GPUs: What Startups Get in H2"
-description: "IndiaAI Mission compute access in H2 2026 — who gets GPUs, waitlists, cloud credits, and what founders should budget while queues clear."
-publishedAt: "2026-08-03T18:00:00+05:30"
-modifiedAt: "2026-08-03T18:00:00+05:30"
+description: "IndiaAI Mission compute access in H2 2026 — who gets GPUs, waitlists, cloud credits, dual-track budgets, and what founders should ship while queues clear."
+publishedAt: "2026-08-01T09:00:00+05:30"
+modifiedAt: "2026-08-03T20:45:00+05:30"
 author: "indiaaibrief-desk"
 category: "news"
 tags: ["indiaai-mission", "compute", "gpus", "startups", "policy"]
@@ -10,7 +10,7 @@ image: "/images/articles/indiaai-mission-gpu-access-h2-2026.webp"
 imageAlt: "Editorial graphic on IndiaAI Mission GPU and compute access for Indian startups in H2 2026"
 featured: true
 trending: true
-readingTime: 9
+readingTime: 12
 excerpt: "IndiaAI Mission compute is real but rationed — H2 2026 founders need a dual plan: apply for public GPUs and budget private cloud while waitlists clear."
 structuredData:
   type: "NewsArticle"
@@ -23,6 +23,8 @@ structuredData:
       answer: "Public compute allocations and convertible instruments into model companies are related policy tools — track both on our Policy Tracker and Startup Tracker rather than treating them as the same programme."
     - question: "Where do I track IndiaAI Mission updates?"
       answer: "Watch MeitY and IndiaAI Mission notices, then map them on our Policy Tracker. Pair with the business regulation guide for DPDP and governance asks that arrive with any subsidised compute."
+    - question: "Should we pause product work until Mission GPUs arrive?"
+      answer: "No. Ship on commercial or smaller GPUs for iteration and inference; use Mission capacity for heavy training windows when approved. Roadmaps that wait only on public queues slip into 2027."
 ---
 
 <Answer>
@@ -45,21 +47,42 @@ Compute is the binding constraint for Indian model and agent startups this half.
 
 Public compute programmes typically combine: (1) shared clusters, (2) credits on partner clouds, (3) priority for India-language or public-interest use cases. None of these replace a production inference budget. If your product serves BFSI or health, buyers will still ask where inference runs, who the subprocessor is, and whether logs leave India — see [DPDP and training data](/explains/dpdp-act-ai-training-data).
 
+Application packs that win scarce slots usually show: a concrete experiment plan (dataset size, epochs, eval metrics), India-language or public-interest benefit, named technical owner, and a plan to release capacity when the run ends. Vision slides without a GPU-hour estimate get queued behind teams that look ready to use the machine tomorrow.
+
 ### Dual-track compute plan (copy this)
 
-| Track | Purpose | H2 2026 action |
-| :--- | :--- | :--- |
-| Mission / partner GPUs | Training & large evals | Apply; document experiment plan + India language benefit |
-| Commercial cloud | Ship product | Cap monthly spend; reserved instances if predictable |
-| Local / smaller GPUs | Iteration | Keep a cheap debug path so queues don’t idle the team |
+| Track | Purpose | H2 2026 action | Rough monthly band (desk) |
+| :--- | :--- | :--- | :--- |
+| Mission / partner GPUs | Training & large evals | Apply; document experiment plan + India language benefit | ₹0 when approved; plan for gaps |
+| Commercial cloud | Ship product / inference | Cap spend; reserved instances if predictable | ₹1.5–4L small team fine-tune+eval |
+| Local / smaller GPUs | Iteration | Keep a cheap debug path so queues don’t idle the team | ₹20k–80k or workstation depreciation |
 
-IndiaAIBrief desk estimate: a three-person startup doing continuous fine-tunes without Mission access often lands in **₹1.5–4 lakh/month** on mid-tier cloud GPUs before optimisation. Mission approval can cut that — it rarely goes to zero once you add inference and staging.
+IndiaAIBrief desk estimate: a three-person startup doing continuous fine-tunes without Mission access often lands in **₹1.5–4 lakh/month** on mid-tier cloud GPUs before optimisation. Mission approval can cut training cost — it rarely goes to zero once you add inference, staging, and eval.
+
+### What to put in the application (and what to cut)
+
+**Include:** dataset card (size, language mix, PII handling), training recipe, eval harness, expected GPU-hours, release/cleanup plan, India benefit sentence.
+
+**Cut:** “We will build India’s GPT,” vague multi-year roadmaps, requests for permanent exclusive capacity, and claims you need H100s to ship a FAQ bot.
+
+### DPDP still applies on subsidised GPUs
+
+Public compute does not waive personal-data duties. If your training set includes Indian customer tickets or KYC text, map purpose and ground before you submit the job — same as on Azure or AWS. Enterprise buyers will ask whether Mission-hosted runs used their data; answer with the [RFP questionnaire playbook](/explains/ai-rfp-dpdp-questionnaire-india).
 
 ### What others won’t tell you
 
 **Approval without a kill-switch for spend still burns cash.** Teams that win credits then spin idle notebooks for “exploration” recreate the same burn curve as US YC cohorts — only with worse FX and invoice friction. Assign a compute owner, a weekly utilisation review, and a hard stop when utilisation stays under 40% for two weeks.
 
 Krutrim’s cloud pivot ([coverage](/news/krutrim-pivot-cloud-services-india-ai)) underlines the market signal: **selling and renting capacity** may beat racing every open-weight release. Founders buying inference should compare India-region latency and DPDP paperwork, not only $/GPU-hour tweets.
+
+### Founder checklist for H2
+
+- [ ] Mission / partner application submitted with GPU-hour estimate  
+- [ ] Commercial cloud budget capped and owned  
+- [ ] Training vs inference split in the P&L  
+- [ ] Subprocessors and regions documented for RFPs  
+- [ ] Utilisation review on calendar (weekly)  
+- [ ] PII map for any Mission-bound dataset  
 
 ## What This Means for Indian Founders and CTOs
 
@@ -68,6 +91,7 @@ Krutrim’s cloud pivot ([coverage](/news/krutrim-pivot-cloud-services-india-ai)
 3. **Separate training vs inference** in finance: Mission may help the first; customers pay for the second.
 4. **Document subprocessors and regions** before the enterprise RFP ([AI regulation guide](/explains/ai-regulation-india-business-guide)).
 5. **If you are pre-revenue**, prefer retrieval + smaller fine-tunes over “full pretrain someday” fantasies — see [how to build an AI startup in India](/playbooks/how-to-build-ai-startup-india).
+6. **Run the [30-day compliance sprint](/playbooks/30-day-ai-compliance-sprint-msme)** so compute wins don’t fail the security questionnaire.
 
 ## Frequently Asked Questions
 
@@ -86,3 +110,7 @@ Public compute allocations and convertible instruments into model companies are 
 ### Where do I track IndiaAI Mission updates?
 
 Watch MeitY and IndiaAI Mission notices, then map them on our [Policy Tracker](/policy). Pair with the [business regulation guide](/explains/ai-regulation-india-business-guide) for DPDP and governance asks that arrive with any subsidised compute.
+
+### Should we pause product work until Mission GPUs arrive?
+
+No. Ship on commercial or smaller GPUs for iteration and inference; use Mission capacity for heavy training windows when approved. Roadmaps that wait only on public queues slip into 2027.
