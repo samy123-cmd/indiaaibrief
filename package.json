@@ -17,6 +17,8 @@
     "typecheck": "tsc --noEmit",
     "audit:perf": "node scripts/performance-audit.mjs",
     "audit:words": "node scripts/audit-word-count.mjs",
+    "check:redirects": "node scripts/check-host-redirects.mjs",
+    "configure:www-redirect": "node scripts/configure-www-redirect.mjs",
     "indexnow": "node scripts/indexnow-submit.mjs",
     "generate:og": "node scripts/generate-og-images.mjs",
     "generate:kit": "node scripts/generate-kit-assets.mjs",

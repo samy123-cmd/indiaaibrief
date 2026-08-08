@@ -27,7 +27,14 @@ const DEFAULT_URLS = [
   "/playbooks",
   "/data",
   "/about",
+  "/authors",
   "/contact",
+  "/careers",
+  "/policy",
+  "/privacy",
+  "/terms",
+  "/cookies",
+  "/subscribe",
   "/kit/ai-compliance",
   "/explains/india-ai-strategy-sovereign-safety",
   "/explains/dpdp-act-ai-training-data",
@@ -44,9 +51,27 @@ function toAbsolute(url) {
   return `${BASE}${url.startsWith("/") ? url : `/${url}`}`;
 }
 
+/** Pull www URLs from live sitemap so IndexNow covers discovered inventory. */
+async function urlsFromSitemap(limit = 80) {
+  try {
+    const res = await fetch(`${BASE}/sitemap.xml`);
+    if (!res.ok) return [];
+    const xml = await res.text();
+    const locs = [...xml.matchAll(/<loc>(https:\/\/www\.indiaaibrief\.com[^<]*)<\/loc>/g)].map(
+      (m) => m[1],
+    );
+    return locs.slice(0, limit);
+  } catch {
+    return [];
+  }
+}
+
 async function main() {
   const args = process.argv.slice(2);
-  const urls = [...new Set((args.length ? args : DEFAULT_URLS).map(toAbsolute))];
+  const fromArgs = args.map(toAbsolute);
+  const fromDefaults = DEFAULT_URLS.map(toAbsolute);
+  const fromSitemap = args.length ? [] : await urlsFromSitemap();
+  const urls = [...new Set([...fromArgs, ...fromDefaults, ...fromSitemap])];
 
   // Verify key file is reachable before submitting
   const keyRes = await fetch(KEY_LOCATION);

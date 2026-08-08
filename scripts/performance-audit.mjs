@@ -206,6 +206,48 @@ async function auditSampleArticle() {
   else warn("article missing JSON-LD");
 }
 
+async function auditHostCanonical() {
+  console.log("\n(host canonical / sitemap www-only)");
+  if (!base.includes("indiaaibrief.com")) {
+    pass("skip host checks on non-production base");
+    return;
+  }
+
+  const { text } = await fetchPath("/sitemap.xml");
+  if (/https?:\/\/indiaaibrief\.com\//.test(text)) {
+    fail("sitemap lists apex (non-www) URLs — burns crawl budget");
+  } else if (text.includes("https://www.indiaaibrief.com/")) {
+    pass("sitemap is www-only");
+  } else {
+    warn("could not confirm www URLs in sitemap");
+  }
+
+  // HTTPS apex must 308 to www in one hop (app or domain redirect).
+  try {
+    const apex = await fetch("https://indiaaibrief.com/", {
+      redirect: "manual",
+      method: "HEAD",
+      headers: { "user-agent": "IndiaAIBrief-PerfAudit/1.0" },
+    });
+    const loc = apex.headers.get("location") || "";
+    if (
+      apex.status >= 300 &&
+      apex.status < 400 &&
+      loc.startsWith("https://www.indiaaibrief.com")
+    ) {
+      pass(`https://indiaaibrief.com/ → ${apex.status} ${loc}`);
+    } else {
+      fail(
+        `https://indiaaibrief.com/ expected 308→www, got ${apex.status} ${loc || "(no location)"}`,
+      );
+    }
+  } catch (error) {
+    warn(
+      `apex redirect check failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+}
+
 async function main() {
   console.log(`IndiaAIBrief performance/SEO audit → ${base}`);
 
@@ -217,6 +259,7 @@ async function main() {
   await auditSitemap("/image-sitemap.xml", ["image:loc", "image:title"]);
   await auditAdsTxt();
   await auditSampleArticle();
+  await auditHostCanonical();
 
   for (const path of paths.filter((p) => !p.includes("sitemap") && p !== "/robots.txt")) {
     try {
